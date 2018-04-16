@@ -1,4 +1,4 @@
-import Neon from '@cityofzion/neon-js'
+import { api } from '@cityofzion/neon-js'
 
 export const getAccountName = (account, accounts) => {
   let result
@@ -17,37 +17,51 @@ export const validateLength = (input, minLength) => {
   return true
 }
 
-export const getBalance = (network, account) => {
+export const getBalance = (networks, network, account) => {
   return new Promise((resolve, reject) => {
-    Neon.get
-      .balance(network, account.address)
+    api[networks[network].apiType]
+      .getBalance(networks[network]['url'], account.address)
       .then(results => {
-        const gasAmount = results.assets['GAS'].balance.c
-        const gas = formatGas(gasAmount)
+        let amounts
+        if (results.address === 'not found') {
+          amounts = {
+            neo: 0,
+            gas: 0,
+          }
+        } else {
+          const gasAmount = results.assets['GAS'].balance.c
+          const gas = formatGas(gasAmount)
 
-        const amounts = {
-          neo: Number(results.assets['NEO'].balance.c[0]),
-          gas,
+          amounts = {
+            neo: Number(results.assets['NEO'].balance.c[0]),
+            gas,
+          }
         }
-
         resolve(amounts)
       })
       .catch(error => reject(error))
-  })
+  }).catch(error => console.log(error))
 }
 
-export const getTransactions = (network, account) => {
+export const getTransactions = (networks, network, account) => {
   return new Promise((resolve, reject) => {
-    Neon.get
-      .transactionHistory(network, account.address)
-      .then(results => resolve(results))
-      .catch(error => reject(error))
+    api[networks[network].apiType]
+      .getTransactionHistory(networks[network]['url'], account.address)
+      .then(results => {
+        console.log(results)
+        resolve(results)
+      })
+      .catch(error => {
+        if (error.message === 'Cannot read property \'length\' of null') {
+          resolve([])
+        }
+        reject(error)
+      })
   })
 }
 
 export const formatGas = gasArray => {
   let gas
-
   if (gasArray.length === 1) {
     gas = gasArray[0] / 100000000000000
   } else {

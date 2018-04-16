@@ -1,6 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { mount, shallow } from 'enzyme'
+import { mount } from 'enzyme'
 import MockStore from '../../__mocks__/MockStore'
 import { StaticRouter } from 'react-router'
 
@@ -12,6 +12,7 @@ describe('Home', () => {
     walletActions: {
       changeLabel: () => {},
     },
+    accountActions: { setBalance: () => {} },
     selectedNetworkId: 'TestNet',
     account: {
       address: 'ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be',
@@ -44,17 +45,5 @@ describe('Home', () => {
 
     const accountName = wrapper.find('.accountInfoDetailsHeading').text()
     expect(accountName).toBe('new account name')
-  })
-
-  test('Changes account balance when switching networks', () => {
-    const wrapper = shallow(<Home { ...props } />)
-
-    wrapper.instance()._getAccountInfo = jest.fn()
-    wrapper.update()
-
-    wrapper.instance().componentWillReceiveProps({ selectedNetworkId: 'MainNet' })
-
-    expect(wrapper.instance()._getAccountInfo).toHaveBeenCalledTimes(1)
-    expect(wrapper.instance()._getAccountInfo).toHaveBeenCalledWith('MainNet')
   })
 })

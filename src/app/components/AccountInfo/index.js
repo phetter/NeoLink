@@ -87,11 +87,11 @@ const AccountInfo = ({
 AccountInfo.propTypes = {
   label: PropTypes.string.isRequired,
   onClickHandler: PropTypes.func,
+  getBalance: PropTypes.func,
   neo: PropTypes.number,
   gas: PropTypes.number,
   address: PropTypes.string.isRequired,
   amountsError: PropTypes.string,
-  getBalance: PropTypes.func.isRequired,
   showDropDown: PropTypes.bool.isRequired,
   toggleDropDownMenu: PropTypes.func.isRequired,
   network: PropTypes.string.isRequired,

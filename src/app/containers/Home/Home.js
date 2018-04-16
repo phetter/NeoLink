@@ -18,20 +18,18 @@ class Home extends Component {
     this.state = {
       showInputField: false,
       label: getAccountName(account, accounts),
-      transactionHistory: [],
       transactionHistoryError: '',
       showDropDown: false,
       labelError: '',
-      amounts: {
-        neo: '',
-        gas: '',
-      },
       amountsError: '',
     }
   }
 
   componentDidMount() {
-    this._getAccountInfo(this.props.selectedNetworkId)
+    const { selectedNetworkId } = this.props
+
+    this.getHomeScreenTransactions(selectedNetworkId)
+    this.getHomeScreenBalance(selectedNetworkId)
 
     window.addEventListener('click', this._closeDropDownMenu)
   }
@@ -40,28 +38,21 @@ class Home extends Component {
     window.removeEventListener('click', this._closeDropDownMenu)
   }
 
-  componentWillReceiveProps(props, newProps) {
-    this._getAccountInfo(props.selectedNetworkId)
-  }
-
   getHomeScreenBalance = network => {
-    const { account } = this.props
-
+    const { account, accountActions, networks } = this.props
     this.setState({ amountsError: '' }, () => {
-      getBalance(network, account)
-        .then(amounts => this.setState({ amounts }))
-        .catch(() => {
-          this.setState({ amountsError: 'Could not retrieve amounts.' })
-        })
+      getBalance(networks, network, account)
+        .then(results => accountActions.setBalance(results.neo, results.gas))
+        .catch(() => this.setState({ amountsError: 'Could not retrieve amount' }))
     })
   }
 
   getHomeScreenTransactions = network => {
-    const { account } = this.props
+    const { account, networks, accountActions } = this.props
 
     this.setState({ transactionHistoryError: '' }, () => {
-      getTransactions(network, account)
-        .then(results => this.setState({ transactionHistory: results }))
+      getTransactions(networks, network, account)
+        .then(results => accountActions.setTransactions(results))
         .catch(() =>
           this.setState({
             transactionHistoryError: 'Could not retrieve transactions.',
@@ -72,11 +63,6 @@ class Home extends Component {
 
   toggleDropDownMenu = () => {
     this.setState(prevState => ({ showDropDown: !prevState.showDropDown }))
-  }
-
-  _getAccountInfo = network => {
-    this.getHomeScreenBalance(network)
-    this.getHomeScreenTransactions(network)
   }
 
   _closeDropDownMenu = event => {
@@ -108,17 +94,7 @@ class Home extends Component {
 
   render() {
     const { account, selectedNetworkId } = this.props
-    const {
-      amounts,
-      showInputField,
-      label,
-      transactionHistory,
-      amountsError,
-      transactionHistoryError,
-      labelError,
-      showDropDown,
-    } = this.state
-    const { neo, gas } = amounts
+    const { showInputField, label, amountsError, transactionHistoryError, labelError, showDropDown } = this.state
 
     return (
       <Fragment>
@@ -134,8 +110,8 @@ class Home extends Component {
             ) : (
               <AccountInfo
                 onClickHandler={ this.showInputField }
-                neo={ Number(neo) }
-                gas={ Number(gas) }
+                neo={ Number(account.neo) }
+                gas={ Number(account.gas) }
                 label={ label }
                 address={ account.address }
                 amountsError={ amountsError }
@@ -143,7 +119,7 @@ class Home extends Component {
                 toggleDropDownMenu={ this.toggleDropDownMenu }
                 showDropDown={ showDropDown }
                 network={ selectedNetworkId }
-                updateBalance={ this._getAccountInfo }
+                updateBalance={ this.getHomeScreenBalance }
               />
             )}
           </section>
@@ -151,7 +127,7 @@ class Home extends Component {
         <section className={ style.transactionInfo }>
           <h2 className={ style.transactionInfoHeader }>Transactions</h2>
           <TransactionList
-            transactions={ transactionHistory }
+            transactions={ account.transactions || [] }
             transactionHistoryError={ transactionHistoryError }
             getTransactions={ this.getHomeScreenTransactions }
           />
@@ -165,7 +141,9 @@ export default Home
 
 Home.propTypes = {
   walletActions: PropTypes.object.isRequired,
+  networks: PropTypes.object,
   selectedNetworkId: PropTypes.string.isRequired,
   account: PropTypes.object.isRequired,
+  accountActions: PropTypes.object,
   accounts: PropTypes.object.isRequired,
 }

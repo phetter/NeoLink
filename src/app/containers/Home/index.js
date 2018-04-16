@@ -13,10 +13,11 @@ const mapStateToProps = state => ({
   account: state.account,
   accounts: state.wallet.accounts,
   selectedNetworkId: state.config.selectedNetworkId,
+  networks: state.config.networks,
 })
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators(accountActions, dispatch),
+  accountActions: bindActionCreators(accountActions, dispatch),
   walletActions: bindActionCreators(walletActions, dispatch),
 })
 
