@@ -18,15 +18,16 @@ const AccountInfo = ({
   getBalance,
   showDropDown,
   toggleDropDownMenu,
-  network,
-  updateBalance,
+  showOptions,
 }) => {
   let dropDownClasses = showDropDown
     ? `${style.accountInfoDropDown} ${style.accountInfoDropDownActive}`
     : style.accountInfoDropDown
+
+  let accountDetailsClasses = showOptions ? style.accountInfo : style.accountInfoNoOptions
   return (
     <Fragment>
-      <div className={ style.accountInfo }>
+      <div className={ accountDetailsClasses }>
         <div className={ style.accountInfoImageContainer }>
           <img src={ neonPNG } alt='Neo' />
         </div>
@@ -34,30 +35,32 @@ const AccountInfo = ({
           <h2 className={ style.accountInfoDetailsHeading }>{label}</h2>
           <p className={ style.accountInfoDetailsParagraph }>{address}</p>
         </div>
-        <div className={ style.accountInfoDropDownContainer }>
-          <button className={ style.accountDropDownButton } onClick={ toggleDropDownMenu }>
-            <i className='fa fa-ellipsis-v' />
-          </button>
-          <div className={ dropDownClasses }>
-            <ul className={ style.accountInfoDropDownList }>
-              <li className={ style.accountInfoDropDownListItem }>
-                <Link to='/send' className={ style.dropDownLinks }>
-                  <i className='fas fa-paper-plane' />Send
-                </Link>
-              </li>
-              <li className={ style.accountInfoDropDownListItem }>
-                <Link to={ `https://neoscan.io/address/${address}` } target='_blank' className={ style.dropDownLinks }>
-                  <i className='fas fa-eye' />View on Neoscan
-                </Link>
-              </li>
-              <li className={ style.accountInfoDropDownListItem }>
-                <button className={ style.dropDownLinksButton } onClick={ onClickHandler }>
-                  <i className='fas fa-pencil-alt' />Rename
-                </button>
-              </li>
-            </ul>
+        {showOptions && (
+          <div className={ style.accountInfoDropDownContainer }>
+            <button className={ style.accountDropDownButton } onClick={ toggleDropDownMenu }>
+              <i className='fa fa-ellipsis-v' />
+            </button>
+            <div className={ dropDownClasses }>
+              <ul className={ style.accountInfoDropDownList }>
+                <li className={ style.accountInfoDropDownListItem }>
+                  <Link to='/send' className={ style.dropDownLinks }>
+                    <i className='fas fa-paper-plane' />Send
+                  </Link>
+                </li>
+                <li className={ style.accountInfoDropDownListItem }>
+                  <Link to={ `https://neoscan.io/address/${address}` } target='_blank' className={ style.dropDownLinks }>
+                    <i className='fas fa-eye' />View on Neoscan
+                  </Link>
+                </li>
+                <li className={ style.accountInfoDropDownListItem }>
+                  <button className={ style.dropDownLinksButton } onClick={ onClickHandler }>
+                    <i className='fas fa-pencil-alt' />Rename
+                  </button>
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {amountsError ? (
@@ -71,7 +74,7 @@ const AccountInfo = ({
             <img src={ neonPNG } alt='Neo' className={ style.accountInfoNeoAmountImg } />
             <p className={ style.accountInfoAmountParagraph }>{neo} NEO</p>
           </div>
-          <button className={ style.accountInfoRefreshButton } onClick={ () => updateBalance(network) }>
+          <button className={ style.accountInfoRefreshButton } onClick={ getBalance }>
             <i className='fas fa-sync' />
           </button>
           <div className={ style.accountInfoGasAmount }>
@@ -86,16 +89,15 @@ const AccountInfo = ({
 
 AccountInfo.propTypes = {
   label: PropTypes.string.isRequired,
+  showOptions: PropTypes.bool,
   onClickHandler: PropTypes.func,
   getBalance: PropTypes.func,
   neo: PropTypes.number,
   gas: PropTypes.number,
   address: PropTypes.string.isRequired,
   amountsError: PropTypes.string,
-  showDropDown: PropTypes.bool.isRequired,
-  toggleDropDownMenu: PropTypes.func.isRequired,
-  network: PropTypes.string.isRequired,
-  updateBalance: PropTypes.func.isRequired,
+  showDropDown: PropTypes.bool,
+  toggleDropDownMenu: PropTypes.func,
 }
 
 export default AccountInfo

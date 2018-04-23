@@ -17,9 +17,9 @@ class Home extends Component {
 
     this.state = {
       showInputField: false,
-      label: getAccountName(account, accounts),
       transactionHistoryError: '',
       showDropDown: false,
+      label: getAccountName(account, accounts),
       labelError: '',
       amountsError: '',
     }
@@ -94,7 +94,7 @@ class Home extends Component {
 
   render() {
     const { account, selectedNetworkId } = this.props
-    const { showInputField, label, amountsError, transactionHistoryError, labelError, showDropDown } = this.state
+    const { showInputField, amountsError, label, transactionHistoryError, labelError, showDropDown } = this.state
 
     return (
       <Fragment>
@@ -115,11 +115,11 @@ class Home extends Component {
                 label={ label }
                 address={ account.address }
                 amountsError={ amountsError }
-                getBalance={ this.getHomeScreenBalance }
+                getBalance={ () => this.getHomeScreenBalance(selectedNetworkId) }
                 toggleDropDownMenu={ this.toggleDropDownMenu }
                 showDropDown={ showDropDown }
                 network={ selectedNetworkId }
-                updateBalance={ this.getHomeScreenBalance }
+                showOptions
               />
             )}
           </section>

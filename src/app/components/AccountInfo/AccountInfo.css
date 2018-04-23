@@ -4,6 +4,12 @@
   align-items: center;
 }
 
+.accountInfoNoOptions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .accountInfoDetails {
   width: 70%;
 }
@@ -145,4 +151,5 @@
   border: none;
   color: #585858;
   position: absolute;
+  cursor: pointer;
 }
