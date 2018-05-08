@@ -148,7 +148,7 @@ export class Send extends Component {
   }
 
   send = () => {
-    const { selectedNetworkId, networks, account, reset } = this.props
+    const { selectedNetworkId, account, reset } = this.props
     const { assetType, address, amount } = this.state
 
     this.setState({ loading: true })
@@ -156,11 +156,12 @@ export class Send extends Component {
     let amounts = {}
     amounts[assetType] = toNumber(amount)
     Neon.do
-      .sendAsset(networks[selectedNetworkId].url, address, account.wif, amounts)
+      .sendAsset(selectedNetworkId, address, account.wif, amounts)
       .then(result => {
         console.log(result)
         this.setState({
           loading: false,
+          showConfirmation: false,
           txid: result.txid,
         })
         reset()

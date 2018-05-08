@@ -1,0 +1,40 @@
+.manageNetworksContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.manageNetworksHeading {
+  margin-top: 20px;
+}
+
+.customNetworkDropdown {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  width: 80px;
+}
+
+.customNetworkDropDownButton {
+  width: 100%;
+  height: 50px;
+  color: #585858;
+  border: none;
+  background: transparent;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.customNetworkNoNetworksBox {
+  width: 80%;
+  background-color: #fff;
+  color: #585858;
+  border-radius: 3px;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
