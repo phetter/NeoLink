@@ -10,19 +10,37 @@ import SelectBox from '../../components/common/form/SelectBox'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import NetworkSuccessPage from '../../components/successPages/NetworkSuccessPage'
 
-import style from './AddCustomNetwork.css'
+import style from './EditCustomNetwork.css'
 
-export class AddCustomNetwork extends Component {
-  state = {
-    name: '',
-    url: '',
-    apiType: 'neoscan',
-    showSuccess: false,
-    errors: {
-      name: '',
+export class EditCustomNetwork extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      id: this.props.match.params.id,
+      name: 'somename',
       url: '',
-      apiType: '',
-    },
+      apiType: 'neoscan',
+      showSuccess: false,
+      errors: {
+        name: '',
+        url: '',
+        apiType: '',
+      },
+    }
+  }
+
+  componentDidMount() {
+    const { networks } = this.props
+    const { id } = this.props.match.params
+
+    const currentObjectName = Object.keys(networks).find(
+      network => networks[network].name.toLowerCase() === id.toLowerCase()
+    )
+
+    const currentObject = networks[currentObjectName]
+
+    this.props.initialize({ name: currentObject.name, url: currentObject.url, apiType: currentObject.apiType })
   }
 
   _clearErrors(key) {
@@ -53,24 +71,9 @@ export class AddCustomNetwork extends Component {
     />
   )
 
-  _uniqueName = input => {
-    const { networks } = this.props
-
-    const filteredNetworks = Object.keys(networks).filter(
-      networkName => networks[networkName].name.toLowerCase() === input.toLowerCase()
-    )
-
-    return filteredNetworks.length !== 0
-  }
-
   _validateName = input => {
     if (!validateLength(input, 3)) {
       this._setErrorState('name', 'Name must be longer than 3 characters')
-      return false
-    }
-
-    if (this._uniqueName(input)) {
-      this._setErrorState('name', 'Name must be unique')
       return false
     }
 
@@ -88,13 +91,14 @@ export class AddCustomNetwork extends Component {
   handleSubmit = (values, dispatch, formProps) => {
     const { reset } = formProps
     const { name, url, apiType } = values
-    const { addCustomNetwork } = this.props
+    const { id } = this.state
+    const { editCustomNetwork } = this.props
 
     const validatedName = this._validateName(name)
     const validatedUrl = this._validateUrl(url)
 
     if (validatedName && validatedUrl && apiType) {
-      addCustomNetwork(name, url, apiType)
+      editCustomNetwork(name, url, apiType, id)
       this.setState({
         name: '',
         url: '',
@@ -106,16 +110,16 @@ export class AddCustomNetwork extends Component {
   }
 
   render() {
-    const { errors, showSuccess } = this.state
+    const { errors, showSuccess, name } = this.state
     const { handleSubmit, history } = this.props
 
     return (
       <Fragment>
         {showSuccess ? (
-          <NetworkSuccessPage history={ history } title={ 'Network Added' } />
+          <NetworkSuccessPage history={ history } title={ 'Network Updated' } />
         ) : (
           <section className={ style.addCustomNetwork }>
-            <SettingsNavigation history={ history } />
+            <SettingsNavigation history={ history } path='/manageNetworks' />
             <section className={ style.addCustomNetworkContainer }>
               <Box classNames={ style.addCustomNetworkBox }>
                 <h1 className={ style.addCustomNetworkHeading }>Add Network</h1>
@@ -123,6 +127,7 @@ export class AddCustomNetwork extends Component {
                   <Field
                     component={ this._renderTextField }
                     type='text'
+                    value={ name }
                     name='name'
                     label='Network Name'
                     error={ errors.name }
@@ -160,16 +165,17 @@ export class AddCustomNetwork extends Component {
   }
 }
 
-AddCustomNetwork.propTypes = {
-  addCustomNetwork: PropTypes.func,
+EditCustomNetwork.propTypes = {
+  editCustomNetwork: PropTypes.func,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   networks: PropTypes.object.isRequired,
+  match: PropTypes.object,
+  initialize: PropTypes.func,
 }
 
 export default reduxForm({
-  form: 'addCustomerNetwork',
-  initialValues: { apiType: 'neoscan' },
+  form: 'editCustomNetwork',
   destroyOnUnmount: false,
-})(AddCustomNetwork)
+})(EditCustomNetwork)
