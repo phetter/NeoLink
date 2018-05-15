@@ -3,26 +3,27 @@ import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import FlashMessage from '../FlashMessage'
 import PrimaryButton from '../common/buttons/PrimaryButton'
+import DropDown from '../DropDown'
 
 import neonPNG from '../../../img/icon-34.png'
 
 import style from './AccountInfo.css'
 
-const AccountInfo = ({
-  label,
-  onClickHandler,
-  neo,
-  gas,
-  address,
-  amountsError,
-  getBalance,
-  showDropDown,
-  toggleDropDownMenu,
-  showOptions,
-}) => {
-  let dropDownClasses = showDropDown
-    ? `${style.accountInfoDropDown} ${style.accountInfoDropDownActive}`
-    : style.accountInfoDropDown
+const AccountInfo = ({ label, onClickHandler, neo, gas, address, amountsError, getBalance, showOptions }) => {
+  const accountDropDownMarkup = (
+    <Fragment>
+      <Link to='/send' className={ style.dropDownLinks }>
+        <i className='fas fa-paper-plane' />Send
+      </Link>
+
+      <Link to={ `https://neoscan.io/address/${address}` } target='_blank' className={ style.dropDownLinks }>
+        <i className='fas fa-eye' />View on Neoscan
+      </Link>
+      <button className={ style.dropDownLinksButton } onClick={ onClickHandler }>
+        <i className='fas fa-edit' />Edit Name
+      </button>
+    </Fragment>
+  )
 
   let accountDetailsClasses = showOptions ? style.accountInfo : style.accountInfoNoOptions
   return (
@@ -36,30 +37,12 @@ const AccountInfo = ({
           <p className={ style.accountInfoDetailsParagraph }>{address}</p>
         </div>
         {showOptions && (
-          <div className={ style.accountInfoDropDownContainer }>
-            <button className={ style.accountDropDownButton } onClick={ toggleDropDownMenu }>
-              <i className='fa fa-ellipsis-v' />
-            </button>
-            <div className={ dropDownClasses }>
-              <ul className={ style.accountInfoDropDownList }>
-                <li className={ style.accountInfoDropDownListItem }>
-                  <Link to='/send' className={ style.dropDownLinks }>
-                    <i className='fas fa-paper-plane' />Send
-                  </Link>
-                </li>
-                <li className={ style.accountInfoDropDownListItem }>
-                  <Link to={ `https://neoscan.io/address/${address}` } target='_blank' className={ style.dropDownLinks }>
-                    <i className='fas fa-eye' />View on Neoscan
-                  </Link>
-                </li>
-                <li className={ style.accountInfoDropDownListItem }>
-                  <button className={ style.dropDownLinksButton } onClick={ onClickHandler }>
-                    <i className='fas fa-pencil-alt' />Rename
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
+          <DropDown
+            buttonContent={ <i className='fas fa-ellipsis-v' /> }
+            buttonStyles={ style.accountDropDownButton }
+            dropDownContent={ accountDropDownMarkup }
+            dropDownContentClassNames={ style.accountInfoDropDown }
+          />
         )}
       </div>
 
@@ -96,8 +79,6 @@ AccountInfo.propTypes = {
   gas: PropTypes.number,
   address: PropTypes.string.isRequired,
   amountsError: PropTypes.string,
-  showDropDown: PropTypes.bool,
-  toggleDropDownMenu: PropTypes.func,
 }
 
 export default AccountInfo
