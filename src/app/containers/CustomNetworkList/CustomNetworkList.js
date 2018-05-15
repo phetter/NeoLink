@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 import SettingsNavigation from '../../components/SettingsNavigation'
 import CustomNetworkCard from '../../components/CustomNetworkCard'
@@ -26,7 +27,7 @@ class CustomNetworkList extends Component {
     deleteCustomNetwork(index)
   }
 
-  _truncateUrl = url => (url.length >= 22 ? `${url.slice(0, 19)}...` : url)
+  _truncateUrl = url => (url.length >= 19 ? `${url.slice(0, 19)}...` : url)
 
   _generateDropDownContent = (index, name) => (
     <ul className={ style.customNetworkDropdown }>
@@ -40,6 +41,9 @@ class CustomNetworkList extends Component {
         >
           <i className='fas fa-trash' /> Delete
         </button>
+        <Link to={ `/editCustomNetwork/${name}` } className={ style.customNetworkLink }>
+          <i className='fas fa-edit' />Edit
+        </Link>
       </li>
     </ul>
   )
