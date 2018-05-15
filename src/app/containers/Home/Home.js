@@ -18,7 +18,6 @@ class Home extends Component {
     this.state = {
       showInputField: false,
       transactionHistoryError: '',
-      showDropDown: false,
       label: getAccountName(account, accounts),
       labelError: '',
       amountsError: '',
@@ -30,12 +29,6 @@ class Home extends Component {
 
     this.getHomeScreenTransactions(selectedNetworkId)
     this.getHomeScreenBalance(selectedNetworkId)
-
-    window.addEventListener('click', this._closeDropDownMenu)
-  }
-
-  comoponentWillUnmount() {
-    window.removeEventListener('click', this._closeDropDownMenu)
   }
 
   getHomeScreenBalance = network => {
@@ -61,23 +54,13 @@ class Home extends Component {
     })
   }
 
-  toggleDropDownMenu = () => {
-    this.setState(prevState => ({ showDropDown: !prevState.showDropDown }))
-  }
-
-  _closeDropDownMenu = event => {
-    if (event.target && !event.target.className.includes('DropDown')) {
-      this.setState({ showDropDown: false })
-    }
-  }
-
   handleRenameButtonFormSubmit = e => {
     e.preventDefault()
     const { walletActions, account } = this.props
 
     if (validateLength(this.state.label, 3)) {
       walletActions.changeLabel({ address: account.address, label: this.state.label })
-      this.setState({ showInputField: false, showDropDown: false })
+      this.setState({ showInputField: false })
     } else {
       this.setState({ labelError: 'Label must be longer than 3 characters.' })
     }
@@ -94,7 +77,7 @@ class Home extends Component {
 
   render() {
     const { account, selectedNetworkId } = this.props
-    const { showInputField, amountsError, label, transactionHistoryError, labelError, showDropDown } = this.state
+    const { showInputField, amountsError, label, transactionHistoryError, labelError } = this.state
 
     return (
       <Fragment>
@@ -116,8 +99,6 @@ class Home extends Component {
                 address={ account.address }
                 amountsError={ amountsError }
                 getBalance={ () => this.getHomeScreenBalance(selectedNetworkId) }
-                toggleDropDownMenu={ this.toggleDropDownMenu }
-                showDropDown={ showDropDown }
                 network={ selectedNetworkId }
                 showOptions
               />
