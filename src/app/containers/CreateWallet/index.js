@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { withRouter } from 'react-router'
+import withForm from '../../components/HoC/withForm'
 
 import { addAccount } from '../../actions/wallet'
 import { setAccount } from '../../actions/account'
@@ -18,4 +19,4 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateWallet))
+export default withForm(withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateWallet)))

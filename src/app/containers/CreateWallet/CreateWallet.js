@@ -7,19 +7,13 @@ import InputField from '../../components/common/form/InputField'
 import Box from '../../components/common/Box'
 import CreateWalletSucessPage from '../../components/successPages/CreateWalletSuccessPage'
 
-import { validateLength, labelExists } from '../../utils/helpers'
+import { labelExists } from '../../utils/helpers'
 
 import style from './CreateWallet.css'
 import Loader from '../../components/Loader'
 
-export default class CreateWallet extends Component {
+class CreateWallet extends Component {
   state = {
-    errors: {
-      wif: '',
-      label: '',
-      passPhrase: '',
-      passPhraseConfirm: '',
-    },
     loading: false,
     encryptedWif: '',
     passPhrase: '',
@@ -29,23 +23,11 @@ export default class CreateWallet extends Component {
     wif: '',
   }
 
-  _clearErrors(key) {
-    this._setErrorState(key, '')
-  }
-
-  _setErrorState = (key, value) => {
-    this.setState(prevState => ({
-      errors: {
-        ...prevState.errors,
-        [key]: value,
-      },
-    }))
-  }
-
   _handleTextFieldChange = e => {
+    const { clearFormFieldError } = this.props
     const key = e.target.id
 
-    this._clearErrors(key)
+    clearFormFieldError(key)
     this.setState({
       [key]: e.target.value,
     })
@@ -53,54 +35,56 @@ export default class CreateWallet extends Component {
 
   _validateLabel = () => {
     const { label } = this.state
-    const { accounts } = this.props
+    const { accounts, setFormFieldError, validateLength } = this.props
     const labelDeclared = labelExists(label, accounts)
 
     if (!validateLength(label, 1)) {
-      this._setErrorState('label', 'Account name must be longer than 1.')
+      setFormFieldError('label', 'Account name must be longer than 1.')
       return false
     } else if (labelDeclared) {
-      this._setErrorState('label', 'You already have an account with that label')
+      setFormFieldError('label', 'You already have an account with that label')
       return false
     } else {
-      this._setErrorState('label', '')
+      setFormFieldError('label', '')
       return true
     }
   }
 
   _validatePassPhrase = () => {
     const { passPhrase } = this.state
+    const { setFormFieldError, validateLength } = this.props
 
     if (!validateLength(passPhrase, 10)) {
-      this._setErrorState('passPhrase', 'Passphrase must be longer than 10 characters.')
+      setFormFieldError('passPhrase', 'Passphrase must be longer than 10 characters.')
       return false
     } else {
-      this._setErrorState('passPhrase', '')
+      setFormFieldError('passPhrase', '')
       return true
     }
   }
 
   _validatePasswordMatch = () => {
     const { passPhrase, passPhraseConfirm } = this.state
+    const { setFormFieldError } = this.props
 
     if (!passPhrase || !passPhraseConfirm || passPhrase !== passPhraseConfirm) {
-      this._setErrorState('passPhraseConfirm', 'Passphrases do not match.')
+      setFormFieldError('passPhraseConfirm', 'Passphrases do not match.')
       return false
     } else {
-      this._setErrorState('passPhraseConfirm', '')
+      setFormFieldError('passPhraseConfirm', '')
       return true
     }
   }
 
   _validateWIF = () => {
     const { wif } = this.state
-    const { manualWIF } = this.props
+    const { manualWIF, setFormFieldError } = this.props
 
     if (manualWIF && !wallet.isWIF(wif)) {
-      this._setErrorState('wif', 'Invalid WIF')
+      setFormFieldError('wif', 'Invalid WIF')
       return false
     } else {
-      this._setErrorState('wif', '')
+      setFormFieldError('wif', '')
       return true
     }
   }
@@ -157,8 +141,8 @@ export default class CreateWallet extends Component {
   }
 
   render() {
-    const { loading, errors, passPhrase, passPhraseConfirm, wif, label, encryptedWif, address } = this.state
-    const { manualWIF, history } = this.props
+    const { loading, passPhrase, passPhraseConfirm, wif, label, encryptedWif, address } = this.state
+    const { manualWIF, history, errors } = this.props
 
     if (loading) {
       return <Loader />
@@ -178,7 +162,7 @@ export default class CreateWallet extends Component {
                 id='wif'
                 onChangeHandler={ this._handleTextFieldChange }
                 label='Wif'
-                error={ errors.wif }
+                error={ errors && errors.wif }
               />
             )}
             <InputField
@@ -187,7 +171,7 @@ export default class CreateWallet extends Component {
               id='label'
               onChangeHandler={ this._handleTextFieldChange }
               label='Account Name'
-              error={ errors.label }
+              error={ errors && errors.label }
             />
             <InputField
               type='password'
@@ -195,7 +179,7 @@ export default class CreateWallet extends Component {
               id='passPhrase'
               onChangeHandler={ this._handleTextFieldChange }
               label='Password'
-              error={ errors.passPhrase }
+              error={ errors && errors.passPhrase }
             />
             <InputField
               type='password'
@@ -203,7 +187,7 @@ export default class CreateWallet extends Component {
               id='passPhraseConfirm'
               onChangeHandler={ this._handleTextFieldChange }
               label='Confirm Password'
-              error={ errors.passPhraseConfirm }
+              error={ errors && errors.passPhraseConfirm }
             />
 
             <PrimaryButton buttonText={ 'Create' } classNames={ style.createWalletButton } />
@@ -220,4 +204,10 @@ CreateWallet.propTypes = {
   manualWIF: PropTypes.bool,
   history: PropTypes.object.isRequired,
   accounts: PropTypes.object.isRequired,
+  setFormFieldError: PropTypes.func.isRequired,
+  clearFormFieldError: PropTypes.func.isRequired,
+  validateLength: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 }
+
+export default CreateWallet

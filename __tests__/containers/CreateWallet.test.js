@@ -17,9 +17,39 @@ const accounts = {
   },
 }
 
+const setupShallow = () => {
+  return shallow(
+    <CreateWallet
+      addAccount={ jest.fn }
+      setAccount={ jest.fn }
+      history={ {} }
+      accounts={ accounts }
+      createFormFieldError={ jest.fn }
+      setFormFieldError={ jest.fn }
+      clearFormFieldError={ jest.fn }
+      validateLength={ jest.fn }
+    />
+  )
+}
+
+const setupMount = () => {
+  return mount(
+    <CreateWallet
+      addAccount={ jest.fn }
+      setAccount={ jest.fn }
+      history={ {} }
+      accounts={ accounts }
+      createFormFieldError={ jest.fn }
+      setFormFieldError={ jest.fn }
+      clearFormFieldError={ jest.fn }
+      validateLength={ jest.fn }
+    />
+  )
+}
+
 describe('CreateWallet', () => {
   test('shows loading', () => {
-    const wrapper = shallow(<CreateWallet addAccount={ jest.fn } setAccount={ jest.fn } history={ {} } accounts={ accounts } />)
+    const wrapper = setupShallow()
     wrapper.setState({ loading: true })
     expect(wrapper.find(Loader).length).toEqual(1)
   })
@@ -30,9 +60,7 @@ describe('CreateWallet', () => {
     const preventDefault = jest.fn()
     const addAccount = jest.fn()
 
-    const wrapper = mount(
-      <CreateWallet addAccount={ addAccount } setAccount={ jest.fn } history={ {} } accounts={ accounts } />
-    )
+    const wrapper = setupMount()
 
     wrapper
       .find('input#passPhraseConfirm')
@@ -61,7 +89,7 @@ describe('CreateWallet', () => {
 
     const preventDefault = jest.fn()
 
-    const wrapper = mount(<CreateWallet addAccount={ jest.fn } setAccount={ jest.fn } history={ {} } accounts={ accounts } />)
+    const wrapper = setupMount()
 
     wrapper
       .find('input#passPhraseConfirm')
@@ -72,8 +100,8 @@ describe('CreateWallet', () => {
 
     jest.runAllTimers()
 
-    expect(wrapper.state().errors.passPhraseConfirm).not.toEqual('')
-    expect(wrapper.state().errors.passPhraseConfirm).toEqual('Passphrases do not match.')
+    expect(wrapper.props().errors.passPhraseConfirm).not.toEqual('')
+    expect(wrapper.props().errors.passPhraseConfirm).toEqual('Passphrases do not match.')
   })
 
   test('passphrase must be at least 10 characters', () => {
@@ -81,7 +109,7 @@ describe('CreateWallet', () => {
 
     const preventDefault = jest.fn()
 
-    const wrapper = mount(<CreateWallet addAccount={ jest.fn } setAccount={ jest.fn } history={ {} } accounts={ accounts } />)
+    const wrapper = setupMount()
 
     wrapper
       .find('input#passPhraseConfirm')
@@ -92,8 +120,8 @@ describe('CreateWallet', () => {
 
     jest.runAllTimers()
 
-    expect(wrapper.state().errors.passPhrase).not.toEqual('')
-    expect(wrapper.state().errors.passPhrase).toEqual('Passphrase must be longer than 10 characters.')
+    expect(wrapper.props().errors.passPhrase).not.toEqual('')
+    expect(wrapper.props().errors.passPhrase).toEqual('Passphrase must be longer than 10 characters.')
   })
 
   test('Creates valid credentials with manual WIF', done => {
@@ -102,9 +130,7 @@ describe('CreateWallet', () => {
     const preventDefault = jest.fn()
     const addAccount = jest.fn()
 
-    const wrapper = mount(
-      <CreateWallet addAccount={ addAccount } manualWIF setAccount={ jest.fn } history={ {} } accounts={ accounts } />
-    )
+    const wrapper = setupMount()
 
     wrapper
       .find('input#wif')
@@ -139,9 +165,7 @@ describe('CreateWallet', () => {
 
     const preventDefault = jest.fn()
 
-    const wrapper = mount(
-      <CreateWallet addAccount={ jest.fn } manualWIF setAccount={ jest.fn } history={ {} } accounts={ accounts } />
-    )
+    const wrapper = setupMount()
 
     wrapper
       .find('input#wif')
@@ -156,7 +180,7 @@ describe('CreateWallet', () => {
     jest.runAllTimers()
 
     process.nextTick(() => {
-      expect(wrapper.state().errors.wif).not.toEqual('')
+      expect(wrapper.props().errors.wif).not.toEqual('')
       done()
     })
   })
