@@ -54,12 +54,13 @@ export default class TestInvoke extends Component {
     this.setState({ args: this.state.args.concat(['']) })
   }
 
-  _handleRemoveArg = id => {
+  _handleRemoveArg = (id, e) => {
+    e.preventDefault()
     this.setState({ args: this.state.args.filter((s, idx) => id !== idx) })
   }
 
-  _handleSubmit = event => {
-    event.preventDefault()
+  _handleSubmit = e => {
+    e.preventDefault()
     const { selectedNetworkId, networks } = this.props
     const { scriptHash, operation, args } = this.state
     this.setState({
@@ -119,7 +120,7 @@ export default class TestInvoke extends Component {
   render() {
     const { result, loading, errorMsg } = this.state
     return (
-      <div>
+      <React.Fragment>
         <form>
           <div className={ tempStyle.tempFormStyle }>
             <TextField
@@ -150,7 +151,12 @@ export default class TestInvoke extends Component {
                   id={ `Argument #${idx + 1} name` }
                   onChange={ (event) => this._handleArgChange(idx, event) }
                 />
-                <Button raised ripple style={ { flexGrow: 0, order: 0 } } onClick={ () => this._handleRemoveArg(idx) }>
+                <Button
+                  key={ `btn-${idx + 1}` }
+                  raised
+                  ripple
+                  style={ { flexGrow: 0, order: 0 } }
+                  onClick={ (event) => this._handleRemoveArg(idx, event) }>
                   -
                 </Button>
               </React.Fragment>
@@ -174,7 +180,7 @@ export default class TestInvoke extends Component {
         )}
         {loading && <div>Loading...</div>}
         {errorMsg !== '' && <div>ERROR: {errorMsg}</div>}
-      </div>
+      </React.Fragment>
     )
   }
 }
