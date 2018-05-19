@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
-import { validateLength } from '../../utils/helpers'
 
 import Box from '../../components/common/Box'
 import SettingsNavigation from '../../components/SettingsNavigation'
@@ -9,6 +8,8 @@ import InputField from '../../components/common/form/InputField'
 import SelectBox from '../../components/common/form/SelectBox'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import NetworkSuccessPage from '../../components/successPages/NetworkSuccessPage'
+
+import withForm from '../../components/HoC/withForm'
 
 import style from './EditCustomNetwork.css'
 
@@ -22,11 +23,6 @@ export class EditCustomNetwork extends Component {
       url: '',
       apiType: 'neoscan',
       showSuccess: false,
-      errors: {
-        name: '',
-        url: '',
-        apiType: '',
-      },
     }
   }
 
@@ -43,37 +39,30 @@ export class EditCustomNetwork extends Component {
     this.props.initialize({ name: currentObject.name, url: currentObject.url, apiType: currentObject.apiType })
   }
 
-  _clearErrors(key) {
-    this._setErrorState(key, '')
-  }
-
-  _setErrorState = (key, value) => {
-    this.setState(prevState => ({
-      errors: {
-        ...prevState.errors,
-        [key]: value,
-      },
-    }))
-  }
-
   _renderSelectField = ({ input, ...rest }) => (
     <SelectBox { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
   )
 
-  _renderTextField = ({ input, ...rest }) => (
-    <InputField
-      { ...input }
-      { ...rest }
-      onChangeHandler={ event => {
-        input.onChange(event.target.value)
-        this._clearErrors(event.target.name)
-      } }
-    />
-  )
+  _renderTextField = ({ input, ...rest }) => {
+    const { clearFormFieldError } = this.props
+
+    return (
+      <InputField
+        { ...input }
+        { ...rest }
+        onChangeHandler={ event => {
+          input.onChange(event.target.value)
+          clearFormFieldError(event.target.name)
+        } }
+      />
+    )
+  }
 
   _validateName = input => {
+    const { validateLength, setFormFieldError } = this.props
+
     if (!validateLength(input, 3)) {
-      this._setErrorState('name', 'Name must be longer than 3 characters')
+      setFormFieldError('name', 'Name must be longer than 3 characters')
       return false
     }
 
@@ -81,8 +70,10 @@ export class EditCustomNetwork extends Component {
   }
 
   _validateUrl = input => {
+    const { validateLength, setFormFieldError } = this.props
+
     if (!validateLength(input, 10)) {
-      this._setErrorState('url', 'Url must be longer than 3 characters')
+      setFormFieldError('url', 'Url must be longer than 3 characters')
       return false
     }
     return true
@@ -110,8 +101,8 @@ export class EditCustomNetwork extends Component {
   }
 
   render() {
-    const { errors, showSuccess, name } = this.state
-    const { handleSubmit, history } = this.props
+    const { showSuccess, name } = this.state
+    const { handleSubmit, history, errors } = this.props
 
     return (
       <Fragment>
@@ -154,7 +145,7 @@ export class EditCustomNetwork extends Component {
                       },
                     ] }
                   />
-                  <PrimaryButton buttonText='Add Network' classNames={ style.addCustomNetworkButton } />
+                  <PrimaryButton buttonText='Edit Network' classNames={ style.addCustomNetworkButton } />
                 </form>
               </Box>
             </section>
@@ -173,9 +164,13 @@ EditCustomNetwork.propTypes = {
   networks: PropTypes.object.isRequired,
   match: PropTypes.object,
   initialize: PropTypes.func,
+  clearFormFieldError: PropTypes.func.isRequired,
+  setFormFieldError: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  validateLength: PropTypes.func.isRequired,
 }
 
 export default reduxForm({
   form: 'editCustomNetwork',
   destroyOnUnmount: false,
-})(EditCustomNetwork)
+})(withForm(EditCustomNetwork))

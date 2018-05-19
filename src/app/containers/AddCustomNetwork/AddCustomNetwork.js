@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
-import { validateLength } from '../../utils/helpers'
 
 import Box from '../../components/common/Box'
 import SettingsNavigation from '../../components/SettingsNavigation'
@@ -52,7 +51,7 @@ export class AddCustomNetwork extends Component {
   }
 
   _validateName = input => {
-    const { setFormFieldError } = this.props
+    const { setFormFieldError, validateLength } = this.props
 
     if (!validateLength(input, 3)) {
       setFormFieldError('name', 'Name must be longer than 3 characters')
@@ -68,7 +67,7 @@ export class AddCustomNetwork extends Component {
   }
 
   _validateUrl = input => {
-    const { setFormFieldError } = this.props
+    const { setFormFieldError, validateLength } = this.props
 
     if (!validateLength(input, 10)) {
       setFormFieldError('url', 'Url must be longer than 3 characters')
@@ -161,6 +160,7 @@ AddCustomNetwork.propTypes = {
   clearFormFieldError: PropTypes.func.isRequired,
   setFormFieldError: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  validateLength: PropTypes.func.isRequired,
 }
 
 export default reduxForm({
