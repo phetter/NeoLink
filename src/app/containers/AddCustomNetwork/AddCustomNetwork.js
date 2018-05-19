@@ -10,6 +10,8 @@ import SelectBox from '../../components/common/form/SelectBox'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import NetworkSuccessPage from '../../components/successPages/NetworkSuccessPage'
 
+import withForm from '../../components/HoC/withForm'
+
 import style from './AddCustomNetwork.css'
 
 export class AddCustomNetwork extends Component {
@@ -18,40 +20,26 @@ export class AddCustomNetwork extends Component {
     url: '',
     apiType: 'neoscan',
     showSuccess: false,
-    errors: {
-      name: '',
-      url: '',
-      apiType: '',
-    },
-  }
-
-  _clearErrors(key) {
-    this._setErrorState(key, '')
-  }
-
-  _setErrorState = (key, value) => {
-    this.setState(prevState => ({
-      errors: {
-        ...prevState.errors,
-        [key]: value,
-      },
-    }))
   }
 
   _renderSelectField = ({ input, ...rest }) => (
     <SelectBox { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
   )
 
-  _renderTextField = ({ input, ...rest }) => (
-    <InputField
-      { ...input }
-      { ...rest }
-      onChangeHandler={ event => {
-        input.onChange(event.target.value)
-        this._clearErrors(event.target.name)
-      } }
-    />
-  )
+  _renderTextField = ({ input, ...rest }) => {
+    const { clearFormFieldError } = this.props
+
+    return (
+      <InputField
+        { ...input }
+        { ...rest }
+        onChangeHandler={ event => {
+          input.onChange(event.target.value)
+          clearFormFieldError(event.target.name)
+        } }
+      />
+    )
+  }
 
   _uniqueName = input => {
     const { networks } = this.props
@@ -64,13 +52,15 @@ export class AddCustomNetwork extends Component {
   }
 
   _validateName = input => {
+    const { setFormFieldError } = this.props
+
     if (!validateLength(input, 3)) {
-      this._setErrorState('name', 'Name must be longer than 3 characters')
+      setFormFieldError('name', 'Name must be longer than 3 characters')
       return false
     }
 
     if (this._uniqueName(input)) {
-      this._setErrorState('name', 'Name must be unique')
+      setFormFieldError('name', 'Name must be unique')
       return false
     }
 
@@ -78,8 +68,10 @@ export class AddCustomNetwork extends Component {
   }
 
   _validateUrl = input => {
+    const { setFormFieldError } = this.props
+
     if (!validateLength(input, 10)) {
-      this._setErrorState('url', 'Url must be longer than 3 characters')
+      setFormFieldError('url', 'Url must be longer than 3 characters')
       return false
     }
     return true
@@ -106,8 +98,8 @@ export class AddCustomNetwork extends Component {
   }
 
   render() {
-    const { errors, showSuccess } = this.state
-    const { handleSubmit, history } = this.props
+    const { showSuccess } = this.state
+    const { handleSubmit, history, errors } = this.props
 
     return (
       <Fragment>
@@ -166,10 +158,13 @@ AddCustomNetwork.propTypes = {
   reset: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   networks: PropTypes.object.isRequired,
+  clearFormFieldError: PropTypes.func.isRequired,
+  setFormFieldError: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
 }
 
 export default reduxForm({
   form: 'addCustomerNetwork',
   initialValues: { apiType: 'neoscan' },
   destroyOnUnmount: false,
-})(AddCustomNetwork)
+})(withForm(AddCustomNetwork))

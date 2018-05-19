@@ -265,6 +265,8 @@ Send.propTypes = {
   reset: PropTypes.func.isRequired,
   history: PropTypes.object,
   errors: PropTypes.object.isRequired,
+  setFormFieldError: PropTypes.func.isRequired,
+  clearFormFieldError: PropTypes.func.isRequired,
 }
 
 export default reduxForm({ form: 'send', destroyOnUnmount: false, initialValues: { assetType: 'NEO' } })(withForm(Send))
