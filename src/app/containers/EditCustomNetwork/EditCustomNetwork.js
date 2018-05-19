@@ -122,7 +122,7 @@ export class EditCustomNetwork extends Component {
             <SettingsNavigation history={ history } path='/manageNetworks' />
             <section className={ style.addCustomNetworkContainer }>
               <Box classNames={ style.addCustomNetworkBox }>
-                <h1 className={ style.addCustomNetworkHeading }>Add Network</h1>
+                <h1 className={ style.addCustomNetworkHeading }>Edit Network</h1>
                 <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.addCustomNetworkForm }>
                   <Field
                     component={ this._renderTextField }

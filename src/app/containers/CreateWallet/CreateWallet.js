@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
+import withForm from '../../components/HoC/withForm'
 
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import InputField from '../../components/common/form/InputField'
@@ -210,4 +211,4 @@ CreateWallet.propTypes = {
   errors: PropTypes.object.isRequired,
 }
 
-export default CreateWallet
+export default withForm(CreateWallet)

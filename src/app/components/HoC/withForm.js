@@ -37,6 +37,7 @@ function withForm(WrappedComponent) {
           setFormFieldError={ this.setFormFieldError }
           clearFormFieldError={ this.clearFormFieldError }
           validateLength={ this.validateLength }
+          { ...this.props }
         />
       )
     }
