@@ -16,17 +16,13 @@ import Loader from '../../components/Loader'
 import ErrorCard from '../../components/errors/ErrorCard'
 import SendSuccessPage from '../../components/successPages/SendSuccessPage'
 
+import withForm from '../../components/HoC/withForm'
 import { toNumber, toBigNumber } from '../../utils/math'
 
 import style from './Send.css'
 
 export class Send extends Component {
   state = {
-    errors: {
-      address: '',
-      amount: '',
-      send: '',
-    },
     loading: false,
     txid: '',
     assetType: '',
@@ -35,27 +31,16 @@ export class Send extends Component {
     showConfirmation: false,
   }
 
-  _clearErrors(key) {
-    this._setErrorState(key, '')
-  }
-
-  _setErrorState = (key, value) => {
-    this.setState(prevState => ({
-      errors: {
-        ...prevState.errors,
-        [key]: value,
-      },
-    }))
-  }
-
   _renderTextField = ({ input, ...rest }) => {
+    const { clearFormFieldError } = this.props
+
     return (
       <InputField
         { ...input }
         { ...rest }
         onChangeHandler={ event => {
           input.onChange(event.target.value)
-          this._clearErrors(event.target.name)
+          clearFormFieldError(event.target.name)
         } }
       />
     )
@@ -125,6 +110,7 @@ export class Send extends Component {
 
   handleSubmit = (values, dispatch, formProps) => {
     const { assetType, address, amount } = values
+    const { setFormFieldError } = this.props
 
     this.setState({
       txid: '',
@@ -132,12 +118,12 @@ export class Send extends Component {
 
     const addressErrorMessage = this.validateAddress(address)
     if (addressErrorMessage) {
-      this._setErrorState('address', addressErrorMessage)
+      setFormFieldError('address', addressErrorMessage)
     }
 
     const amountErrorMessage = this.validateAmount(amount, assetType)
     if (amountErrorMessage) {
-      this._setErrorState('amount', amountErrorMessage)
+      setFormFieldError('amount', amountErrorMessage)
     }
 
     const validationPassed = (assetType === 'NEO' || assetType === 'GAS') && !amountErrorMessage && !addressErrorMessage
@@ -148,7 +134,7 @@ export class Send extends Component {
   }
 
   send = () => {
-    const { selectedNetworkId, account, reset } = this.props
+    const { selectedNetworkId, account, reset, setFormFieldError } = this.props
     const { assetType, address, amount } = this.state
 
     this.setState({ loading: true })
@@ -158,7 +144,6 @@ export class Send extends Component {
     Neon.do
       .sendAsset(selectedNetworkId, address, account.wif, amounts)
       .then(result => {
-        console.log(result)
         this.setState({
           loading: false,
           showConfirmation: false,
@@ -172,7 +157,7 @@ export class Send extends Component {
           loading: false,
           showConfirmation: false,
         })
-        this._setErrorState('send', e.message)
+        setFormFieldError('send', e.message)
       })
   }
 
@@ -183,8 +168,8 @@ export class Send extends Component {
   }
 
   render() {
-    const { txid, loading, errors, showConfirmation, address, amount, assetType } = this.state
-    const { handleSubmit, account, accounts, history, selectedNetworkId } = this.props
+    const { txid, loading, showConfirmation, address, amount, assetType } = this.state
+    const { handleSubmit, account, accounts, history, selectedNetworkId, errors, clearFormFieldError } = this.props
 
     let content
 
@@ -208,7 +193,9 @@ export class Send extends Component {
       content = (
         <section className={ style.sendWrapper }>
           <section className={ style.sendContainer }>
-            {errors.send ? <ErrorCard onClickHandler={ () => this._clearErrors('send') } message={ errors.send } /> : null}
+            {errors.send ? (
+              <ErrorCard onClickHandler={ () => clearFormFieldError('send') } message={ errors.send } />
+            ) : null}
             <AccountInfo
               neo={ Number(account.neo) }
               gas={ Number(account.gas) }
@@ -277,6 +264,7 @@ Send.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   history: PropTypes.object,
+  errors: PropTypes.object.isRequired,
 }
 
-export default reduxForm({ form: 'send', destroyOnUnmount: false, initialValues: { assetType: 'NEO' } })(Send)
+export default reduxForm({ form: 'send', destroyOnUnmount: false, initialValues: { assetType: 'NEO' } })(withForm(Send))
