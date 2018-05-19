@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Neon, { api, u } from '@cityofzion/neon-js'
+import Neon, { api, u, rpc } from '@cityofzion/neon-js'
 
 import { Button } from 'rmwc/Button'
 import { TextField } from 'rmwc/TextField'
@@ -51,17 +51,10 @@ export default class TestInvoke extends Component {
 
   _handleAddArgument = e => {
     e.preventDefault()
-    const a = this.state.args
-    const b = ['']
-    console.log('this is a', this.state.args)
-    console.log('w', b)
-    const x = a.concat(b)
-    this.setState({ args: x }, () => console.log('set', this.state))
-    // this.setState({ args: this.state.args.concat(['']) }, () => console.log(this.state))
+    this.setState({ args: this.state.args.concat(['']) })
   }
 
   _handleRemoveArg = id => {
-    console.log('removing')
     this.setState({ args: this.state.args.filter((s, idx) => id !== idx) })
   }
 
@@ -93,21 +86,12 @@ export default class TestInvoke extends Component {
       return
     }
 
-    // const parsedArgs = args.map(arg => {
-    //   if (arg !== '') return { type: 7, value: arg }
-    // })
-    //
-    // const query = Neon.create.query({
-    //   method: 'invokefunction',
-    //   params: [this.state.scriptHash, this.state.operation, parsedArgs],
-    // })
-
-    const parsedArgs = args.map(arg => u.reverseHex(arg));
+    const parsedArgs = args.map(arg => u.str2hexstring(arg))
 
     const props = {
-      scriptHash: scriptHash, // Scripthash for the contract
-      operation: operation, // name of operation to perform.
-      args: [Neon.u.reverseHex('cef0c0fdcfe7838eff6ff104f9cdec2922297537')] // any optional arguments to pass in. If null, use empty array.
+      scriptHash: scriptHash,
+      operation: operation,
+      args: parsedArgs,
     }
 
     const script = Neon.create.script(props)
@@ -115,22 +99,16 @@ export default class TestInvoke extends Component {
     api[networks[selectedNetworkId].apiType]
       .getRPCEndpoint(networks[selectedNetworkId].url)
       .then(endpoint => {
-
         rpc.Query.invokeScript(script)
-          .execute('http://seed3.neo.org:20332')
-          .then(res => {
-            console.log(res) // You should get a result with state: "HALT, BREAK"
+          .execute(endpoint)
+          .then(response => {
+            this.setState({
+              loading: false,
+              result: response.result,
+            })
           })
-
-        query.execute(endpoint).then(response => {
-          this.setState({
-            loading: false,
-            result: response.result,
-          })
-        })
       })
       .catch(e => {
-        console.log('ejhowe', e);
         this.setState({
           loading: false,
           errorMsg: 'Error testing invoke.',
@@ -159,7 +137,7 @@ export default class TestInvoke extends Component {
               onChange={ this._handleTextFieldChange }
             />
           </div>
-          <div className={ styles.argsWrapper } >
+          <div className={ styles.argsWrapper }>
 
             {this.state.args.map((arg, idx) => (
               <React.Fragment>
@@ -177,7 +155,8 @@ export default class TestInvoke extends Component {
                 </Button>
               </React.Fragment>
             ))}
-            <Button className={ styles.btn } style={ { marginRight: 2 } } raised ripple onClick={ this._handleAddArgument }>Add Argument</Button>
+            <Button className={ styles.btn } style={ { marginRight: 2 } } raised ripple onClick={ this._handleAddArgument }>Add
+              Argument</Button>
 
             <Button raised ripple className={ styles.btn } style={ { marginLeft: 2 } }
               onClick={ this._handleSubmit }
