@@ -29,11 +29,9 @@ function withForm(WrappedComponent) {
     }
 
     render() {
-      const { errors } = this.state
-
       return (
         <WrappedComponent
-          errors={ errors }
+          errors={ this.state.errors }
           setFormFieldError={ this.setFormFieldError }
           clearFormFieldError={ this.clearFormFieldError }
           validateLength={ this.validateLength }

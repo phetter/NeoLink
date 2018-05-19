@@ -13,7 +13,7 @@ import { labelExists } from '../../utils/helpers'
 import style from './CreateWallet.css'
 import Loader from '../../components/Loader'
 
-class CreateWallet extends Component {
+export class CreateWallet extends Component {
   state = {
     loading: false,
     encryptedWif: '',
