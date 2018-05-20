@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { reduxForm } from 'redux-form'
 
 import SettingsNavigation from '../../components/SettingsNavigation'
-import InputField from '../../components/common/form/InputField'
-import SelectBox from '../../components/common/form/SelectBox'
 import NetworkSuccessPage from '../../components/successPages/NetworkSuccessPage'
 import CustomNetworkForm from '../../components/common/form/CustomNetworkForm'
 import CustomNetworkContainer from '../../components/CustomNetworkContainer'

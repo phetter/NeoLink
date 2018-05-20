@@ -7,8 +7,6 @@ import Neon, { wallet } from '@cityofzion/neon-js'
 import { getBalance, getAccountName } from '../../utils/helpers'
 
 import AccountInfo from '../../components/AccountInfo'
-import InputField from '../../components/common/form/InputField'
-import SelectBox from '../../components/common/form/SelectBox'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import SendConfirmCard from '../../components/confirmPages/SendConfirmCard'
 import sendSVG from '../../../img/paper-planeSolidWhite.svg'
