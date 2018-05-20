@@ -7,11 +7,9 @@ import InputField from '../../components/common/form/InputField'
 import SelectBox from '../../components/common/form/SelectBox'
 import NetworkSuccessPage from '../../components/successPages/NetworkSuccessPage'
 import CustomNetworkForm from '../../components/common/form/CustomNetworkForm'
-import AddCustomNetworkContainer from './AddCustomNetworkContainer'
+import CustomNetworkContainer from '../../components/CustomNetworkContainer'
 
 import withForm from '../../components/HoC/withForm'
-
-import style from './AddCustomNetwork.css'
 
 export class AddCustomNetwork extends Component {
   state = {
@@ -105,17 +103,17 @@ export class AddCustomNetwork extends Component {
         {showSuccess ? (
           <NetworkSuccessPage history={ history } title={ 'Network Added' } />
         ) : (
-          <section className={ style.addCustomNetwork }>
+          <Fragment>
             <SettingsNavigation history={ history } />
-            <AddCustomNetworkContainer>
+            <CustomNetworkContainer title={ 'Add Network' }>
               <CustomNetworkForm
                 onSubmit={ handleSubmit(this.handleSubmit) }
                 renderTextField={ this._renderTextField }
                 renderSelectField={ this._renderSelectField }
                 errors={ errors }
               />
-            </AddCustomNetworkContainer>
-          </section>
+            </CustomNetworkContainer>
+          </Fragment>
         )}
       </Fragment>
     )
