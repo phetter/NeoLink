@@ -31,25 +31,6 @@ export class Send extends Component {
     showConfirmation: false,
   }
 
-  _renderTextField = ({ input, ...rest }) => {
-    const { clearFormFieldError } = this.props
-
-    return (
-      <InputField
-        { ...input }
-        { ...rest }
-        onChangeHandler={ event => {
-          input.onChange(event.target.value)
-          clearFormFieldError(event.target.name)
-        } }
-      />
-    )
-  }
-
-  _renderSelectField = ({ input, ...rest }) => (
-    <SelectBox { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
-  )
-
   resetState = () => {
     this.setState({
       loading: false,
@@ -164,7 +145,17 @@ export class Send extends Component {
 
   render() {
     const { txid, loading, showConfirmation, address, amount, assetType } = this.state
-    const { handleSubmit, account, accounts, history, selectedNetworkId, errors, clearFormFieldError } = this.props
+    const {
+      handleSubmit,
+      account,
+      accounts,
+      history,
+      selectedNetworkId,
+      errors,
+      clearFormFieldError,
+      renderTextField,
+      renderSelectField,
+    } = this.props
 
     let content
 
@@ -203,7 +194,7 @@ export class Send extends Component {
               <section className={ style.sendSelectAsset }>
                 <p className={ style.sendSelectAssetText }>Send</p>
                 <Field
-                  component={ this._renderSelectField }
+                  component={ renderSelectField }
                   classNames={ style.sendAssetSelectBox }
                   cssOnly
                   name='assetType'
@@ -221,7 +212,7 @@ export class Send extends Component {
               </section>
               <section className={ style.sendAddress }>
                 <Field
-                  component={ this._renderTextField }
+                  component={ renderTextField }
                   type='text'
                   placeholder='Address'
                   error={ errors.address }
@@ -231,7 +222,7 @@ export class Send extends Component {
               </section>
               <section className={ style.sendAmount }>
                 <Field
-                  component={ this._renderTextField }
+                  component={ renderTextField }
                   type='text'
                   placeholder='Eg: 1'
                   error={ errors.amount }
@@ -263,6 +254,8 @@ Send.propTypes = {
   errors: PropTypes.object.isRequired,
   setFormFieldError: PropTypes.func.isRequired,
   clearFormFieldError: PropTypes.func.isRequired,
+  renderTextField: PropTypes.func.isRequired,
+  renderSelectField: PropTypes.func.isRequired,
 }
 
 export default reduxForm({ form: 'send', destroyOnUnmount: false, initialValues: { assetType: 'NEO' } })(withForm(Send))
