@@ -4,8 +4,6 @@ import { wallet } from '@cityofzion/neon-js'
 import { Field, reduxForm } from 'redux-form'
 import { getBalance, getTransactions } from '../../utils/helpers'
 
-import SelectBox from '../common/form/SelectBox'
-import InputField from '../common/form/InputField'
 import PrimaryButton from '../common/buttons/PrimaryButton'
 import Box from '../common/Box'
 import Loader from '../Loader'
@@ -129,7 +127,6 @@ Login.propTypes = {
   account: PropTypes.object.isRequired,
   accounts: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   history: PropTypes.object,
   selectedNetworkId: PropTypes.string,
   networks: PropTypes.object,
