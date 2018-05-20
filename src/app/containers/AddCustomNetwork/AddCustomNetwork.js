@@ -8,6 +8,7 @@ import InputField from '../../components/common/form/InputField'
 import SelectBox from '../../components/common/form/SelectBox'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import NetworkSuccessPage from '../../components/successPages/NetworkSuccessPage'
+import CustomNetworkForm from '../../components/common/form/CustomNetworkForm'
 
 import withForm from '../../components/HoC/withForm'
 
@@ -110,38 +111,12 @@ export class AddCustomNetwork extends Component {
             <section className={ style.addCustomNetworkContainer }>
               <Box classNames={ style.addCustomNetworkBox }>
                 <h1 className={ style.addCustomNetworkHeading }>Add Network</h1>
-                <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.addCustomNetworkForm }>
-                  <Field
-                    component={ this._renderTextField }
-                    type='text'
-                    name='name'
-                    label='Network Name'
-                    error={ errors.name }
-                  />
-                  <Field
-                    component={ this._renderTextField }
-                    type='text'
-                    name='url'
-                    label='Network URL'
-                    error={ errors.url }
-                  />
-                  <Field
-                    label='API Type'
-                    component={ this._renderSelectField }
-                    name='apiType'
-                    options={ [
-                      {
-                        label: 'neoscan',
-                        value: 'neoscan',
-                      },
-                      {
-                        label: 'neonDB',
-                        value: 'neonDB',
-                      },
-                    ] }
-                  />
-                  <PrimaryButton buttonText='Add Network' classNames={ style.addCustomNetworkButton } />
-                </form>
+                <CustomNetworkForm
+                  onSubmit={ handleSubmit(this.handleSubmit) }
+                  renderTextField={ this._renderTextField }
+                  renderSelectField={ this._renderSelectField }
+                  errors={ errors }
+                />
               </Box>
             </section>
           </section>

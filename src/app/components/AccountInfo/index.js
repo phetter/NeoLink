@@ -17,12 +17,8 @@ const AccountInfo = ({ label, onClickHandler, neo, gas, address, amountsError, g
         label={ label }
         accountDropDownMarkup={ accountDropDownMarkup }
       />
-
-      {amountsError ? (
-        <AccountInfoError getBalance={ getBalance } amountsError={ amountsError } />
-      ) : (
-        <AccountInfoAmounts neo={ neo } gas={ gas } getBalance={ getBalance } />
-      )}
+      {amountsError && <AccountInfoError getBalance={ getBalance } amountsError={ amountsError } />}
+      {!amountsError && <AccountInfoAmounts neo={ neo } gas={ gas } getBalance={ getBalance } />}
     </Fragment>
   )
 }
