@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { reduxForm } from 'redux-form'
 
-import Box from '../../components/common/Box'
 import SettingsNavigation from '../../components/SettingsNavigation'
 import InputField from '../../components/common/form/InputField'
 import SelectBox from '../../components/common/form/SelectBox'
@@ -11,8 +10,6 @@ import CustomNetworkForm from '../../components/common/form/CustomNetworkForm'
 import CustomNetworkContainer from '../../components/CustomNetworkContainer'
 
 import withForm from '../../components/HoC/withForm'
-
-import style from './EditCustomNetwork.css'
 
 export class EditCustomNetwork extends Component {
   constructor(props) {

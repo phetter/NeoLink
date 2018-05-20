@@ -22,25 +22,6 @@ export class Login extends Component {
     passPhrase: '',
   }
 
-  _renderTextField = ({ input, ...rest }) => {
-    const { clearFormFieldError } = this.props
-
-    return (
-      <InputField
-        { ...input }
-        { ...rest }
-        onChangeHandler={ event => {
-          input.onChange(event.target.value)
-          clearFormFieldError(event.target.name)
-        } }
-      />
-    )
-  }
-
-  _renderSelectField = ({ input, ...rest }) => (
-    <SelectBox { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
-  )
-
   handleSubmit = (values, dispatch, formProps) => {
     const { clearFormFieldError } = this.props
     const { reset } = formProps
@@ -98,7 +79,7 @@ export class Login extends Component {
 
   render() {
     const { loading } = this.state
-    const { accounts, account, handleSubmit, errors } = this.props
+    const { accounts, account, handleSubmit, errors, renderSelectField, renderTextField } = this.props
 
     if (loading) {
       return <Loader />
@@ -118,13 +99,13 @@ export class Login extends Component {
           <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.loginForm }>
             <Field
               label='Account'
-              component={ this._renderSelectField }
+              component={ renderSelectField }
               cssOnly
               name='encryptedWif'
               options={ this.getAccountOptions(accounts) }
             />
             <Field
-              component={ this._renderTextField }
+              component={ renderTextField }
               type='password'
               name='passPhrase'
               id='passPhrase'
@@ -155,6 +136,8 @@ Login.propTypes = {
   clearFormFieldError: PropTypes.func.isRequired,
   setFormFieldError: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
+  renderTextField: PropTypes.func.isRequired,
+  renderSelectField: PropTypes.func.isRequired,
 }
 
 export default reduxForm({ form: 'login', destroyOnUnmount: false })(withForm(Login))

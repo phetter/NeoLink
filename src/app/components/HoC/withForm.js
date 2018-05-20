@@ -1,5 +1,8 @@
 import React from 'react'
 
+import SelectBox from '../common/form/SelectBox'
+import InputField from '../common/form/InputField'
+
 function withForm(WrappedComponent) {
   return class extends React.Component {
     constructor(props) {
@@ -28,6 +31,21 @@ function withForm(WrappedComponent) {
       return true
     }
 
+    renderTextField = ({ input, ...rest }) => (
+      <InputField
+        { ...input }
+        { ...rest }
+        onChangeHandler={ event => {
+          input.onChange(event.target.value)
+          this.clearFormFieldError(event.target.name)
+        } }
+      />
+    )
+
+    renderSelectField = ({ input, ...rest }) => (
+      <SelectBox { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
+    )
+
     render() {
       return (
         <WrappedComponent
@@ -35,6 +53,8 @@ function withForm(WrappedComponent) {
           setFormFieldError={ this.setFormFieldError }
           clearFormFieldError={ this.clearFormFieldError }
           validateLength={ this.validateLength }
+          renderTextField={ this.renderTextField }
+          renderSelectField={ this.renderSelectField }
           { ...this.props }
         />
       )
