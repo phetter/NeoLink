@@ -37,25 +37,6 @@ export class EditCustomNetwork extends Component {
     this.props.initialize({ name: currentObject.name, url: currentObject.url, apiType: currentObject.apiType })
   }
 
-  _renderSelectField = ({ input, ...rest }) => (
-    <SelectBox { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
-  )
-
-  _renderTextField = ({ input, ...rest }) => {
-    const { clearFormFieldError } = this.props
-
-    return (
-      <InputField
-        { ...input }
-        { ...rest }
-        onChangeHandler={ event => {
-          input.onChange(event.target.value)
-          clearFormFieldError(event.target.name)
-        } }
-      />
-    )
-  }
-
   _validateName = input => {
     const { validateLength, setFormFieldError } = this.props
 
@@ -100,7 +81,7 @@ export class EditCustomNetwork extends Component {
 
   render() {
     const { showSuccess } = this.state
-    const { handleSubmit, history, errors } = this.props
+    const { handleSubmit, history, errors, renderTextField, renderSelectField } = this.props
 
     return (
       <Fragment>
@@ -112,8 +93,8 @@ export class EditCustomNetwork extends Component {
             <CustomNetworkContainer title='Edit Network'>
               <CustomNetworkForm
                 onSubmit={ handleSubmit(this.handleSubmit) }
-                renderTextField={ this._renderTextField }
-                renderSelectField={ this._renderSelectField }
+                renderTextField={ renderTextField }
+                renderSelectField={ renderSelectField }
                 errors={ errors }
               />
             </CustomNetworkContainer>
@@ -127,15 +108,15 @@ export class EditCustomNetwork extends Component {
 EditCustomNetwork.propTypes = {
   editCustomNetwork: PropTypes.func,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   networks: PropTypes.object.isRequired,
   match: PropTypes.object,
   initialize: PropTypes.func,
-  clearFormFieldError: PropTypes.func.isRequired,
   setFormFieldError: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   validateLength: PropTypes.func.isRequired,
+  renderTextField: PropTypes.func.isRequired,
+  renderSelectField: PropTypes.func.isRequired,
 }
 
 export default reduxForm({
