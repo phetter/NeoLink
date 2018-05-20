@@ -26,7 +26,7 @@ const CustomNetworkForm = ({ renderTextField, renderSelectField, errors, onSubmi
           },
         ] }
       />
-      <PrimaryButton buttonText='Add Network' classNames={ style.addCustomNetworkButton } />
+      <PrimaryButton buttonText='Add Network' classNames={ style.customNetworkButton } />
     </form>
   )
 }

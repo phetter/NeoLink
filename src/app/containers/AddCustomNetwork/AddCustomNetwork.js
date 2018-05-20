@@ -1,14 +1,14 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Field, reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form'
 
 import Box from '../../components/common/Box'
 import SettingsNavigation from '../../components/SettingsNavigation'
 import InputField from '../../components/common/form/InputField'
 import SelectBox from '../../components/common/form/SelectBox'
-import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import NetworkSuccessPage from '../../components/successPages/NetworkSuccessPage'
 import CustomNetworkForm from '../../components/common/form/CustomNetworkForm'
+import AddCustomNetworkContainer from './AddCustomNetworkContainer'
 
 import withForm from '../../components/HoC/withForm'
 
@@ -108,17 +108,14 @@ export class AddCustomNetwork extends Component {
         ) : (
           <section className={ style.addCustomNetwork }>
             <SettingsNavigation history={ history } />
-            <section className={ style.addCustomNetworkContainer }>
-              <Box classNames={ style.addCustomNetworkBox }>
-                <h1 className={ style.addCustomNetworkHeading }>Add Network</h1>
-                <CustomNetworkForm
-                  onSubmit={ handleSubmit(this.handleSubmit) }
-                  renderTextField={ this._renderTextField }
-                  renderSelectField={ this._renderSelectField }
-                  errors={ errors }
-                />
-              </Box>
-            </section>
+            <AddCustomNetworkContainer>
+              <CustomNetworkForm
+                onSubmit={ handleSubmit(this.handleSubmit) }
+                renderTextField={ this._renderTextField }
+                renderSelectField={ this._renderSelectField }
+                errors={ errors }
+              />
+            </AddCustomNetworkContainer>
           </section>
         )}
       </Fragment>
