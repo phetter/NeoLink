@@ -2,7 +2,6 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { reduxForm } from 'redux-form'
 
-import Box from '../../components/common/Box'
 import SettingsNavigation from '../../components/SettingsNavigation'
 import InputField from '../../components/common/form/InputField'
 import SelectBox from '../../components/common/form/SelectBox'
