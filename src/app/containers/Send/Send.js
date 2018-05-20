@@ -47,12 +47,7 @@ export class Send extends Component {
   }
 
   _renderSelectField = ({ input, ...rest }) => (
-    <SelectBox
-      classNames={ style.sendAssetSelectBox }
-      { ...input }
-      { ...rest }
-      onChangeHandler={ event => input.onChange(event.target.value) }
-    />
+    <SelectBox { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
   )
 
   resetState = () => {
@@ -209,6 +204,7 @@ export class Send extends Component {
                 <p className={ style.sendSelectAssetText }>Send</p>
                 <Field
                   component={ this._renderSelectField }
+                  classNames={ style.sendAssetSelectBox }
                   cssOnly
                   name='assetType'
                   options={ [
