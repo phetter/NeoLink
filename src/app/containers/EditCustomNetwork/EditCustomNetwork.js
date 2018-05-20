@@ -8,6 +8,7 @@ import InputField from '../../components/common/form/InputField'
 import SelectBox from '../../components/common/form/SelectBox'
 import NetworkSuccessPage from '../../components/successPages/NetworkSuccessPage'
 import CustomNetworkForm from '../../components/common/form/CustomNetworkForm'
+import CustomNetworkContainer from '../../components/CustomNetworkContainer'
 
 import withForm from '../../components/HoC/withForm'
 
@@ -109,20 +110,17 @@ export class EditCustomNetwork extends Component {
         {showSuccess ? (
           <NetworkSuccessPage history={ history } title={ 'Network Updated' } />
         ) : (
-          <section className={ style.addCustomNetwork }>
+          <Fragment>
             <SettingsNavigation history={ history } path='/manageNetworks' />
-            <section className={ style.addCustomNetworkContainer }>
-              <Box classNames={ style.addCustomNetworkBox }>
-                <h1 className={ style.addCustomNetworkHeading }>Edit Network</h1>
-                <CustomNetworkForm
-                  onSubmit={ handleSubmit(this.handleSubmit) }
-                  renderTextField={ this._renderTextField }
-                  renderSelectField={ this._renderSelectField }
-                  errors={ errors }
-                />
-              </Box>
-            </section>
-          </section>
+            <CustomNetworkContainer title='Edit Network'>
+              <CustomNetworkForm
+                onSubmit={ handleSubmit(this.handleSubmit) }
+                renderTextField={ this._renderTextField }
+                renderSelectField={ this._renderSelectField }
+                errors={ errors }
+              />
+            </CustomNetworkContainer>
+          </Fragment>
         )}
       </Fragment>
     )
