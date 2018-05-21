@@ -25,10 +25,10 @@ describe('AddCustomNetwork', () => {
 
     wrapper.find('form').simulate('submit')
 
-    const addCustomNetworkState = wrapper.find(AddCustomNetwork).instance().state
+    const addCustomNetworkProps = wrapper.find(AddCustomNetwork).instance().props
 
-    expect(addCustomNetworkState.errors.name).toEqual('Name must be longer than 3 characters')
-    expect(addCustomNetworkState.errors.url).toEqual('Url must be longer than 3 characters')
+    expect(addCustomNetworkProps.errors.name).toEqual('Name must be longer than 3 characters')
+    expect(addCustomNetworkProps.errors.url).toEqual('Url must be longer than 3 characters')
   })
 
   test('Correctly calls addCustomNetwork when input is valid', () => {

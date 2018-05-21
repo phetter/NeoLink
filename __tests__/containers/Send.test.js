@@ -70,8 +70,8 @@ describe('Send', () => {
 
     wrapper.find('form').simulate('submit')
 
-    const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errors.address).toEqual('The address you entered was not valid.')
+    const sendProps = wrapper.find(Send).instance().props
+    expect(sendProps.errors.address).toEqual('The address you entered was not valid.')
   })
 
   test('Address must not be empty', async () => {
@@ -82,8 +82,8 @@ describe('Send', () => {
 
     wrapper.find('form').simulate('submit')
 
-    const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errors.address).toEqual('Address field is required')
+    const sendProps = wrapper.find(Send).instance().props
+    expect(sendProps.errors.address).toEqual('Address field is required')
   })
 
   test('Amount must not be empty', async () => {
@@ -96,8 +96,8 @@ describe('Send', () => {
 
     wrapper.find('form').simulate('submit')
 
-    const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errors.amount).toEqual('Amount field is required')
+    const sendProps = wrapper.find(Send).instance().props
+    expect(sendProps.errors.amount).toEqual('Amount field is required')
   })
 
   test('Amount must be numeric', async () => {
@@ -110,8 +110,8 @@ describe('Send', () => {
 
     wrapper.find('form').simulate('submit')
 
-    const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errors.amount).toEqual('You must enter a valid number.')
+    const sendProps = wrapper.find(Send).instance().props
+    expect(sendProps.errors.amount).toEqual('You must enter a valid number.')
   })
 
   test('Amount must be positive', async () => {
@@ -124,8 +124,8 @@ describe('Send', () => {
 
     wrapper.find('form').simulate('submit')
 
-    const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errors.amount).toEqual('You cannot send zero or negative amounts of an asset.')
+    const sendProps = wrapper.find(Send).instance().props
+    expect(sendProps.errors.amount).toEqual('You cannot send zero or negative amounts of an asset.')
   })
 
   test('Amount must be whole number if sending NEO', async () => {
@@ -139,8 +139,8 @@ describe('Send', () => {
 
     wrapper.find('form').simulate('submit')
 
-    const sendState = wrapper.find(Send).instance().state
-    expect(sendState.errors.amount).toEqual('You cannot send fractional amounts of NEO.')
+    const sendProps = wrapper.find(Send).instance().props
+    expect(sendProps.errors.amount).toEqual('You cannot send fractional amounts of NEO.')
   })
 
   test('Correctly displays confirm screen when all validation passes', () => {

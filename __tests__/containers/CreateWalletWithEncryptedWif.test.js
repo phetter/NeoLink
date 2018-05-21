@@ -3,7 +3,9 @@ import { wallet } from '@cityofzion/neon-js'
 
 import { mount } from 'enzyme'
 
-import CreateWalletWithEncryptedWif from '../../src/app/containers/CreateWalletWithEncryptedWif/CreateWalletWithEncryptedWif'
+import CreateWalletWithEncryptedWifWrapped, {
+  CreateWalletWithEncryptedWif,
+} from '../../src/app/containers/CreateWalletWithEncryptedWif/CreateWalletWithEncryptedWif'
 
 jest.useFakeTimers()
 
@@ -24,14 +26,14 @@ describe('CreateWallet', () => {
     const addAccount = jest.fn()
 
     const wrapper = mount(
-      <CreateWalletWithEncryptedWif
+      <CreateWalletWithEncryptedWifWrapped
         addAccount={ addAccount }
         manualWIF
         setAccount={ jest.fn }
         history={ { push: jest.fn } }
         accounts={ accounts }
       />
-    )
+    ).find(CreateWalletWithEncryptedWif)
 
     wrapper.find('input#encryptedWif').simulate('change', {
       target: { id: 'encryptedWif', value: '6PYQG2bP5dXuw2q6rLozSziezdA9E8esHhy2NmM1ZeSPdB2bWWAP87nb3i' },
@@ -43,13 +45,15 @@ describe('CreateWallet', () => {
 
     jest.runAllTimers()
 
-    process.nextTick(() => {
-      expect(wrapper.state().errors.wif).toEqual('')
-      expect(wrapper.state().encryptedWif).toBeTruthy()
-      expect(wrapper.state().address).toBeTruthy()
+    const instance = wrapper.instance()
 
-      expect(wallet.isAddress(wrapper.state().address)).toEqual(true)
-      expect(wrapper.state().address).toEqual('AR4zoMWmbtP1M2YsYXQtDGyZJUxB9GwNZT')
+    process.nextTick(() => {
+      expect(instance.props.errors.wif).toEqual(undefined)
+      expect(instance.state.encryptedWif).toBeTruthy()
+      expect(instance.state.address).toBeTruthy()
+
+      expect(wallet.isAddress(instance.state.address)).toEqual(true)
+      expect(instance.state.address).toEqual('AR4zoMWmbtP1M2YsYXQtDGyZJUxB9GwNZT')
       expect(addAccount.mock.calls.length).toBe(1)
       done()
     })
@@ -61,14 +65,14 @@ describe('CreateWallet', () => {
     const preventDefault = jest.fn()
 
     const wrapper = mount(
-      <CreateWalletWithEncryptedWif
+      <CreateWalletWithEncryptedWifWrapped
         addAccount={ jest.fn }
         manualWIF
         setAccount={ jest.fn }
         history={ { push: jest.fn } }
         accounts={ accounts }
       />
-    )
+    ).find(CreateWalletWithEncryptedWif)
 
     wrapper.find('input#encryptedWif').simulate('change', {
       target: { id: 'encryptedWif', value: '!xDgvEKzgSBPPfuVfw67oPQBSjidEiqTHURKSDL1R7yGaGYAeYnr' },
@@ -81,7 +85,7 @@ describe('CreateWallet', () => {
     jest.runAllTimers()
 
     process.nextTick(() => {
-      expect(wrapper.state().errors.passPhrase).not.toEqual('')
+      expect(wrapper.instance().props.errors.passPhrase).not.toEqual('')
       done()
     })
   })
