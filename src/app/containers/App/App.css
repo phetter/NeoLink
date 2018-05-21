@@ -10,6 +10,7 @@
 
 body {
   font-family: Roboto, sans-serif;
+  overflow:hidden;
 }
 
 h1,
@@ -34,4 +35,8 @@ h6 {
   padding: 20px;
   display: flex;
   flex-direction: column;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
