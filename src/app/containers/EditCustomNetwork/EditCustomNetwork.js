@@ -1,17 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Field, reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form'
 
-import Box from '../../components/common/Box'
 import SettingsNavigation from '../../components/SettingsNavigation'
-import InputField from '../../components/common/form/InputField'
-import SelectBox from '../../components/common/form/SelectBox'
-import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import NetworkSuccessPage from '../../components/successPages/NetworkSuccessPage'
+import CustomNetworkForm from '../../components/common/form/CustomNetworkForm'
+import CustomNetworkContainer from '../../components/CustomNetworkContainer'
 
 import withForm from '../../components/HoC/withForm'
-
-import style from './EditCustomNetwork.css'
 
 export class EditCustomNetwork extends Component {
   constructor(props) {
@@ -37,25 +33,6 @@ export class EditCustomNetwork extends Component {
     const currentObject = networks[currentObjectName]
 
     this.props.initialize({ name: currentObject.name, url: currentObject.url, apiType: currentObject.apiType })
-  }
-
-  _renderSelectField = ({ input, ...rest }) => (
-    <SelectBox { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
-  )
-
-  _renderTextField = ({ input, ...rest }) => {
-    const { clearFormFieldError } = this.props
-
-    return (
-      <InputField
-        { ...input }
-        { ...rest }
-        onChangeHandler={ event => {
-          input.onChange(event.target.value)
-          clearFormFieldError(event.target.name)
-        } }
-      />
-    )
   }
 
   _validateName = input => {
@@ -101,55 +78,25 @@ export class EditCustomNetwork extends Component {
   }
 
   render() {
-    const { showSuccess, name } = this.state
-    const { handleSubmit, history, errors } = this.props
+    const { showSuccess } = this.state
+    const { handleSubmit, history, errors, renderTextField, renderSelectField } = this.props
 
     return (
       <Fragment>
         {showSuccess ? (
           <NetworkSuccessPage history={ history } title={ 'Network Updated' } />
         ) : (
-          <section className={ style.addCustomNetwork }>
+          <Fragment>
             <SettingsNavigation history={ history } path='/manageNetworks' />
-            <section className={ style.addCustomNetworkContainer }>
-              <Box classNames={ style.addCustomNetworkBox }>
-                <h1 className={ style.addCustomNetworkHeading }>Edit Network</h1>
-                <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.addCustomNetworkForm }>
-                  <Field
-                    component={ this._renderTextField }
-                    type='text'
-                    value={ name }
-                    name='name'
-                    label='Network Name'
-                    error={ errors.name }
-                  />
-                  <Field
-                    component={ this._renderTextField }
-                    type='text'
-                    name='url'
-                    label='Network URL'
-                    error={ errors.url }
-                  />
-                  <Field
-                    label='API Type'
-                    component={ this._renderSelectField }
-                    name='apiType'
-                    options={ [
-                      {
-                        label: 'neoscan',
-                        value: 'neoscan',
-                      },
-                      {
-                        label: 'neonDB',
-                        value: 'neonDB',
-                      },
-                    ] }
-                  />
-                  <PrimaryButton buttonText='Edit Network' classNames={ style.addCustomNetworkButton } />
-                </form>
-              </Box>
-            </section>
-          </section>
+            <CustomNetworkContainer title='Edit Network'>
+              <CustomNetworkForm
+                onSubmit={ handleSubmit(this.handleSubmit) }
+                renderTextField={ renderTextField }
+                renderSelectField={ renderSelectField }
+                errors={ errors }
+              />
+            </CustomNetworkContainer>
+          </Fragment>
         )}
       </Fragment>
     )
@@ -159,15 +106,15 @@ export class EditCustomNetwork extends Component {
 EditCustomNetwork.propTypes = {
   editCustomNetwork: PropTypes.func,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   networks: PropTypes.object.isRequired,
   match: PropTypes.object,
   initialize: PropTypes.func,
-  clearFormFieldError: PropTypes.func.isRequired,
   setFormFieldError: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   validateLength: PropTypes.func.isRequired,
+  renderTextField: PropTypes.func.isRequired,
+  renderSelectField: PropTypes.func.isRequired,
 }
 
 export default reduxForm({

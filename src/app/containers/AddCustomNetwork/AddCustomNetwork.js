@@ -1,17 +1,13 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Field, reduxForm } from 'redux-form'
+import { reduxForm } from 'redux-form'
 
-import Box from '../../components/common/Box'
 import SettingsNavigation from '../../components/SettingsNavigation'
-import InputField from '../../components/common/form/InputField'
-import SelectBox from '../../components/common/form/SelectBox'
-import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import NetworkSuccessPage from '../../components/successPages/NetworkSuccessPage'
+import CustomNetworkForm from '../../components/common/form/CustomNetworkForm'
+import CustomNetworkContainer from '../../components/CustomNetworkContainer'
 
 import withForm from '../../components/HoC/withForm'
-
-import style from './AddCustomNetwork.css'
 
 export class AddCustomNetwork extends Component {
   state = {
@@ -19,25 +15,6 @@ export class AddCustomNetwork extends Component {
     url: '',
     apiType: 'neoscan',
     showSuccess: false,
-  }
-
-  _renderSelectField = ({ input, ...rest }) => (
-    <SelectBox { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
-  )
-
-  _renderTextField = ({ input, ...rest }) => {
-    const { clearFormFieldError } = this.props
-
-    return (
-      <InputField
-        { ...input }
-        { ...rest }
-        onChangeHandler={ event => {
-          input.onChange(event.target.value)
-          clearFormFieldError(event.target.name)
-        } }
-      />
-    )
   }
 
   _uniqueName = input => {
@@ -98,53 +75,24 @@ export class AddCustomNetwork extends Component {
 
   render() {
     const { showSuccess } = this.state
-    const { handleSubmit, history, errors } = this.props
+    const { handleSubmit, history, errors, renderTextField, renderSelectField } = this.props
 
     return (
       <Fragment>
         {showSuccess ? (
           <NetworkSuccessPage history={ history } title={ 'Network Added' } />
         ) : (
-          <section className={ style.addCustomNetwork }>
+          <Fragment>
             <SettingsNavigation history={ history } />
-            <section className={ style.addCustomNetworkContainer }>
-              <Box classNames={ style.addCustomNetworkBox }>
-                <h1 className={ style.addCustomNetworkHeading }>Add Network</h1>
-                <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.addCustomNetworkForm }>
-                  <Field
-                    component={ this._renderTextField }
-                    type='text'
-                    name='name'
-                    label='Network Name'
-                    error={ errors.name }
-                  />
-                  <Field
-                    component={ this._renderTextField }
-                    type='text'
-                    name='url'
-                    label='Network URL'
-                    error={ errors.url }
-                  />
-                  <Field
-                    label='API Type'
-                    component={ this._renderSelectField }
-                    name='apiType'
-                    options={ [
-                      {
-                        label: 'neoscan',
-                        value: 'neoscan',
-                      },
-                      {
-                        label: 'neonDB',
-                        value: 'neonDB',
-                      },
-                    ] }
-                  />
-                  <PrimaryButton buttonText='Add Network' classNames={ style.addCustomNetworkButton } />
-                </form>
-              </Box>
-            </section>
-          </section>
+            <CustomNetworkContainer title={ 'Add Network' }>
+              <CustomNetworkForm
+                onSubmit={ handleSubmit(this.handleSubmit) }
+                renderTextField={ renderTextField }
+                renderSelectField={ renderSelectField }
+                errors={ errors }
+              />
+            </CustomNetworkContainer>
+          </Fragment>
         )}
       </Fragment>
     )
@@ -154,13 +102,13 @@ export class AddCustomNetwork extends Component {
 AddCustomNetwork.propTypes = {
   addCustomNetwork: PropTypes.func,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   networks: PropTypes.object.isRequired,
-  clearFormFieldError: PropTypes.func.isRequired,
   setFormFieldError: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   validateLength: PropTypes.func.isRequired,
+  renderTextField: PropTypes.func.isRequired,
+  renderSelectField: PropTypes.func.isRequired,
 }
 
 export default reduxForm({

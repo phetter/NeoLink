@@ -1,0 +1,27 @@
+.dropDownLinks,
+.dropDownLinksButton {
+  color: #585858;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  text-align: left;
+  padding-left: 0;
+  font-family: Roboto;
+  font-size: 0.9rem;
+  cursor: pointer;
+  width: 100%;
+  display: block;
+  padding: 5px 10px;
+}
+
+.dropDownLinks:hover,
+.dropDownLinksButton:hover {
+  background-color: #ededed;
+}
+
+.dropDownLinks svg,
+.dropDownLinksButton svg {
+  margin-right: 5px;
+  color: #585858;
+  font-size: 1rem;
+}
