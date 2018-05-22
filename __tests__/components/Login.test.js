@@ -133,9 +133,8 @@ describe('Login', () => {
     jest.runAllTimers()
 
     process.nextTick(() => {
-      const loginState = loginForm.find(Login).instance().state
-      expect(loginState.errorMsg).not.toEqual('')
-      expect(loginForm.text().includes(loginState.errorMsg)).toEqual(true)
+      const loginProps = loginForm.find(Login).instance().props
+      expect(loginProps.errors.passPhrase).toEqual('Wrong password')
       done()
     })
   })

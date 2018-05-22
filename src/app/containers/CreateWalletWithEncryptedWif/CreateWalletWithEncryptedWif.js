@@ -2,63 +2,48 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { wallet } from '@cityofzion/neon-js'
-import { validateLength, labelExists } from '../../utils/helpers'
+import { labelExists } from '../../utils/helpers'
 
 import Box from '../../components/common/Box'
 import InputField from '../../components/common/form/InputField'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import Loader from '../../components/Loader'
 
+import withForm from '../../components/HoC/withForm'
+
 import style from './CreateWalletWithWif.css'
 
-class CreateWalletWitEncryptedWif extends Component {
+export class CreateWalletWithEncryptedWif extends Component {
   state = {
     loading: false,
     encryptedWif: '',
     passPhrase: '',
     address: '',
     label: '',
-    errors: {
-      wif: '',
-      passPhrase: '',
-      label: '',
-    },
-  }
-
-  _clearErrors(key) {
-    this._setErrorState(key, '')
-  }
-
-  _setErrorState = (key, value) => {
-    this.setState(prevState => ({
-      errors: {
-        ...prevState.errors,
-        [key]: value,
-      },
-    }))
   }
 
   _validateLabel = () => {
     const { label } = this.state
-    const { accounts } = this.props
+    const { accounts, setFormFieldError, validateLength } = this.props
     const labelDeclared = labelExists(label, accounts)
 
     if (!validateLength(label, 1)) {
-      this._setErrorState('label', 'Account name must be longer than 1.')
+      setFormFieldError('label', 'Account name must be longer than 1.')
       return false
     } else if (labelDeclared) {
-      this._setErrorState('label', 'You already have an account with that label')
+      setFormFieldError('label', 'You already have an account with that label')
       return false
     } else {
-      this._setErrorState('label', '')
+      setFormFieldError('label', '')
       return true
     }
   }
 
   _handleTextFieldChange = e => {
+    const { clearFormFieldError } = this.props
     const key = e.target.id
 
-    this._clearErrors(key)
+    clearFormFieldError(key)
     this.setState({
       [key]: e.target.value,
     })
@@ -68,7 +53,7 @@ class CreateWalletWitEncryptedWif extends Component {
     e.preventDefault()
 
     const { encryptedWif, passPhrase, label } = this.state
-    const { setAccount, addAccount, history } = this.props
+    const { setAccount, addAccount, history, setFormFieldError } = this.props
 
     const validated = this._validateLabel(label)
 
@@ -94,13 +79,14 @@ class CreateWalletWitEncryptedWif extends Component {
         })
         .catch(() => {
           this.setState({ loading: false })
-          this._setErrorState('passPhrase', 'Wrong password or encrypted key')
+          setFormFieldError('passPhrase', 'Wrong password or encrypted key')
         })
     }
   }
 
   render() {
-    const { encryptedWif, passPhrase, label, errors, loading } = this.state
+    const { encryptedWif, passPhrase, label, loading } = this.state
+    const { errors } = this.props
 
     const content = loading ? (
       <Loader />
@@ -143,11 +129,15 @@ class CreateWalletWitEncryptedWif extends Component {
   }
 }
 
-CreateWalletWitEncryptedWif.propTypes = {
+CreateWalletWithEncryptedWif.propTypes = {
   addAccount: PropTypes.func.isRequired,
   setAccount: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   accounts: PropTypes.object.isRequired,
+  clearFormFieldError: PropTypes.func.isRequired,
+  setFormFieldError: PropTypes.func.isRequired,
+  validateLength: PropTypes.func.isRequired,
+  errors: PropTypes.object,
 }
 
-export default CreateWalletWitEncryptedWif
+export default withForm(CreateWalletWithEncryptedWif)

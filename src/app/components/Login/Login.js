@@ -2,54 +2,46 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
 import { Field, reduxForm } from 'redux-form'
+import { getBalance, getTransactions } from '../../utils/helpers'
 
-import SelectBox from '../common/form/SelectBox'
-import InputField from '../common/form/InputField'
 import PrimaryButton from '../common/buttons/PrimaryButton'
 import Box from '../common/Box'
-
 import Loader from '../Loader'
 import StartPage from '../StartPage'
 
+import withForm from '../HoC/withForm'
+
 import style from './Login.css'
-import { getBalance, getTransactions } from '../../utils/helpers'
 
 export class Login extends Component {
   state = {
-    errorMsg: '',
     loading: false,
     encryptedWif: '',
     passPhrase: '',
   }
 
-  _renderTextField = ({ input, ...rest }) => (
-    <InputField
-      { ...input }
-      { ...rest }
-      error={ this.state.errorMsg }
-      label='Password'
-      onChangeHandler={ event => {
-        this.setState(prevState => ({ errorMsg: '' }))
-        input.onChange(event.target.value)
-      } }
-    />
-  )
-
-  _renderSelectField = ({ input, ...rest }) => (
-    <SelectBox { ...input } { ...rest } onChangeHandler={ event => input.onChange(event.target.value) } />
-  )
-
   handleSubmit = (values, dispatch, formProps) => {
+    const { clearFormFieldError } = this.props
     const { reset } = formProps
     const encryptedWif = values.encryptedWif
     const passPhrase = values.passPhrase
 
-    this.setState({
-      loading: true,
-      errorMsg: '',
-    })
+    this.setState(
+      {
+        loading: true,
+      },
+      () => clearFormFieldError('passPhrase')
+    )
 
-    const { setAccount, history, selectedNetworkId, networks, setBalance, setTransactions } = this.props
+    const {
+      setAccount,
+      history,
+      selectedNetworkId,
+      networks,
+      setBalance,
+      setTransactions,
+      setFormFieldError,
+    } = this.props
 
     wallet
       .decryptAsync(encryptedWif, passPhrase)
@@ -62,14 +54,13 @@ export class Login extends Component {
         history.push('/home')
 
         getBalance(networks, selectedNetworkId, account).then(results => {
-          console.log(results)
           setBalance(results.neo, results.gas)
         })
         getTransactions(networks, selectedNetworkId, account).then(transactions => setTransactions(transactions))
       })
 
       .catch(e => {
-        this.setState({ loading: false, errorMsg: e.message })
+        this.setState({ loading: false }, () => setFormFieldError('passPhrase', 'Wrong password'))
       })
   }
 
@@ -86,7 +77,7 @@ export class Login extends Component {
 
   render() {
     const { loading } = this.state
-    const { accounts, account, handleSubmit } = this.props
+    const { accounts, account, handleSubmit, errors, renderSelectField, renderTextField } = this.props
 
     if (loading) {
       return <Loader />
@@ -106,12 +97,19 @@ export class Login extends Component {
           <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.loginForm }>
             <Field
               label='Account'
-              component={ this._renderSelectField }
+              component={ renderSelectField }
               cssOnly
               name='encryptedWif'
               options={ this.getAccountOptions(accounts) }
             />
-            <Field component={ this._renderTextField } type='password' name='passPhrase' id='passPhrase' />
+            <Field
+              component={ renderTextField }
+              type='password'
+              name='passPhrase'
+              id='passPhrase'
+              label='password'
+              error={ errors.passPhrase }
+            />
             <div>
               <PrimaryButton classNames={ style.loginButton } buttonText={ 'Login' } />
             </div>
@@ -129,10 +127,14 @@ Login.propTypes = {
   account: PropTypes.object.isRequired,
   accounts: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   history: PropTypes.object,
   selectedNetworkId: PropTypes.string,
   networks: PropTypes.object,
+  clearFormFieldError: PropTypes.func.isRequired,
+  setFormFieldError: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  renderTextField: PropTypes.func.isRequired,
+  renderSelectField: PropTypes.func.isRequired,
 }
 
-export default reduxForm({ form: 'login', destroyOnUnmount: false })(Login)
+export default reduxForm({ form: 'login', destroyOnUnmount: false })(withForm(Login))
