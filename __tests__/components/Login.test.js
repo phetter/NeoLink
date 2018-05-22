@@ -36,6 +36,7 @@ describe('Login', () => {
         />
       </Provider>
     )
+
     loginForm
       .find(Login)
       .instance()
@@ -56,8 +57,14 @@ describe('Login', () => {
         accounts={ {} }
         setBalance={ jest.fn }
         setTransactions={ jest.fn }
+        setFormFieldError={ jest.fn }
+        clearFormFieldError={ jest.fn }
+        errors={ {} }
+        renderTextField={ jest.fn }
+        renderSelectField={ jest.fn }
       />
     )
+
     expect(loginForm.contains('CreateOrImportWallet'))
   })
 
