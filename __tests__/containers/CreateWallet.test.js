@@ -3,7 +3,7 @@ import { wallet } from '@cityofzion/neon-js'
 
 import { shallow, mount } from 'enzyme'
 
-import CreateWallet from '../../src/app/containers/CreateWallet/CreateWallet'
+import CreateWalletWrapped, { CreateWallet } from '../../src/app/containers/CreateWallet/CreateWallet'
 import Loader from '../../src/app/components/Loader'
 
 jest.useFakeTimers()
@@ -17,9 +17,32 @@ const accounts = {
   },
 }
 
+const setupShallow = () => {
+  const wrapper = shallow(
+    <CreateWalletWrapped addAccount={ jest.fn } setAccount={ jest.fn } history={ {} } accounts={ accounts } />
+  ).dive()
+
+  return wrapper
+}
+
+const setupMount = (addAccount = jest.fn, setAccount = jest.fn, manualWIF = false) => {
+  const wrapper = mount(
+    <CreateWalletWrapped
+      addAccount={ addAccount }
+      setAccount={ setAccount }
+      history={ {} }
+      accounts={ accounts }
+      manualWIF={ manualWIF }
+    />
+  ).find(CreateWallet)
+
+  return wrapper
+}
+
 describe('CreateWallet', () => {
   test('shows loading', () => {
-    const wrapper = shallow(<CreateWallet addAccount={ jest.fn } setAccount={ jest.fn } history={ {} } accounts={ accounts } />)
+    const wrapper = setupShallow()
+
     wrapper.setState({ loading: true })
     expect(wrapper.find(Loader).length).toEqual(1)
   })
@@ -30,9 +53,7 @@ describe('CreateWallet', () => {
     const preventDefault = jest.fn()
     const addAccount = jest.fn()
 
-    const wrapper = mount(
-      <CreateWallet addAccount={ addAccount } setAccount={ jest.fn } history={ {} } accounts={ accounts } />
-    )
+    const wrapper = setupMount(addAccount)
 
     wrapper
       .find('input#passPhraseConfirm')
@@ -45,11 +66,11 @@ describe('CreateWallet', () => {
     jest.runAllTimers()
 
     process.nextTick(() => {
-      expect(wrapper.state().errors).toEqual({ label: '', passPhrase: '', passPhraseConfirm: '', wif: '' })
-      expect(wrapper.state().encryptedWif).toBeTruthy()
-      expect(wrapper.state().address).toBeTruthy()
+      expect(wrapper.props().errors).toEqual({})
+      expect(wrapper.instance().state.encryptedWif).toBeTruthy()
+      expect(wrapper.instance().state).toBeTruthy()
 
-      expect(wallet.isAddress(wrapper.state().address)).toEqual(true)
+      expect(wallet.isAddress(wrapper.instance().state.address)).toEqual(true)
       expect(addAccount.mock.calls.length).toBe(1)
       done()
     })
@@ -61,7 +82,7 @@ describe('CreateWallet', () => {
 
     const preventDefault = jest.fn()
 
-    const wrapper = mount(<CreateWallet addAccount={ jest.fn } setAccount={ jest.fn } history={ {} } accounts={ accounts } />)
+    const wrapper = setupMount()
 
     wrapper
       .find('input#passPhraseConfirm')
@@ -72,8 +93,10 @@ describe('CreateWallet', () => {
 
     jest.runAllTimers()
 
-    expect(wrapper.state().errors.passPhraseConfirm).not.toEqual('')
-    expect(wrapper.state().errors.passPhraseConfirm).toEqual('Passphrases do not match.')
+    const instance = wrapper.instance()
+
+    expect(instance.props.errors.passPhraseConfirm).not.toEqual('')
+    expect(instance.props.errors.passPhraseConfirm).toEqual('Passphrases do not match.')
   })
 
   test('passphrase must be at least 10 characters', () => {
@@ -81,7 +104,7 @@ describe('CreateWallet', () => {
 
     const preventDefault = jest.fn()
 
-    const wrapper = mount(<CreateWallet addAccount={ jest.fn } setAccount={ jest.fn } history={ {} } accounts={ accounts } />)
+    const wrapper = setupMount()
 
     wrapper
       .find('input#passPhraseConfirm')
@@ -92,8 +115,10 @@ describe('CreateWallet', () => {
 
     jest.runAllTimers()
 
-    expect(wrapper.state().errors.passPhrase).not.toEqual('')
-    expect(wrapper.state().errors.passPhrase).toEqual('Passphrase must be longer than 10 characters.')
+    const instance = wrapper.instance()
+
+    expect(instance.props.errors.passPhrase).not.toEqual('')
+    expect(instance.props.errors.passPhrase).toEqual('Passphrase must be longer than 10 characters.')
   })
 
   test('Creates valid credentials with manual WIF', done => {
@@ -102,9 +127,7 @@ describe('CreateWallet', () => {
     const preventDefault = jest.fn()
     const addAccount = jest.fn()
 
-    const wrapper = mount(
-      <CreateWallet addAccount={ addAccount } manualWIF setAccount={ jest.fn } history={ {} } accounts={ accounts } />
-    )
+    const wrapper = setupMount(addAccount, jest.fn, true)
 
     wrapper
       .find('input#wif')
@@ -117,18 +140,19 @@ describe('CreateWallet', () => {
     wrapper.find('input#passPhraseConfirm').simulate('change', { target: { id: 'passPhrase', value: passphrase } })
     wrapper.find('input#label').simulate('change', { target: { id: 'label', value: 'somelabel' } })
 
-    wrapper.find('button').simulate('click')
     wrapper.find('form').simulate('submit', { preventDefault })
 
     jest.runAllTimers()
 
-    process.nextTick(() => {
-      expect(wrapper.state().errors.wif).toEqual('')
-      expect(wrapper.state().encryptedWif).toBeTruthy()
-      expect(wrapper.state().address).toBeTruthy()
+    const instance = wrapper.instance()
 
-      expect(wallet.isAddress(wrapper.state().address)).toEqual(true)
-      expect(wrapper.state().address).toEqual('AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y')
+    process.nextTick(() => {
+      expect(instance.props.errors.wif).toEqual('')
+      expect(instance.state.encryptedWif).toBeTruthy()
+      expect(instance.state.address).toBeTruthy()
+
+      expect(wallet.isAddress(instance.state.address)).toEqual(true)
+      expect(instance.state.address).toEqual('AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y')
       expect(addAccount.mock.calls.length).toBe(1)
       done()
     })
@@ -139,9 +163,7 @@ describe('CreateWallet', () => {
 
     const preventDefault = jest.fn()
 
-    const wrapper = mount(
-      <CreateWallet addAccount={ jest.fn } manualWIF setAccount={ jest.fn } history={ {} } accounts={ accounts } />
-    )
+    const wrapper = setupMount(jest.fn, jest.fn, true)
 
     wrapper
       .find('input#wif')
@@ -156,7 +178,7 @@ describe('CreateWallet', () => {
     jest.runAllTimers()
 
     process.nextTick(() => {
-      expect(wrapper.state().errors.wif).not.toEqual('')
+      expect(wrapper.instance().props.errors.wif).not.toEqual('')
       done()
     })
   })

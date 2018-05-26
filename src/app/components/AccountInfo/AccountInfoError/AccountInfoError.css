@@ -1,0 +1,10 @@
+.accountInfoErrorButton {
+  margin: 0 auto;
+  height: 35px;
+  font-size: 0.9rem;
+  box-shadow: none;
+  background: transparent;
+  border: 1px solid #36b148;
+  color: #36b149;
+}
+

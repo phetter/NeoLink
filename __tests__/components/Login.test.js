@@ -36,6 +36,7 @@ describe('Login', () => {
         />
       </Provider>
     )
+
     loginForm
       .find(Login)
       .instance()
@@ -56,8 +57,14 @@ describe('Login', () => {
         accounts={ {} }
         setBalance={ jest.fn }
         setTransactions={ jest.fn }
+        setFormFieldError={ jest.fn }
+        clearFormFieldError={ jest.fn }
+        errors={ {} }
+        renderTextField={ jest.fn }
+        renderSelectField={ jest.fn }
       />
     )
+
     expect(loginForm.contains('CreateOrImportWallet'))
   })
 
@@ -133,9 +140,8 @@ describe('Login', () => {
     jest.runAllTimers()
 
     process.nextTick(() => {
-      const loginState = loginForm.find(Login).instance().state
-      expect(loginState.errorMsg).not.toEqual('')
-      expect(loginForm.text().includes(loginState.errorMsg)).toEqual(true)
+      const loginProps = loginForm.find(Login).instance().props
+      expect(loginProps.errors.passPhrase).toEqual('Wrong password')
       done()
     })
   })
