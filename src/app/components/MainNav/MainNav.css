@@ -4,7 +4,15 @@
   height: 100%;
   border: none;
   cursor: pointer;
+  transition:all 0.3s ease;
 }
+
+.mainNavButton:active {
+  -webkit-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  transform: scale(0.8);
+}
+
 
 .mainNavButton svg {
   color: #fff;

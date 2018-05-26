@@ -37,7 +37,7 @@ class MainNav extends Component {
     const navigationMarkup = this.generateNavigationMarkup()
 
     return (
-      <nav className={ style.mainNav }>
+      <nav>
         <DropDown
           buttonContent={ <i className='fas fa-bars' /> }
           buttonStyles={ style.mainNavButton }

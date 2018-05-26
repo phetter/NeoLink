@@ -17,6 +17,10 @@
   align-items: center;
 }
 
+.settingsNavigationButton:active {
+  outline:none;
+}
+
 .settingsNavigationButton svg {
   margin-right: 5px;
 }
