@@ -32,7 +32,6 @@
   cursor: default;
 }
 
-
 .accountInfoRefreshButton {
   font-size: 1.2rem;
   border: none;
@@ -41,16 +40,22 @@
   cursor: pointer;
   background-color: white;
 
-  transition:all 0.2s ease;
-  opacity:1;
+  transition: all 0.2s ease;
+  opacity: 1;
+}
+
+.accountInfoRefreshButton:link,
+.accountInfoRefreshButton:visited {
+  color: #585858;
 }
 
 .accountInfoRefreshButton:hover {
-  opacity: 0.7;
+  opacity: 0.5;
 }
 
 .accountInfoRefreshButton:active {
-  opacity: 0.7;
+  opacity: 1;
+  color: #585858;
   -webkit-transform: scale(0.8);
   -ms-transform: scale(0.8);
   transform: scale(0.8);
