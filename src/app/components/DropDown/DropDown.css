@@ -20,7 +20,3 @@
 .showDropDown {
   display: block;
 }
-
-.dropDownButton:focus {
-  outline: none;
-}
