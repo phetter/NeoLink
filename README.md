@@ -101,18 +101,9 @@ Please note that currently the code is limited to a maximum of two arguments to 
 
 ## NeoLink - Demo
 
-<<<<<<< HEAD
-- Install NeoLink
-    - Clone github.com/cityofzion/neolink/
-    - Follow the instructions there to install and build
-    - Login with encrypted WIF (wallet needs a balance of TestNet gas)
-- Visit sendeo.surge.sh and watch the video to learn how it works.
-- Code available at [on Githhub](https://github.com/slipo/sendeo)
-=======
 * Install NeoLink
   * Clone github.com/cityofzion/neolink/
   * Follow the instructions there to install and build
   * Login with encrypted WIF (wallet needs a balance of TestNet gas)
 * Visit sendeo.surge.sh and watch the video to learn how it works.
-* Code available at [on Githhub](https://github.com/slipo/sendeo)
->>>>>>> upstream/development
+* Code available at [on Github](https://github.com/slipo/sendeo)
