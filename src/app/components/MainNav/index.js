@@ -1,76 +1,14 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
-import { Menu, MenuItem, MenuAnchor } from 'rmwc/Menu'
-import '@material/menu/dist/mdc.menu.min.css'
-import '@material/button/dist/mdc.button.min.css'
+import { logOut } from '../../actions/account'
 
-import style from './MainNav.css'
+import MainNav from './MainNav'
 
-class MainNav extends Component {
-  state = {
-    menuIsOpen: false,
-  }
-
-  render () {
-    const { history } = this.props
-
-    return (
-      <div className={ style.menu }>
-        <MenuAnchor>
-          <div
-            className={ style.menuButton }
-            onClick={ e => {
-              this.setState({ 'menuIsOpen': !this.state.menuIsOpen })
-            } }
-          />
-          <Menu
-            open={ this.state.menuIsOpen }
-            onClose={ evt => this.setState({ menuIsOpen: false }) }
-          >
-            <MenuItem className={ style.menuItem } onClick={ () => history.push('/') }>
-              Home
-            </MenuItem>
-            <MenuItem className={ style.menuItem } onClick={ () => history.push('/send') }>
-              Send
-            </MenuItem>
-            <MenuItem className={ style.menuItem } onClick={ () => history.push('/testInvoke') }>
-              Test Invoke
-            </MenuItem>
-            <MenuItem className={ style.menuItem } onClick={ () => history.push('/sendInvoke') }>
-              Send Invoke
-            </MenuItem>
-            <MenuItem className={ style.menuItem } onClick={ () => history.push('/transactions') }>
-              Transactions
-            </MenuItem>
-            <MenuItem className={ style.menuItem } onClick={ () => history.push('/balance') }>
-              Balance
-            </MenuItem>
-            <MenuItem className={ style.menuItem } onClick={ () => history.push('/createWallet') }>
-              Create Account
-            </MenuItem>
-            <MenuItem className={ style.menuItem } onClick={ () => history.push('/newAccountFromWIF') }>
-              Create Account from WIF
-            </MenuItem>
-            <MenuItem className={ style.menuItem } onClick={ () => history.push('/importWallet') }>
-              Import Wallet
-            </MenuItem>
-            <MenuItem className={ style.menuItem } onClick={ () => history.push('/exportWallet') }>
-              Export Wallet
-            </MenuItem>
-            <MenuItem className={ style.menuItem } onClick={ () => history.push('/config') }>
-              Config
-            </MenuItem>
-          </Menu>
-        </MenuAnchor>
-      </div>
-    )
-  }
+const actionCreators = {
+  logOut,
 }
 
-export default withRouter(MainNav)
+const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
 
-MainNav.propTypes = {
-  history: PropTypes.object,
-}
+export default connect(null, mapDispatchToProps)(MainNav)

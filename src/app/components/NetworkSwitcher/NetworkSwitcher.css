@@ -1,18 +1,86 @@
-.switcher {
+.networkNavigation {
+  position: relative;
+  height: 100%;
+  width: 25%;
+}
+
+.networkNavigationButtonContainer {
+  height: 100%;
+}
+
+.networkNavigationButton {
+  width: 100%;
+  display: flex;
+  background-color: transparent;
+  border: none;
+  justify-content: center;
+  height: 100%;
+  cursor: pointer;
+}
+
+.networkNavigationGlobe {
+  width: 14px;
+  margin-right: 5px;
+  pointer-events: none;
+}
+
+.networkNavigationChevron {
+  width: 10px;
+  transform: translateY(5px);
+  pointer-events: none;
+}
+
+.networkNavigationDropDownContainer {
+  padding: 15px 5px;
+  width: 140px;
+  left: -77px;
+  top: 49px;
+}
+
+.networkOptionButton {
+  display: block;
+  width: 100%;
+  margin: 6px 0;
+  border: none;
+  font-family: Roboto;
   background: transparent;
-  font-size: 11px;
-  color: white;
-  border-style: none;
-  display: inline;
-  margin: 0;
-  outline: none;
+  color: #585858;
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 0.8rem;
 }
 
-.switcher :active, .switcher :hover {
-  outline: none;
+.networkOptionButton:first-child {
+  margin-top: 0;
 }
 
-.switcher option {
-  background: #86d13e;
-  border-style: none;
+.networkOptionButton:last-child {
+  margin-bottom: 0;
+}
+
+.networkNavigationOptionSelected {
+  background-color: #48f12f;
+  border: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-left: auto;
+}
+
+.mainNetNeoImg,
+.networkOptionIcon {
+  width: 16px;
+  margin-right: 8px;
+}
+
+@keyframes fadeInMenu {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
