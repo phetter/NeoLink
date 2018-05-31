@@ -5,7 +5,6 @@ import DropDown from '../DropDown'
 
 import style from './NetworkSwitcher.css'
 
-import globe from '../../../img/globe.svg'
 import chevron from '../../../img/chevron-down.svg'
 import neoImg from '../../../img/icon-34.png'
 import flask from '../../../img/flask.svg'
@@ -64,7 +63,7 @@ class NetworkSwitcher extends Component {
           onClick={ () => this.changeNetwork(index) }
         >
           {indicator}
-          {truncateString(networks[index].name, 9)}
+          {truncateString(networks[index].name, 12)}
           {selected && <div className={ style.networkNavigationOptionSelected } />}
         </button>
       )
@@ -74,10 +73,11 @@ class NetworkSwitcher extends Component {
 
   render() {
     const networkOptions = this.generateNetworkOptions()
+    const { selectedNetworkId } = this.props
 
     const buttonContent = (
       <div className={ style.networkNavigationButtonContent }>
-        {truncateString(this.props.selectedNetworkId, 9)}
+        {truncateString(selectedNetworkId, 9)}
         <img src={ chevron } className={ style.networkNavigationChevron } alt='chevron down' />
       </div>
     )
