@@ -76,10 +76,10 @@ class NetworkSwitcher extends Component {
     const networkOptions = this.generateNetworkOptions()
 
     const buttonContent = (
-      <Fragment>
-        <img src={ globe } className={ style.networkNavigationGlobe } alt='globe' />
+      <div className={ style.networkNavigationButtonContent }>
+        {this.props.selectedNetworkId}
         <img src={ chevron } className={ style.networkNavigationChevron } alt='chevron down' />
-      </Fragment>
+      </div>
     )
 
     return (
