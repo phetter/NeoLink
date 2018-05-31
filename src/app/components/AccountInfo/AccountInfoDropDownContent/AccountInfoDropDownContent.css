@@ -22,4 +22,5 @@
 .dropDownLinksImage {
   margin-right: 5px;
   width: 15px;
+  pointer-events: none;
 }
