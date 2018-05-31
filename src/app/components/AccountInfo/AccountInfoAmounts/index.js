@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import neonPNG from '../../../../img/icon-34.png'
 
 import syncSolidSVG from '../../../../img/syncSolid.svg'
-import tintSVG from '../../../../img/tintSVG.svg'
+import tintSVG from '../../../../img/tint.svg'
 
 import style from './AccountInfoAmounts.css'
 
