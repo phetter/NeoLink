@@ -80,3 +80,5 @@ export const formatGas = gasArray => {
 
   return gas
 }
+
+export const truncateString = (string, len) => (string.length >= len ? `${string.slice(0, len - 3)}...` : string)
