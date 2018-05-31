@@ -17,10 +17,8 @@
   width: 25px;
 }
 
-.accountInfoGasAmount svg {
-  font-size: 1.3rem;
-  margin-bottom: 3px;
-  color: #36b049;
+.accountInfoGasAmountImage {
+  width: 20px;
 }
 
 .accountInfoAmountParagraph {
@@ -38,4 +36,8 @@
   color: #585858;
   position: absolute;
   cursor: pointer;
+}
+
+.accountInfoRefreshButtonImage {
+  width: 20px;
 }
