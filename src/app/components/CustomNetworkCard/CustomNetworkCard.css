@@ -48,3 +48,8 @@ h3.customNetworkUrl {
   margin-left: auto;
   width: 20%;
 }
+
+.customNetworkCardDropdownImage {
+  width: 6px;
+  pointer-events: none;
+}
