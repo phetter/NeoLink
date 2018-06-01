@@ -28,6 +28,7 @@
 }
 
 .startPageIcon {
-  width: 15px;
+  width: 17px;
   margin: 0 25px;
+  pointer-events: none;
 }
