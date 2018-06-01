@@ -29,10 +29,11 @@ class MainNav extends Component {
   }
 
   handleLogOut = e => {
-    const { logOut } = this.props
+    const { logOut, history } = this.props
 
     e.preventDefault()
     logOut()
+    history.push('/')
   }
 
   render() {
