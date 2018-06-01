@@ -7,9 +7,8 @@
     cursor: pointer;
 }
 
-.fileUpload svg {
-    color: #36b049;
-    font-size: 2em;
+.fileUploadImage {
+    width: 27px;
     transform: translateX(61px) translateY(59px);
 }
 
