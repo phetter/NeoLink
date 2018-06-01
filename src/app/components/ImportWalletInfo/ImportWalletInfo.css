@@ -5,9 +5,9 @@
     margin-bottom: 20px;
 }
 
-.importWalletInfo svg {
+.importWalletBookImage {
     margin: 0 10px 0 5px;
-    font-size: 1rem;
+    width: 15px;
     transform: translateY(-5px);
 }
 

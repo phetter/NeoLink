@@ -6,9 +6,9 @@
   cursor: pointer;
 }
 
-.mainNavButton svg {
-  color: #fff;
-  font-size: 1.5rem;
+.mainNavButtonImage {
+  width: 20px;
+  pointer-events: none;
 }
 
 .mainNavDropDownContent {
