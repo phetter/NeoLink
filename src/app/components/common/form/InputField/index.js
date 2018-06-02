@@ -22,7 +22,7 @@ const InputField = ({
 }) => {
   const inputFieldLabelStyles = label ? style.inputFieldLabelStyles : ''
   const errorStyles = error ? style.inputFieldErrorStyles : ''
-  const errorElement = error ? <div className={ `${style.inputFieldErrorMessage} ${errorClassNames}` }>{error}</div> : ''
+  const errorElement = error ? <div className={ style.inputFieldErrorMessage + ' ' + errorClassNames }>{error}</div> : ''
 
   let input
 
@@ -31,7 +31,7 @@ const InputField = ({
       <input
         value={ value }
         disabled={ disabled }
-        className={ `${style.inputFieldLabelStyles} ${style.inputField} ${style.inputFieldDisabled}` }
+        className={ style.inputFieldLabelStyles + ' ' + style.inputField + ' '  + style.inputFieldDisabled} }
       />
     )
   } else {
@@ -40,7 +40,7 @@ const InputField = ({
         name={ name }
         value={ value }
         onChange={ onChangeHandler }
-        className={ `${style.inputField} ${classNames} ${inputFieldLabelStyles} ${errorStyles}` }
+        className={ style.inputField + ' ' + classNames + ' ' + inputFieldLabelStyles + ' ' + errorStyles }
         type={ type }
         id={ id }
         placeholder={ placeholder }
@@ -50,7 +50,7 @@ const InputField = ({
 
   if (label) {
     return (
-      <Label labelText={ label } classNames={ `${style.inputFieldLabel} ${labelClassNames}` }>
+      <Label labelText={ label } classNames={ style.inputFieldLabel + ' ' + labelClassNames }>
         {input}
         {errorElement}
         {children}

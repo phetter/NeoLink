@@ -9,7 +9,7 @@ const SecondaryButton = ({ buttonText, icon, classNames, onClickHandler }) => (
   <Button
     buttonText={ buttonText }
     icon={ icon }
-    classNames={ `${style.secondaryButton} ${classNames}` }
+    classNames={ style.secondaryButton + ' ' + classNames }
     onClickHandler={ onClickHandler }
   />
 )

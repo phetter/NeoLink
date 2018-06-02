@@ -27,7 +27,7 @@ class CustomNetworkList extends Component {
     deleteCustomNetwork(index)
   }
 
-  _truncateUrl = url => (url.length >= 19 ? `${url.slice(0, 19)}...` : url)
+  _truncateUrl = url => (url.length >= 19 ? url.slice(0, 19) + '...' : url)
 
   _generateDropDownContent = (index, name) => (
     <ul className={ style.customNetworkDropdown }>

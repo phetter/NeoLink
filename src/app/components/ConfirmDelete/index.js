@@ -15,10 +15,10 @@ const ConfirmDelete = ({ onClickAcceptHandler, onClickRejectHandler, item }) => 
         <h3 className={ style.confirmDeleteThirdHeading }>Are you certain?</h3>
       </div>
       <div className={ style.confirmDeleteButtons }>
-        <button onClick={ onClickRejectHandler } className={ `${style.confirmDeleteButton} ${style.confirmDeleteReject}` }>
+        <button onClick={ onClickRejectHandler } className={ style.confirmDeleteButton + ' ' + style.confirmDeleteReject }>
           Take me back.
         </button>
-        <button onClick={ onClickAcceptHandler } className={ `${style.confirmDeleteButton} ${style.confirmDeleteAccept}` }>
+        <button onClick={ onClickAcceptHandler } className={ style.confirmDeleteButton + ' ' + style.confirmDeleteAccept }>
           Yes, delete.
         </button>
       </div>
