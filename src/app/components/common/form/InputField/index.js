@@ -31,7 +31,7 @@ const InputField = ({
       <input
         value={ value }
         disabled={ disabled }
-        className={ style.inputFieldLabelStyles + ' ' + style.inputField + ' '  + style.inputFieldDisabled} }
+        className={ style.inputFieldLabelStyles + ' ' + style.inputField + ' ' + style.inputFieldDisabled }
       />
     )
   } else {
