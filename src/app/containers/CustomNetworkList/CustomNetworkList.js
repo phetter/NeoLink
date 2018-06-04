@@ -8,6 +8,8 @@ import Overlay from '../../components/Overlay'
 import ConfirmDelete from '../../components/ConfirmDelete'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 
+import { truncateString } from '../../utils/helpers'
+
 import trashSVG from '../../../img/trash.svg'
 import editSVG from '../../../img/edit.svg'
 
@@ -29,8 +31,6 @@ class CustomNetworkList extends Component {
 
     deleteCustomNetwork(index)
   }
-
-  _truncateUrl = url => (url.length >= 19 ? `${url.slice(0, 19)}...` : url)
 
   _generateDropDownContent = (index, name) => (
     <ul className={ style.customNetworkDropdown }>
@@ -72,7 +72,7 @@ class CustomNetworkList extends Component {
         networkRows.push(
           <CustomNetworkCard
             name={ network.name }
-            url={ this._truncateUrl(network.url) }
+            url={ truncateString(network.url, 19) }
             key={ network.name }
             dropDownContent={ this._generateDropDownContent(index, network.name) }
           />
