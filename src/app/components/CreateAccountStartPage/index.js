@@ -8,7 +8,7 @@ import style from '../../components/StartPage/StartPage.css'
 
 const CreateAccountStartPage = ({ history }) => {
   return (
-    <section className={ `${style.startPage} ${style.startPageCreateAccount}` }>
+    <section className={ style.startPage + ' ' + style.startPageCreateAccount }>
       <button className={ style.startPageButton } onClick={ () => history.push('/createWallet') }>
         <img src={ plusSVG } alt='plus' className={ style.startPageIcon } />
         Create New Wallet

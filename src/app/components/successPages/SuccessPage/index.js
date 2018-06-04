@@ -6,7 +6,7 @@ import checkSVG from '../../../../img/checkGreen.svg'
 import style from './SuccessPage.css'
 
 const SuccessPage = ({ title, children, classNames }) => (
-  <section className={ `${style.successPage} ${classNames}` }>
+  <section className={ style.successPage + ' ' + classNames }>
     <div className={ style.successPageIconContainer }>
       <img src={ checkSVG } alt='checkmark' className={ style.successPageIconImage } />
     </div>

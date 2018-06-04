@@ -24,13 +24,13 @@ const SendConfirmCard = ({ assetType, amount, address, succesClickHandler, rejec
     </div>
     <section className={ style.confirmSendButtons }>
       <button
-        className={ `${style.confirmSendCardRejectButton} ${style.confirmSendButton}` }
+        className={ style.confirmSendCardRejectButton + ' ' + style.confirmSendButton }
         onClick={ rejectClickHandler }
       >
         Reject
       </button>
       <button
-        className={ `${style.confirmSendCardAcceptButton} ${style.confirmSendButton}` }
+        className={ style.confirmSendCardAcceptButton + ' ' + style.confirmSendButton }
         onClick={ succesClickHandler }
       >
         Accept

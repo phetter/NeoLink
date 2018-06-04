@@ -6,7 +6,7 @@ import exclamationSVG from '../../../img/exclamationGrey.svg'
 import style from './FlashMessage.css'
 
 const FlashMessage = ({ flashMessage, classNames }) => (
-  <h5 className={ `${style.flashMessage} ${classNames}` }>
+  <h5 className={ style.flashMessage + ' ' + classNames }>
     <img src={ exclamationSVG } alt='exclamation mark' className={ style.flashMessageImage } />
     {flashMessage}
   </h5>
