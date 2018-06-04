@@ -29,8 +29,8 @@
   font-weight: bold;
 }
 
-.confirmDeleteCard svg {
-  font-size: 1.8rem;
+.confirmDeleteBoxImage {
+  width: 15px;
   color: #ff6f6f;
 }
 

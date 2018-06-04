@@ -44,6 +44,22 @@
   cursor: pointer;
   color: #585858;
   font-size: 1.1rem;
+  transition:all 0.2s ease;
+}
+
+.accountDropDownButton:link,
+.accountDropDownButton:visited {
+  color: #585858;
+}
+
+.accountDropDownButton:hover {
+  opacity: 0.5;
+}
+
+.accountDropDownButton:active {
+  opacity: 1;
+  color: #585858;
+  font-size: 0.8rem;
 }
 
 .accountInfoDropDown {
@@ -56,3 +72,7 @@
   padding: 5px 0;
 }
 
+.accountInfoDropdownButtonImage {
+  width: 7px;
+  pointer-events: none;
+}

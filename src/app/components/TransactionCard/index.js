@@ -3,10 +3,16 @@ import PropTypes from 'prop-types'
 
 import style from './TransactionCard.css'
 
+import tintSVG from '../../../img/tint.svg'
 import neoPNG from '../../../img/icon-34.png'
 
 const TransactionCard = ({ transactionId, neoSent, amounts }) => {
-  const icon = neoSent === true ? <img src={ neoPNG } alt='neo' /> : <i className='fas fa-tint' />
+  const icon =
+    neoSent === true ? (
+      <img src={ neoPNG } alt='neo' />
+    ) : (
+      <img src={ tintSVG } alt='drop' className={ style.transactionCardGasImage } />
+    )
   const amount = neoSent === true ? amounts.neo : amounts.gas
   const amountText = neoSent === true ? 'NEO' : 'GAS'
 
