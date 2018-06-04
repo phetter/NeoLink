@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Neon, { api } from '@cityofzion/neon-js'
+import Neon, { api, u, rpc } from '@cityofzion/neon-js'
 
 import { Button } from 'rmwc/Button'
 import { TextField } from 'rmwc/TextField'
@@ -10,6 +10,7 @@ import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
 
 import tempStyle from '../App/App.css'
+import styles from './testInvoke.css'
 
 @connect(state => ({
   selectedNetworkId: state.config.selectedNetworkId,
@@ -20,9 +21,8 @@ export default class TestInvoke extends Component {
     errorMsg: '',
     loading: false,
     scriptHash: '',
-    arg1: '',
-    arg2: '',
     operation: '',
+    args: [''],
   }
 
   resetState = () => {
@@ -30,8 +30,7 @@ export default class TestInvoke extends Component {
       errorMsg: '',
       loading: false,
       scriptHash: '',
-      arg1: '',
-      arg2: '',
+      args: [''],
       operation: '',
     })
   }
@@ -43,16 +42,34 @@ export default class TestInvoke extends Component {
     })
   }
 
-  handleSubmit = event => {
-    event.preventDefault()
+  _handleArgChange = (id, e) => {
+    const myArgs = this.state.args
+    myArgs[id] = e.target.value
+
+    this.setState({ args: myArgs })
+  }
+
+  _handleAddArgument = e => {
+    e.preventDefault()
+    this.setState({ args: this.state.args.concat(['']) })
+  }
+
+  _handleRemoveArg = (id, e) => {
+    e.preventDefault()
+    this.setState({ args: this.state.args.filter((s, idx) => id !== idx) })
+  }
+
+  _handleSubmit = e => {
+    e.preventDefault()
     const { selectedNetworkId, networks } = this.props
+    const { scriptHash, operation, args } = this.state
     this.setState({
       loading: true,
       errorMsg: '',
       result: '',
     })
 
-    if (!this.state.scriptHash || !this.state.operation) {
+    if (!scriptHash || !operation) {
       this.setState({
         loading: false,
         errorMsg: 'Error! Script hash and operation are both required!',
@@ -61,34 +78,36 @@ export default class TestInvoke extends Component {
       return
     }
 
-    const txArgs = []
-    if (this.state.arg1) {
-      txArgs.push(this.state.arg1)
+    if (!u.isHex(scriptHash) || scriptHash.length !== 40) {
+      this.setState({
+        loading: false,
+        errorMsg: 'Error! No valid scripthash was given!',
+      })
+
+      return
     }
 
-    if (this.state.arg2) {
-      txArgs.push(this.state.arg2)
+    const parsedArgs = args.map(arg => u.str2hexstring(arg))
+
+    const props = {
+      scriptHash: scriptHash,
+      operation: operation,
+      args: parsedArgs,
     }
 
-    const args = []
-    txArgs.forEach(arg => {
-      if (arg !== '') args.push({ type: 7, value: arg })
-    })
-
-    const query = Neon.create.query({
-      method: 'invokefunction',
-      params: [this.state.scriptHash, this.state.operation, args],
-    })
+    const script = Neon.create.script(props)
 
     api[networks[selectedNetworkId].apiType]
       .getRPCEndpoint(networks[selectedNetworkId].url)
       .then(endpoint => {
-        query.execute(endpoint).then(response => {
-          this.setState({
-            loading: false,
-            result: response.result,
+        rpc.Query.invokeScript(script)
+          .execute(endpoint)
+          .then(response => {
+            this.setState({
+              loading: false,
+              result: response.result,
+            })
           })
-        })
       })
       .catch(e => {
         this.setState({
@@ -101,39 +120,57 @@ export default class TestInvoke extends Component {
   render() {
     const { result, loading, errorMsg } = this.state
     return (
-      <div>
-        <form onSubmit={ this.handleSubmit } className={ tempStyle.tempFormStyle }>
-          <TextField
-            type='text'
-            placeholder='Script Hash'
-            value={ this.state.scriptHash }
-            id='scriptHash'
-            onChange={ this._handleTextFieldChange }
-          />
-          <TextField
-            type='text'
-            placeholder='Operation'
-            value={ this.state.operation }
-            id='operation'
-            onChange={ this._handleTextFieldChange }
-          />
-          <TextField
-            type='text'
-            placeholder='Argument 1'
-            value={ this.state.arg1 }
-            id='arg1'
-            onChange={ this._handleTextFieldChange }
-          />
-          <TextField
-            type='text'
-            placeholder='Argument 2'
-            value={ this.state.arg2 }
-            id='arg2'
-            onChange={ this._handleTextFieldChange }
-          />
-          <Button raised ripple>
-            Invoke
-          </Button>
+      <React.Fragment>
+        <form>
+          <div className={ tempStyle.tempFormStyle }>
+            <TextField
+              type='text'
+              placeholder='Script Hash'
+              value={ this.state.scriptHash }
+              id='scriptHash'
+              onChange={ this._handleTextFieldChange }
+            />
+            <TextField
+              type='text'
+              placeholder='Operation'
+              value={ this.state.operation }
+              id='operation'
+              onChange={ this._handleTextFieldChange }
+            />
+          </div>
+          <div className={ styles.argsWrapper }>
+
+            {this.state.args.map((arg, idx) => (
+              <React.Fragment>
+                <TextField
+                  style={ { flexGrow: 1, order: 1 } }
+                  type='text'
+                  key={ idx + 1 }
+                  placeholder={ `Argument #${idx + 1}` }
+                  value={ arg }
+                  id={ `Argument #${idx + 1} name` }
+                  onChange={ (event) => this._handleArgChange(idx, event) }
+                />
+                <Button
+                  key={ `btn-${idx + 1}` }
+                  raised
+                  ripple
+                  style={ { flexGrow: 0, order: 0 } }
+                  onClick={ (event) => this._handleRemoveArg(idx, event) }>
+                  -
+                </Button>
+              </React.Fragment>
+            ))}
+            <Button className={ styles.btn } style={ { marginRight: 2 } } raised ripple onClick={ this._handleAddArgument }>Add
+              Argument</Button>
+
+            <Button raised ripple className={ styles.btn } style={ { marginLeft: 2 } }
+              onClick={ this._handleSubmit }
+            >
+              Invoke
+            </Button>
+          </div>
+
         </form>
         {result && (
           <div>
@@ -143,7 +180,7 @@ export default class TestInvoke extends Component {
         )}
         {loading && <div>Loading...</div>}
         {errorMsg !== '' && <div>ERROR: {errorMsg}</div>}
-      </div>
+      </React.Fragment>
     )
   }
 }

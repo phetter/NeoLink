@@ -10,6 +10,9 @@ import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 
 import { truncateString } from '../../utils/helpers'
 
+import trashSVG from '../../../img/trash.svg'
+import editSVG from '../../../img/edit.svg'
+
 import style from './CustomNetworkList.css'
 
 class CustomNetworkList extends Component {
@@ -39,10 +42,10 @@ class CustomNetworkList extends Component {
             this.setCurrentItem(index, name)
           } }
         >
-          <i className='fas fa-trash' /> Delete
+          <img src={ trashSVG } alt='trashcan' className={ style.customNetworkDropDownButtonImage } /> Delete
         </button>
         <Link to={ `/editCustomNetwork/${name}` } className={ style.customNetworkLink }>
-          <i className='fas fa-edit' />Edit
+          <img src={ editSVG } alt='pen on paper' className={ style.customNetworkDropDownButtonImage } />Edit
         </Link>
       </li>
     </ul>

@@ -16,6 +16,18 @@
   justify-content: center;
   height: 100%;
   cursor: pointer;
+  transition:all 0.2s ease;
+}
+
+.networkNavigationButton:hover {
+  opacity: 0.6;
+}
+
+.networkNavigationButton:active {
+  opacity: 1;
+  -webkit-transform: scale(0.8);
+  -ms-transform: scale(0.8);
+  transform: scale(0.8);
 }
 
 .networkNavigationButtonContent {
