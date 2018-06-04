@@ -40,7 +40,7 @@ class MainNav extends Component {
     const navigationMarkup = this.generateNavigationMarkup()
 
     return (
-      <nav className={ style.mainNav }>
+      <nav>
         <DropDown
           buttonContent={ <img src={ barsSVG } alt='three horizontal bars' className={ style.mainNavButtonImage } /> }
           buttonStyles={ style.mainNavButton }
