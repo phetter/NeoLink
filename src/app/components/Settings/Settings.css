@@ -23,3 +23,9 @@
   flex-wrap: wrap;
   margin-top: 30px;
 }
+
+.settingsIcon {
+  width: 17px;
+  margin-bottom: 6px;
+  pointer-events: none;
+}

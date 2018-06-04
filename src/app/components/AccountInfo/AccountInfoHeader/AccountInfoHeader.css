@@ -56,3 +56,7 @@
   padding: 5px 0;
 }
 
+.accountInfoDropdownButtonImage {
+  width: 7px;
+  pointer-events: none;
+}

@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Root from '../app/Root'
-import '../../vendor/fontawesome-all.min'
 
 chrome.storage.local.get('stateVersion', stateVersion => {
   chrome.storage.local.get('state', obj => {
@@ -27,7 +26,7 @@ chrome.storage.local.get('stateVersion', stateVersion => {
 // Moving defaults from neondb to neoscan.
 function upgradeToStateVersion1(initialState) {
   if (initialState && initialState.config && initialState.config.networks) {
-    Object.keys(initialState.config.networks).forEach(function (key) {
+    Object.keys(initialState.config.networks).forEach(function(key) {
       if (initialState.config.networks[key].apiType === 'neonDB') {
         initialState.config.networks[key].apiType = 'neondb'
       }
