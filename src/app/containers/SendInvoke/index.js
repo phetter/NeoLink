@@ -128,7 +128,7 @@ class SendInvoke extends Component {
             onChange={ this._handleTextFieldChange }
           />
 
-          <div className={ style.argsWrapper } style={{ marginBottom: "-20px" }}>
+          <div className={ style.argsWrapper } style={ { marginBottom: '-20px' } }>
             {this.state.args.map((arg, idx) => (
               <React.Fragment>
                 <TextField
@@ -152,20 +152,20 @@ class SendInvoke extends Component {
             ))}
           </div>
 
-          {/*<TextField*/}
-            {/*type='text'*/}
-            {/*placeholder='Argument 1'*/}
-            {/*value={ this.state.arg1 }*/}
-            {/*id='arg1'*/}
-            {/*onChange={ this._handleTextFieldChange }*/}
-          {/*/>*/}
-          {/*<TextField*/}
-            {/*type='text'*/}
-            {/*placeholder='Argument 2'*/}
-            {/*value={ this.state.arg2 }*/}
-            {/*id='arg2'*/}
-            {/*onChange={ this._handleTextFieldChange }*/}
-          {/*/>*/}
+          {/* <TextField */}
+          {/* type='text' */}
+          {/* placeholder='Argument 1' */}
+          {/* value={ this.state.arg1 } */}
+          {/* id='arg1' */}
+          {/* onChange={ this._handleTextFieldChange } */}
+          {/* /> */}
+          {/* <TextField */}
+          {/* type='text' */}
+          {/* placeholder='Argument 2' */}
+          {/* value={ this.state.arg2 } */}
+          {/* id='arg2' */}
+          {/* onChange={ this._handleTextFieldChange } */}
+          {/* /> */}
           <TextField
             type='text'
             placeholder='Amount'
@@ -193,13 +193,13 @@ class SendInvoke extends Component {
               },
             ] }
           />
-          <div className={ style.argsWrapper } style={{ marginTop: "0px"}}>
+          <div className={ style.argsWrapper } style={ { marginTop: '0px' } }>
 
-          <Button className={ style.btn } style={ { marginLeft: 2, order: 3 } } raised ripple onClick={ this._handleAddArgument }>Add
+            <Button className={ style.btn } style={ { marginLeft: 2, order: 3 } } raised ripple onClick={ this._handleAddArgument }>Add
             Argument</Button>
-          <Button className={ style.btn } style={ { marginRight: 2 } } raised ripple disabled={ this.state.loading }>
+            <Button className={ style.btn } style={ { marginRight: 2 } } raised ripple disabled={ this.state.loading }>
             Invoke
-          </Button>
+            </Button>
           </div>
         </form>
 
