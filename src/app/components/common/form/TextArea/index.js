@@ -12,7 +12,7 @@ const TextArea = ({ classNames, value, disabled, label, labelClassNames = '', ch
   if (disabled) {
     textArea = (
       <textarea
-        className={ `${style.textArea} ${textFieldLabelStyles} ${classNames} ${style.textAreaDisabled}` }
+        className={ style.textArea + ' ' + textFieldLabelStyles + ' ' + classNames + ' ' + style.textAreaDisabled }
         disabled
         value={ value }
       />
@@ -20,7 +20,7 @@ const TextArea = ({ classNames, value, disabled, label, labelClassNames = '', ch
   } else {
     textArea = (
       <textarea
-        className={ `${style.textArea} ${textFieldLabelStyles} ${classNames} ${style.textAreaDisabled}` }
+        className={ style.textArea + ' ' + textFieldLabelStyles + ' ' + classNames + ' ' + style.textAreaDisabled }
         value={ value }
       />
     )
@@ -28,7 +28,7 @@ const TextArea = ({ classNames, value, disabled, label, labelClassNames = '', ch
 
   if (label) {
     return (
-      <Label classNames={ `${style.textAreaLabel} ${labelClassNames}` } labelText={ label }>
+      <Label classNames={ style.textAreaLabel + ' ' + labelClassNames } labelText={ label }>
         {textArea}
         {children}
       </Label>

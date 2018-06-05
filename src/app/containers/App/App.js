@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import 'what-input'
+
 import Home from '../Home'
 import Send from '../Send'
 import TestInvoke from '../TestInvoke'

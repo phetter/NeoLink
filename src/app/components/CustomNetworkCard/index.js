@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 
 import DropDown from '../DropDown'
 
+import ellpisisSVG from '../../../img/ellipsis-v.svg'
+
 import style from './CustomNetworkCard.css'
 
 const CustomNetworkCard = ({ name, url, dropDownContent }) => (
@@ -15,7 +17,7 @@ const CustomNetworkCard = ({ name, url, dropDownContent }) => (
       <h3 className={ style.customNetworkUrl }>{url}</h3>
     </div>
     <DropDown
-      buttonContent={ <i className='fas fa-ellipsis-v' /> }
+      buttonContent={ <img src={ ellpisisSVG } alt='three vertical dots' className={ style.customNetworkCardDropdownImage } /> }
       buttonStyles={ style.customNetworkDropdownButton }
       dropDownContent={ dropDownContent }
       classNames={ style.customNetworkDropDown }

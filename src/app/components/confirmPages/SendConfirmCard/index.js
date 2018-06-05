@@ -1,19 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import paperPlaneSVG from '../../../../img/paper-planeThin.svg'
+
 import style from './SendConfirmCard.css'
 
 const SendConfirmCard = ({ assetType, amount, address, succesClickHandler, rejectClickHandler }) => (
   <section className={ style.confirmSendCard }>
     <div className={ style.confirmSendCardContainer }>
-      <i className={ `${style.confirmSendCardMainIcon} far fa-paper-plane` } />
+      <img src={ paperPlaneSVG } alt='paper plane' className={ style.confirmSendCardMainIcon } />
       <h2 className={ style.confirmSendHeader }>You are about to send</h2>
       <h3>
         {amount} {assetType}
       </h3>
       <h4 className={ style.confirmSendCardDetailsHeading }>Details</h4>
       <section className={ style.confirmSendCardDetails }>
-        <i className={ `${style.confirmSendSecondaryIcon} far fa-paper-plane` } />
+        <img src={ paperPlaneSVG } alt='paper plane' className={ style.confirmSendSecondaryIcon } />
         <p className={ style.confirmSendDetailsText }>
           You are about to send {amount} {assetType} to the following address
         </p>
@@ -22,13 +24,13 @@ const SendConfirmCard = ({ assetType, amount, address, succesClickHandler, rejec
     </div>
     <section className={ style.confirmSendButtons }>
       <button
-        className={ `${style.confirmSendCardRejectButton} ${style.confirmSendButton}` }
+        className={ style.confirmSendCardRejectButton + ' ' + style.confirmSendButton }
         onClick={ rejectClickHandler }
       >
         Reject
       </button>
       <button
-        className={ `${style.confirmSendCardAcceptButton} ${style.confirmSendButton}` }
+        className={ style.confirmSendCardAcceptButton + ' ' + style.confirmSendButton }
         onClick={ succesClickHandler }
       >
         Accept

@@ -8,6 +8,11 @@ import Overlay from '../../components/Overlay'
 import ConfirmDelete from '../../components/ConfirmDelete'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 
+import { truncateString } from '../../utils/helpers'
+
+import trashSVG from '../../../img/trash.svg'
+import editSVG from '../../../img/edit.svg'
+
 import style from './CustomNetworkList.css'
 
 class CustomNetworkList extends Component {
@@ -27,8 +32,6 @@ class CustomNetworkList extends Component {
     deleteCustomNetwork(index)
   }
 
-  _truncateUrl = url => (url.length >= 19 ? `${url.slice(0, 19)}...` : url)
-
   _generateDropDownContent = (index, name) => (
     <ul className={ style.customNetworkDropdown }>
       <li>
@@ -39,10 +42,10 @@ class CustomNetworkList extends Component {
             this.setCurrentItem(index, name)
           } }
         >
-          <i className='fas fa-trash' /> Delete
+          <img src={ trashSVG } alt='trashcan' className={ style.customNetworkDropDownButtonImage } /> Delete
         </button>
         <Link to={ `/editCustomNetwork/${name}` } className={ style.customNetworkLink }>
-          <i className='fas fa-edit' />Edit
+          <img src={ editSVG } alt='pen on paper' className={ style.customNetworkDropDownButtonImage } />Edit
         </Link>
       </li>
     </ul>
@@ -69,7 +72,7 @@ class CustomNetworkList extends Component {
         networkRows.push(
           <CustomNetworkCard
             name={ network.name }
-            url={ this._truncateUrl(network.url) }
+            url={ truncateString(network.url, 19) }
             key={ network.name }
             dropDownContent={ this._generateDropDownContent(index, network.name) }
           />

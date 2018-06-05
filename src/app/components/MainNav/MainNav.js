@@ -5,6 +5,8 @@ import { withRouter } from 'react-router'
 import navData from '../../../data/mainNavigationData'
 import DropDown from '../../components/DropDown'
 
+import barsSVG from '../../../img/bars.svg'
+
 import style from './MainNav.css'
 
 class MainNav extends Component {
@@ -27,19 +29,20 @@ class MainNav extends Component {
   }
 
   handleLogOut = e => {
-    const { logOut } = this.props
+    const { logOut, history } = this.props
 
     e.preventDefault()
     logOut()
+    history.push('/')
   }
 
   render() {
     const navigationMarkup = this.generateNavigationMarkup()
 
     return (
-      <nav className={ style.mainNav }>
+      <nav>
         <DropDown
-          buttonContent={ <i className='fas fa-bars' /> }
+          buttonContent={ <img src={ barsSVG } alt='three horizontal bars' className={ style.mainNavButtonImage } /> }
           buttonStyles={ style.mainNavButton }
           dropDownContent={ navigationMarkup }
           dropDownContentClassNames={ style.mainNavDropDownContent }

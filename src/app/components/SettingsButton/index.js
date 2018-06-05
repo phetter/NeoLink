@@ -5,7 +5,7 @@ import style from './SettingsButton.css'
 
 const SettingsButton = ({ icon, text, onClickHandler }) => (
   <button className={ style.settingsButton } onClick={ onClickHandler }>
-    <i className={ icon } />
+    {icon}
     {text}
   </button>
 )

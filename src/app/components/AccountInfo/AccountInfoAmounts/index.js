@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 
 import neonPNG from '../../../../img/icon-34.png'
 
+import syncSolidSVG from '../../../../img/syncSolid.svg'
+import tintSVG from '../../../../img/tint.svg'
+
 import style from './AccountInfoAmounts.css'
 
 const AccountInfoAmounts = ({ neo, getBalance, gas }) => {
@@ -13,10 +16,10 @@ const AccountInfoAmounts = ({ neo, getBalance, gas }) => {
         <p className={ style.accountInfoAmountParagraph }>{neo} NEO</p>
       </div>
       <button className={ style.accountInfoRefreshButton } onClick={ getBalance }>
-        <i className='fas fa-sync' />
+        <img src={ syncSolidSVG } alt='refresh balance' className={ style.accountInfoRefreshButtonImage } />
       </button>
       <div className={ style.accountInfoGasAmount }>
-        <i className='fas fa-tint' />
+        <img src={ tintSVG } alt='drop' className={ style.accountInfoGasAmountImage } />
         <p className={ style.accountInfoAmountParagraph }>{gas > 0 ? gas : 0} GAS</p>
       </div>
     </div>
