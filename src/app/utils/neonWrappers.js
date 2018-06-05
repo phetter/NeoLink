@@ -7,14 +7,6 @@ export function callInvoke (networkUrl, account, input) {
       reject(new Error('Invalid asset type specified'))
     }
 
-    const txArgs = [input.arg1, input.arg2]
-    const args = []
-    txArgs.forEach((arg) => {
-      if (arg) {
-        args.push(arg)
-      }
-    })
-
     const myAccount = Neon.create.account(account.wif)
 
     const config = {
@@ -26,7 +18,7 @@ export function callInvoke (networkUrl, account, input) {
         value: toNumber(input.amount),
         scriptHash: input.scriptHash,
       }],
-      script: { scriptHash: input.scriptHash, operation: input.operation, args: args },
+      script: { scriptHash: input.scriptHash, operation: input.operation, args: input.args },
       gas: 0,
     }
 
