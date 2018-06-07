@@ -22,6 +22,7 @@ import Settings from '../../components/Settings'
 import AddCustomNetwork from '../../containers/AddCustomNetwork'
 import CustomNetworkList from '../../containers/CustomNetworkList'
 import EditCustomNetwork from '../../containers/EditCustomNetwork'
+import SwitchAccount from '../../containers/SwitchAccount'
 
 import style from './App.css'
 
@@ -52,6 +53,7 @@ export default class App extends Component {
             <Route path='/addCustomNetwork' component={ AddCustomNetwork } />
             <Route path='/editCustomNetwork/:id' component={ EditCustomNetwork } />
             <Route path='/manageNetworks' component={ CustomNetworkList } />
+            <Route path='/switchAccounts' component={ SwitchAccount } />
             <Route path='/' component={ StartPage } />
           </ConnectedSwitch>
         </ContentWrapper>

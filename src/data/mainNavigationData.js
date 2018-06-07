@@ -31,7 +31,7 @@ export default [
     title: 'Switch Accounts',
     img: swapSVG,
     alt: 'Arrows in circles',
-    path: '/config',
+    path: '/switchAccounts',
     id: 4,
   },
   {
