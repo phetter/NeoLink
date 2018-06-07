@@ -6,3 +6,7 @@
     text-align: center;
     margin-top: 0;
 }
+
+.accountSelected {
+    border-top: 1px solid green;
+}
