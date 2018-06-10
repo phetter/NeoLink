@@ -10,7 +10,7 @@ const SwitchAccountCard = ({ address, neo, gas, label, classNames }) => {
   return (
     <section className={ style.switchAccountCard + ' ' + classNames }>
       <AccountInfoHeader address={ address } label={ label } showOptions={ false } />
-      <AccountInfoAmounts neo={ neo } gas={ gas } showRefresh={ false } />
+      <AccountInfoAmounts neo={ neo } gas={ gas } showRefresh={ false } classNames={ style.switchAccountAmounts } />
     </section>
   )
 }
