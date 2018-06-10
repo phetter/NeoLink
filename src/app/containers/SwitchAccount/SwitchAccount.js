@@ -20,7 +20,9 @@ class SwitchAccount extends Component {
     const { accounts, networks, selectedNetworkId } = this.props
     const formattedAccounts = []
 
-    Object.keys(accounts).map(account => {
+    const accountsArray = Object.keys(accounts)
+
+    accountsArray.map((account, index) => {
       getBalance(networks, selectedNetworkId, accounts[account].address).then(response => {
         formattedAccounts.push({
           address: accounts[account].address,
@@ -29,10 +31,11 @@ class SwitchAccount extends Component {
           neo: response.neo,
           gas: response.gas,
         })
+        if (index === accountsArray.length - 1) {
+          this.setState({ accounts: formattedAccounts })
+        }
       })
     })
-
-    setTimeout(() => this.setState({ accounts: formattedAccounts }), 0)
   }
 
   generateAccountCards = () => {
@@ -54,12 +57,10 @@ class SwitchAccount extends Component {
   }
 
   render() {
-    const { accounts } = this.state
-    console.log(accounts)
     return (
       <section className={ style.switchAccountContainer }>
         <h1 className={ style.switchAccountHeading }>Switch Account</h1>
-        {accounts && this.generateAccountCards()}
+        {this.generateAccountCards()}
       </section>
     )
   }
