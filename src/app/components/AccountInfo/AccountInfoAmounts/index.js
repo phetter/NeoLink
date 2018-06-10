@@ -8,7 +8,7 @@ import tintSVG from '../../../../img/tint.svg'
 
 import style from './AccountInfoAmounts.css'
 
-const AccountInfoAmounts = ({ neo, getBalance, gas, showRefresh = false, classNames }) => {
+const AccountInfoAmounts = ({ neo, getBalance, gas, showRefresh = true, classNames }) => {
   return (
     <div className={ style.accountInfoAmounts + ' ' + classNames }>
       <div className={ style.accountInfoNeoAmount }>
