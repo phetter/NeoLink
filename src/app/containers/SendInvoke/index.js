@@ -40,7 +40,7 @@ class SendInvoke extends Component {
     txid: '',
     args: [''],
     assetType: 'GAS',
-    assetAmount: '0.00025'
+    assetAmount: '0.00025',
   }
 
   _handleTextFieldChange = e => {
@@ -77,7 +77,7 @@ class SendInvoke extends Component {
       txid: '',
     })
 
-    console.log(this.state);
+    console.log(this.state)
     // return;
 
     if (!this.state.scriptHash || !this.state.operation) {
@@ -91,7 +91,7 @@ class SendInvoke extends Component {
 
     callInvoke(networks[selectedNetworkId].url, account, this.state)
       .then(c => {
-        console.log(c);
+        console.log(c)
         if (c.response.result === true) {
           this.setState({
             loading: false,
