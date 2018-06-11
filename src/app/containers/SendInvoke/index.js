@@ -39,6 +39,8 @@ class SendInvoke extends Component {
     errorMsg: '',
     txid: '',
     args: [''],
+    assetType: 'GAS',
+    assetAmount: '0.00025'
   }
 
   _handleTextFieldChange = e => {
@@ -75,10 +77,13 @@ class SendInvoke extends Component {
       txid: '',
     })
 
-    if (!this.state.scriptHash || !this.state.operation || !this.state.amount) {
+    console.log(this.state);
+    // return;
+
+    if (!this.state.scriptHash || !this.state.operation) {
       this.setState({
         loading: false,
-        errorMsg: 'Error! Script hash, operation and amount are all required!',
+        errorMsg: 'Error! Script hash and operation are required!',
       })
 
       return
@@ -86,6 +91,7 @@ class SendInvoke extends Component {
 
     callInvoke(networks[selectedNetworkId].url, account, this.state)
       .then(c => {
+        console.log(c);
         if (c.response.result === true) {
           this.setState({
             loading: false,
@@ -134,7 +140,7 @@ class SendInvoke extends Component {
                 <TextField
                   style={ { flexGrow: 1, order: 1 } }
                   type='text'
-                  key={ idx + 1 }
+                  key={ `input-${idx + 1}` }
                   placeholder={ `Argument #${idx + 1}` }
                   value={ arg }
                   id={ `Argument #${idx + 1} name` }
@@ -169,7 +175,7 @@ class SendInvoke extends Component {
           <TextField
             type='text'
             placeholder='Amount'
-            value={ this.state.amount }
+            value={ this.state.assetAmount }
             id='amount'
             onChange={ this._handleTextFieldChange }
           />
