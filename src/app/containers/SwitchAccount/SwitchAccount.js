@@ -48,8 +48,14 @@ class SwitchAccount extends Component {
   generateAccountCards = () => {
     const { account } = this.props
     const { accounts } = this.state
-    return accounts.map(({ label, neo, gas, address }) => {
-      const selectedStyles = account.address === address ? style.accountSelected : null
+    let selectedAccountIndex
+
+    const accountCards = accounts.map(({ label, neo, gas, address }, index) => {
+      let selectedStyles = null
+      if (account.address === address) {
+        selectedStyles = style.accountSelected
+        selectedAccountIndex = index
+      }
       return (
         <SwitchAccountCard
           label={ label }
@@ -61,6 +67,11 @@ class SwitchAccount extends Component {
         />
       )
     })
+
+    const selectedAccount = accountCards.splice(selectedAccountIndex, 1)
+    accountCards.unshift(selectedAccount)
+
+    return accountCards
   }
 
   render() {
