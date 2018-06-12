@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
+
+import ErrorCard from '../../components/errors/ErrorCard'
 import Box from '../../components/common/Box'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 
@@ -67,8 +69,7 @@ export default class ExportWallet extends Component {
               <PrimaryButton buttonText='Export wallet' />
             </div>
           </form>
-
-          <div className='content'>{this.state.errorMsg !== '' && <div>ERROR: {errorMsg}</div>}</div>
+          {errorMsg && <ErrorCard message={ errorMsg } onClickHandler={ () => this.setState({ errorMsg: '' }) } />}
         </Box>
       </section>
     )
