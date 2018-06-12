@@ -13,10 +13,17 @@ class SwitchAccount extends Component {
   }
 
   componentDidMount() {
-    this.setInitialState()
+    this.setAccountState()
   }
 
-  setInitialState = () => {
+  componentWillReceiveProps(nextProps) {
+    const { selectedNetworkId } = this.props
+    if (selectedNetworkId !== nextProps.selectedNetworkId) {
+      this.setAccountState()
+    }
+  }
+
+  setAccountState = () => {
     const { accounts, networks, selectedNetworkId } = this.props
     const formattedAccounts = []
 
