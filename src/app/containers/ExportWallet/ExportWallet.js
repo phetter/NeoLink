@@ -59,7 +59,7 @@ export default class ExportWallet extends Component {
         <Box>
           <h1>Export Wallet</h1>
           <p className={ style.exportWalletParagraph }>
-            Export your wallets private keys, to a JSON format that you can import into other wallets. Never give this
+            Export your wallets encrypted keys, to a JSON format that you can import into other wallets. Never give this
             file to anyone.
           </p>
           <form onSubmit={ this.exportWallet }>
