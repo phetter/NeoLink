@@ -28,7 +28,6 @@ class SwitchAccount extends Component {
     const formattedAccounts = []
 
     const accountsArray = Object.keys(accounts)
-
     accountsArray.map((account, index) => {
       getBalance(networks, selectedNetworkId, accounts[account].address).then(response => {
         formattedAccounts.push({
