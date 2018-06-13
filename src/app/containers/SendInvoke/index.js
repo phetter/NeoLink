@@ -21,18 +21,7 @@ import withLoginCheck from '../../components/Login/withLoginCheck'
   selectedNetworkId: state.config.selectedNetworkId,
   account: state.account,
 }))
-
-/*
-  Test call ...
-  {
-    scriptHash: 'b3a14d99a3fb6646c78bf2f4e2f25a7964d2956a',
-    operation: 'putvalue',
-    arg1: 'test',
-    arg2: '1',
-    assetType: 'GAS',
-    assetAmount: '.00025'
-  }
-*/
+  
 class SendInvoke extends Component {
   state = {
     loading: false,
@@ -77,9 +66,6 @@ class SendInvoke extends Component {
       txid: '',
     })
 
-    console.log(this.state)
-    // return;
-
     if (!this.state.scriptHash || !this.state.operation) {
       this.setState({
         loading: false,
@@ -91,7 +77,6 @@ class SendInvoke extends Component {
 
     callInvoke(networks[selectedNetworkId].url, account, this.state)
       .then(c => {
-        console.log(c)
         if (c.response.result === true) {
           this.setState({
             loading: false,
@@ -105,7 +90,6 @@ class SendInvoke extends Component {
         }
       })
       .catch(e => {
-        console.log('e', e)
         this.setState({
           loading: false,
           errorMsg: 'Invoke failed',
@@ -157,21 +141,6 @@ class SendInvoke extends Component {
               </React.Fragment>
             ))}
           </div>
-
-          {/* <TextField */}
-          {/* type='text' */}
-          {/* placeholder='Argument 1' */}
-          {/* value={ this.state.arg1 } */}
-          {/* id='arg1' */}
-          {/* onChange={ this._handleTextFieldChange } */}
-          {/* /> */}
-          {/* <TextField */}
-          {/* type='text' */}
-          {/* placeholder='Argument 2' */}
-          {/* value={ this.state.arg2 } */}
-          {/* id='arg2' */}
-          {/* onChange={ this._handleTextFieldChange } */}
-          {/* /> */}
           <TextField
             type='text'
             placeholder='Amount'
