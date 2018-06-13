@@ -1,4 +1,4 @@
-import Neon, { u, sc, wallet } from '@cityofzion/neon-js'
+import Neon, { u, wallet } from '@cityofzion/neon-js'
 import { toNumber } from './math'
 
 export function callInvoke (networkUrl, account, input) {
@@ -10,9 +10,9 @@ export function callInvoke (networkUrl, account, input) {
     const myAccount = Neon.create.account(account.wif)
 
     const parsedArgs = input.args.map(arg => {
-      if(wallet.isAddress(arg)) return u.reverseHex(wallet.getScriptHashFromAddress(arg));
-      if(typeof arg === 'string') return u.str2hexstring(arg);
-      if(typeof arg === 'number') return u.int2hex(arg);
+      if (wallet.isAddress(arg)) return u.reverseHex(wallet.getScriptHashFromAddress(arg))
+      if (typeof arg === 'string') return u.str2hexstring(arg)
+      if (typeof arg === 'number') return u.int2hex(arg)
     })
 
     const config = {
