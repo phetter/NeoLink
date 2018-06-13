@@ -1,4 +1,4 @@
-import Neon, { u } from '@cityofzion/neon-js'
+import Neon, { u, sc, wallet } from '@cityofzion/neon-js'
 import { toNumber } from './math'
 
 export function callInvoke (networkUrl, account, input) {
@@ -9,26 +9,18 @@ export function callInvoke (networkUrl, account, input) {
 
     const myAccount = Neon.create.account(account.wif)
 
-    // const parsedArgs = input.args.map(arg => u.str2hexstring(arg))
-
-    // const finalArgs = [
-    //   sc.ContractParam.string("my_id"),
-    //   sc.ContractParam.byteArray("AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y", "address"),
-    // ];
-
-    const finalArgs = [
-      u.str2hexstring('my_id'),
-      u.str2hexstring('AK2nJJpJr6o664CWJKi1QRXjqeic2zRp8y'),
-    ]
-
-    console.log(finalArgs)
+    const parsedArgs = input.args.map(arg => {
+      if(wallet.isAddress(arg)) return u.reverseHex(wallet.getScriptHashFromAddress(arg));
+      if(typeof arg === 'string') return u.str2hexstring(arg);
+      if(typeof arg === 'number') return u.int2hex(arg);
+    })
 
     const config = {
       net: networkUrl,
       script: Neon.create.script({
         scriptHash: input.scriptHash,
         operation: input.operation,
-        args: finalArgs,
+        args: parsedArgs,
       }),
       address: myAccount.address,
       privateKey: myAccount.privateKey,
@@ -39,8 +31,6 @@ export function callInvoke (networkUrl, account, input) {
       }],
       gas: 0,
     }
-
-    console.log(config)
 
     Neon.doInvoke(config)
       .then(res => resolve(res))
