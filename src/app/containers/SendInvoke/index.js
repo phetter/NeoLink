@@ -21,7 +21,7 @@ import withLoginCheck from '../../components/Login/withLoginCheck'
   selectedNetworkId: state.config.selectedNetworkId,
   account: state.account,
 }))
-  
+
 class SendInvoke extends Component {
   state = {
     loading: false,
