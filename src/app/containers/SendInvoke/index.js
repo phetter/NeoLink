@@ -176,7 +176,7 @@ class SendInvoke extends Component {
             type='text'
             placeholder='Amount'
             value={ this.state.assetAmount }
-            id='amount'
+            id='assetAmount'
             onChange={ this._handleTextFieldChange }
           />
           <Select
