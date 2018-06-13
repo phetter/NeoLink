@@ -66,10 +66,10 @@ class SendInvoke extends Component {
       txid: '',
     })
 
-    if (!this.state.scriptHash || !this.state.operation) {
+    if (!this.state.scriptHash || !this.state.operation || !this.state.amount) {
       this.setState({
         loading: false,
-        errorMsg: 'Error! Script hash and operation are required!',
+        errorMsg: 'Error! Script hash, operation and amount are all required!',
       })
 
       return
