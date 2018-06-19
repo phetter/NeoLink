@@ -2,8 +2,97 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b69fa9f0-fa01-4bd6-a677-d260332dc8d5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/components/SwitchAccountCard/SwitchAccountCard.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/components/SwitchAccountCard/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/containers/ExportWallet/ExportWallet.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/containers/SwitchAccount/SwitchAccount.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/containers/SwitchAccount/SwitchAccount.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/containers/SwitchAccount/index.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/app/containers/TestInvoke/testInvoke.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/arrow-left.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/bars.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/book.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/checkGreen.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/cogs.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/download.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/downloadWhite.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/edit.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/ellipsis-v.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/exclamation-triangle.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/exclamation.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/exclamationGrey.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/eye.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/paper-planeThin.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/plus-circle.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/plus.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/sign-in-alt.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/times.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/tint.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/trash.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/img/upload.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/components/__snapshots__/CustomNetworkList.test.js.snap" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/components/__snapshots__/CustomNetworkList.test.js.snap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/components/__snapshots__/NetworkSwitcher.test.js.snap" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/components/__snapshots__/NetworkSwitcher.test.js.snap" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/AccountInfo/AccountInfoAmounts/AccountInfoAmounts.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/AccountInfo/AccountInfoAmounts/AccountInfoAmounts.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/AccountInfo/AccountInfoAmounts/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/AccountInfo/AccountInfoAmounts/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/AccountInfo/AccountInfoDropDownContent/AccountInfoDropDownContent.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/AccountInfo/AccountInfoDropDownContent/AccountInfoDropDownContent.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/AccountInfo/AccountInfoDropDownContent/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/AccountInfo/AccountInfoDropDownContent/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/AccountInfo/AccountInfoHeader/AccountInfoHeader.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/AccountInfo/AccountInfoHeader/AccountInfoHeader.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/AccountInfo/AccountInfoHeader/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/AccountInfo/AccountInfoHeader/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/ConfirmDelete/ConfirmDelete.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/ConfirmDelete/ConfirmDelete.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/ConfirmDelete/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/ConfirmDelete/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/CreateAccountStartPage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/CreateAccountStartPage/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/CustomNetworkCard/CustomNetworkCard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/CustomNetworkCard/CustomNetworkCard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/CustomNetworkCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/CustomNetworkCard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/DropDown/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/DropDown/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/FileUpload/FileUpload.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/FileUpload/FileUpload.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/FileUpload/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/FileUpload/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/FlashMessage/FlashMessage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/FlashMessage/FlashMessage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/FlashMessage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/FlashMessage/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/ImportWalletInfo/ImportWalletInfo.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/ImportWalletInfo/ImportWalletInfo.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/ImportWalletInfo/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/ImportWalletInfo/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/MainNav/MainNav.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/MainNav/MainNav.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/MainNav/MainNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/MainNav/MainNav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/NetworkSwitcher/NetworkSwitcher.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/NetworkSwitcher/NetworkSwitcher.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/NetworkSwitcher/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/NetworkSwitcher/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Settings/Settings.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Settings/Settings.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/Settings/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/Settings/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/SettingsButton/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/SettingsButton/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/SettingsNavigation/SettingsNavigation.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/SettingsNavigation/SettingsNavigation.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/SettingsNavigation/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/SettingsNavigation/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/StartPage/StartPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/StartPage/StartPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/StartPage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/StartPage/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/ToolTip/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/ToolTip/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/TransactionCard/TransactionCard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/TransactionCard/TransactionCard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/TransactionCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/TransactionCard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/common/Box/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/common/Box/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/common/buttons/Button/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/common/buttons/Button/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/common/buttons/PrimaryButton/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/common/buttons/PrimaryButton/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/common/buttons/SecondaryButton/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/common/buttons/SecondaryButton/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/common/form/InputField/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/common/form/InputField/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/common/form/SelectBox/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/common/form/SelectBox/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/common/form/TextArea/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/common/form/TextArea/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/confirmPages/SendConfirmCard/SendConfirmCard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/confirmPages/SendConfirmCard/SendConfirmCard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/confirmPages/SendConfirmCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/confirmPages/SendConfirmCard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/errors/ErrorCard/ErrorCard.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/errors/ErrorCard/ErrorCard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/errors/ErrorCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/errors/ErrorCard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/successPages/SuccessPage/SuccessPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/successPages/SuccessPage/SuccessPage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/components/successPages/SuccessPage/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/successPages/SuccessPage/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/containers/App/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/containers/App/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/containers/App/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/containers/App/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/containers/ExportWallet/ExportWallet.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/containers/ExportWallet/ExportWallet.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/containers/SendInvoke/SendInvoke.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/containers/SendInvoke/SendInvoke.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/containers/SendInvoke/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/containers/SendInvoke/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/containers/TestInvoke/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/containers/TestInvoke/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/utils/NeonJsHelpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/utils/NeonJsHelpers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/utils/neonWrappers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/utils/neonWrappers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/mainNavigationData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/mainNavigationData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/img/globe.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/fontawesome-all.min.js" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,11 +120,68 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="package.json" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/package.json">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/components/NetworkSwitcher/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="180">
+              <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+              <folding>
+                <element signature="e#0#40#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/components/confirmPages/SendConfirmCard/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="525">
+              <caret line="35" selection-start-line="35" selection-end-line="35" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/app/components/TransactionCard/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="148">
+              <caret line="11" column="56" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NetworkSwitcher.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/components/NetworkSwitcher/NetworkSwitcher.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="13">
+              <caret line="52" column="37" selection-start-line="52" selection-start-column="37" selection-end-line="52" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="neonWrappers.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/utils/neonWrappers.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="50" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
+              <folding>
+                <element signature="e#0#62#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NeonJsHelpers.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/app/utils/NeonJsHelpers.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="664">
+              <caret line="70" column="4" selection-start-line="58" selection-start-column="1" selection-end-line="70" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -44,9 +190,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>edit_custom_network</find>
-      <find>reset</find>
-      <find>eslint</find>
       <find>eslin</find>
       <find>setState</find>
       <find>saveState</find>
@@ -74,12 +217,19 @@
       <find>state</find>
       <find>infoamounts</find>
       <find>networks</find>
+      <find>&lt;&lt;</find>
+      <find>api</find>
+      <find>wallet</find>
     </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src/app/utils</dir>
       <dir>$PROJECT_DIR$/src/app/containers/Send</dir>
       <dir>$PROJECT_DIR$/src/app/components/AccountInfo</dir>
       <dir>$PROJECT_DIR$/src/app/containers</dir>
+      <dir>$PROJECT_DIR$/src/js</dir>
     </dirStrings>
   </component>
   <component name="Git.Settings">
@@ -96,7 +246,6 @@
         <option value="$PROJECT_DIR$/src/app/utils/debugTools.js" />
         <option value="$PROJECT_DIR$/src/app/utils/helpers.js" />
         <option value="$PROJECT_DIR$/src/app/utils/rpc.js" />
-        <option value="$PROJECT_DIR$/src/app/components/confirmPages/SendConfirmCard/index.js" />
         <option value="$PROJECT_DIR$/src/app/utils/api.js" />
         <option value="$PROJECT_DIR$/src/app/utils/NeonJsHelpers.js" />
         <option value="$PROJECT_DIR$/src/app/utils/state.js" />
@@ -111,10 +260,8 @@
         <option value="$PROJECT_DIR$/src/app/containers/Home/index.js" />
         <option value="$PROJECT_DIR$/src/app/containers/AddCustomNetwork/AddCustomNetwork.js" />
         <option value="$PROJECT_DIR$/src/app/actions/config.js" />
-        <option value="$PROJECT_DIR$/src/app/components/NetworkSwitcher/index.js" />
         <option value="$PROJECT_DIR$/src/app/components/PasswordModal/PasswordModal.js" />
         <option value="$PROJECT_DIR$/src/js/app.js" />
-        <option value="$PROJECT_DIR$/src/app/components/TransactionCard/index.js" />
         <option value="$PROJECT_DIR$/src/app/components/TransactionList/index.js" />
         <option value="$PROJECT_DIR$/src/app/components/TransactionRemark/index.js" />
         <option value="$PROJECT_DIR$/src/app/containers/AddTransactionRemark/AddTransactionRemark.js" />
@@ -124,7 +271,6 @@
         <option value="$PROJECT_DIR$/src/app/reducers/account.js" />
         <option value="$PROJECT_DIR$/src/app/reducers/config.js" />
         <option value="$PROJECT_DIR$/src/app/utils/math.js" />
-        <option value="$PROJECT_DIR$/src/app/utils/neonWrappers.js" />
         <option value="$PROJECT_DIR$/src/app/utils/string.js" />
         <option value="$PROJECT_DIR$/src/app/utils/NeoscanApi.js" />
         <option value="$PROJECT_DIR$/src/app/containers/Send/Send.js" />
@@ -137,6 +283,10 @@
         <option value="$PROJECT_DIR$/__tests__/components/Login.test.js" />
         <option value="$PROJECT_DIR$/__tests__/containers/Send.test.js" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/src/app/components/NetworkSwitcher/index.js" />
+        <option value="$PROJECT_DIR$/src/app/utils/neonWrappers.js" />
+        <option value="$PROJECT_DIR$/src/app/components/confirmPages/SendConfirmCard/index.js" />
+        <option value="$PROJECT_DIR$/src/app/components/TransactionCard/index.js" />
       </list>
     </option>
   </component>
@@ -166,6 +316,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -173,11 +324,68 @@
               <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
               <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="confirmPages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="confirmPages" type="462c0819:PsiDirectoryNode" />
+              <item name="SendConfirmCard" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="NetworkSwitcher" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="TransactionCard" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -236,7 +444,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-348" y="-1080" width="1920" height="1080" extended-state="0" />
+    <frame x="-348" y="-1057" width="1920" height="1057" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32935324" />
@@ -246,7 +454,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32935324" />
       <window_info anchor="bottom" id="Python Console" order="11" weight="0.32935324" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.32935324" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49851632" visible="true" weight="0.16347177" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49851632" visible="true" weight="0.16666667" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" weight="0.32960597" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32827586" />
@@ -255,11 +463,26 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" sideWeight="0.5014837" side_tool="true" weight="0.13578275" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info id="Favorites" order="2" sideWeight="0.5014837" side_tool="true" weight="0.13578275" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49851632" visible="true" weight="0.16347177" />
+      <window_info anchor="right" id="SciView" order="4" weight="0.32960597" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32935324" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.32935324" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info id="Structure" order="1" sideWeight="0.5014837" side_tool="true" weight="0.13578275" />
+      <window_info anchor="right" id="Database" order="3" weight="0.32960597" />
       <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32827586" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.32935324" />
+      <window_info anchor="bottom" id="Python Console" order="11" weight="0.32935324" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -280,20 +503,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/app/containers/Config/Config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="29" column="10" selection-start-line="29" selection-start-column="10" selection-end-line="29" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/containers/AddCustomNetwork/AddCustomNetwork.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="591">
-          <caret line="72" selection-start-line="72" selection-end-line="72" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/components/AccountInfo/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -327,13 +536,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package-lock.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="3" selection-start-line="2" selection-start-column="3" selection-end-line="2" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/package-lock.json" />
     <entry file="file://$PROJECT_DIR$/src/app/utils/storage.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
@@ -345,13 +548,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="539">
           <caret line="36" column="11" selection-start-line="36" selection-start-column="11" selection-end-line="36" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/components/NetworkSwitcher/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="42" selection-start-line="7" selection-start-column="42" selection-end-line="7" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -383,9 +579,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
           <caret line="15" column="61" selection-start-line="15" selection-start-column="61" selection-end-line="15" selection-end-column="61" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -395,13 +588,6 @@
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/components/TransactionCard/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="45" selection-start-line="14" selection-start-column="45" selection-end-line="14" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -416,9 +602,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="12" selection-start-line="12" selection-end-line="12" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -467,13 +650,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/utils/neonWrappers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="92" column="82" lean-forward="true" selection-start-line="92" selection-start-column="82" selection-end-line="92" selection-end-column="82" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/utils/state.js" />
     <entry file="file://$PROJECT_DIR$/src/app/utils/string.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -506,13 +682,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/utils/NeonJsHelpers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="70" column="4" selection-start-line="58" selection-start-column="1" selection-end-line="70" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/utils/debug.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -523,9 +692,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="810">
           <caret line="54" column="2" lean-forward="true" selection-start-line="54" selection-start-column="2" selection-end-line="54" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -550,9 +716,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="765">
           <caret line="51" column="30" selection-start-line="51" selection-start-column="22" selection-end-line="51" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -560,9 +723,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
           <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -570,28 +730,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="577">
           <caret line="170" column="29" selection-start-line="170" selection-start-column="29" selection-end-line="170" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/__tests__/containers/ImportWallet.test.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-12">
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
+        <state relative-caret-position="-12" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/__tests__/containers/Home.test.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="57" selection-start-line="6" selection-start-column="57" selection-end-line="6" selection-end-column="57" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -599,9 +749,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -630,9 +777,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
           <caret line="144" column="28" selection-start-line="144" selection-start-column="13" selection-end-line="144" selection-end-column="28" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -640,6 +784,60 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="19" selection-start-line="19" selection-end-line="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/components/NetworkSwitcher/NetworkSwitcher.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13">
+          <caret line="52" column="37" selection-start-line="52" selection-start-column="37" selection-end-line="52" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/utils/NeonJsHelpers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="664">
+          <caret line="70" column="4" selection-start-line="58" selection-start-column="1" selection-end-line="70" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/utils/neonWrappers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="50" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/components/NetworkSwitcher/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/components/confirmPages/SendConfirmCard/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/components/TransactionCard/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="11" column="56" selection-start-line="11" selection-start-column="56" selection-end-line="11" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

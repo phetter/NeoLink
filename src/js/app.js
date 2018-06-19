@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Root from '../app/Root'
-import '../../vendor/fontawesome-all.min'
 
 // TODO add API neon-js settings configuration if using neon-js
 
@@ -31,7 +30,7 @@ chrome.storage.local.get('stateVersion', stateVersion => {
 
 function upgradeToStateVersion1(initialState) {
   if (initialState && initialState.config && initialState.config.networks) {
-    Object.keys(initialState.config.networks).forEach(function (key) {
+    Object.keys(initialState.config.networks).forEach(function(key) {
       if (initialState.config.networks[key].apiType === 'neonDB') {
         initialState.config.networks[key].apiType = 'neondb'
       }

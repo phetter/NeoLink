@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import DropDown from '../../DropDown'
 
 import neonPNG from '../../../../img/icon-34.png'
+import ellipsisSVG from '../../../../img/ellipsis-v.svg'
 
 import style from './AccountInfoHeader.css'
 
@@ -21,7 +22,7 @@ const AccountInfoHeader = ({ showOptions, label, address, accountDropDownMarkup 
       </div>
       {showOptions && (
         <DropDown
-          buttonContent={ <i className='fas fa-ellipsis-v' /> }
+          buttonContent={ <img src={ ellipsisSVG } alt='three vertical dots' className={ style.accountInfoDropdownButtonImage } /> }
           buttonStyles={ style.accountDropDownButton }
           dropDownContent={ accountDropDownMarkup }
           dropDownContentClassNames={ style.accountInfoDropDown }

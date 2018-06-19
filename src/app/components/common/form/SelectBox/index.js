@@ -13,7 +13,7 @@ const SelectBox = ({ options, classNames = '', name = '', id = '', label = '', v
 
   const selectBox = (
     <select
-      className={ `${style.selectBox} ${classNames} ${selectBoxLabeLStyles}` }
+      className={ style.selectBox + ' ' + classNames + ' ' + selectBoxLabeLStyles }
       name={ name }
       id={ id }
       onChange={ onChangeHandler }

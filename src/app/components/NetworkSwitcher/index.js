@@ -1,16 +1,14 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import DropDown from '../DropDown'
 
 import style from './NetworkSwitcher.css'
 
-import globe from '../../../img/globe.svg'
 import chevron from '../../../img/chevron-down.svg'
 import neoImg from '../../../img/icon-34.png'
 import flask from '../../../img/flask.svg'
 
-// import { getBalance, getTransactions } from '../../utils/NeonJsHelpers'
 import * as Neoscan from '../../utils/NeoscanApi'
 
 class NetworkSwitcher extends Component {
@@ -75,7 +73,7 @@ class NetworkSwitcher extends Component {
           onClick={ () => this.changeNetwork(index) }
         >
           {indicator}
-          {networks[index].name}
+          {truncateString(networks[index].name, 12)}
           {selected && <div className={ style.networkNavigationOptionSelected } />}
         </button>
       )
@@ -85,12 +83,13 @@ class NetworkSwitcher extends Component {
 
   render() {
     const networkOptions = this.generateNetworkOptions()
+    const { selectedNetworkId } = this.props
 
     const buttonContent = (
-      <Fragment>
-        <img src={ globe } className={ style.networkNavigationGlobe } alt='globe' />
+      <div className={ style.networkNavigationButtonContent }>
+        {truncateString(selectedNetworkId, 9)}
         <img src={ chevron } className={ style.networkNavigationChevron } alt='chevron down' />
-      </Fragment>
+      </div>
     )
 
     return (
