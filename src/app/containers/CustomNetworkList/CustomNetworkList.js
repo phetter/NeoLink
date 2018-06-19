@@ -13,6 +13,9 @@ import editSVG from '../../../img/edit.svg'
 
 import style from './CustomNetworkList.css'
 
+import { truncateUrl } from '../../utils/NeonJsHelpers'
+
+
 class CustomNetworkList extends Component {
   state = {
     showConfirmDelete: false,
@@ -70,7 +73,7 @@ class CustomNetworkList extends Component {
         networkRows.push(
           <CustomNetworkCard
             name={ network.name }
-            url={ this._truncateUrl(network.url) }
+            url={ truncateUrl(network.url) }
             // txUrl={ this._truncateUrl(network.txUrl) }
             key={ network.name }
             dropDownContent={ this._generateDropDownContent(index, network.name) }
