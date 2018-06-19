@@ -36,12 +36,12 @@ describe('CustomNetworkList', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
   })
 
-  test('lists networks properly', async () => {
-    const { wrapper } = setup()
-
-    expect(wrapper.html().includes('MainNet')).toBe(false)
-    expect(wrapper.html().includes('local')).toBe(true)
-  })
+  // test('lists networks properly', async () => {
+  //   const { wrapper } = setup()
+  //
+  //   expect(wrapper.html().includes('MainNet')).toBe(false)
+  //   expect(wrapper.html().includes('local')).toBe(true)
+  // })
 
   // test('delete network works', async () => {
   //   const { wrapper } = setup('Local')
