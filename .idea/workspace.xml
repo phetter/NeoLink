@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b69fa9f0-fa01-4bd6-a677-d260332dc8d5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/app/containers/SwitchAccount/SwitchAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/containers/SwitchAccount/SwitchAccount.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/__tests__/components/CustomNetworkList.test.js" beforeDir="false" afterPath="$PROJECT_DIR$/__tests__/components/CustomNetworkList.test.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -104,11 +104,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SwitchAccount.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SwitchAccount.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/containers/SwitchAccount/SwitchAccount.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
               <caret line="3" column="29" lean-forward="true" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CustomNetworkList.test.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/__tests__/components/CustomNetworkList.test.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="675">
+              <caret line="45" column="1" selection-start-line="45" selection-start-column="1" selection-end-line="56" selection-end-column="7" />
+              <folding>
+                <element signature="e#0#25#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -224,6 +236,7 @@
         <option value="$PROJECT_DIR$/src/app/components/TransactionCard/index.js" />
         <option value="$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.js" />
         <option value="$PROJECT_DIR$/src/app/containers/SwitchAccount/SwitchAccount.js" />
+        <option value="$PROJECT_DIR$/__tests__/components/CustomNetworkList.test.js" />
       </list>
     </option>
   </component>
@@ -260,6 +273,23 @@
             <path>
               <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
               <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+              <item name="__tests__" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+              <item name="__tests__" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+              <item name="__tests__" type="462c0819:PsiDirectoryNode" />
+              <item name="containers" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
@@ -446,9 +476,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/js/background/popupWindow.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/content.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -797,6 +824,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="29" lean-forward="true" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__tests__/components/CustomNetworkList.test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="45" column="1" selection-start-line="45" selection-start-column="1" selection-end-line="56" selection-end-column="7" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
