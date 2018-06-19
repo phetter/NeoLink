@@ -8,8 +8,6 @@ import Overlay from '../../components/Overlay'
 import ConfirmDelete from '../../components/ConfirmDelete'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 
-import { truncateString } from '../../utils/helpers'
-
 import trashSVG from '../../../img/trash.svg'
 import editSVG from '../../../img/edit.svg'
 

@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b69fa9f0-fa01-4bd6-a677-d260332dc8d5" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/src/app/components/NetworkSwitcher/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/NetworkSwitcher/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/TransactionCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/TransactionCard/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/components/confirmPages/SendConfirmCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/components/confirmPages/SendConfirmCard/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,11 +53,8 @@
       <file leaf-file-name="CustomNetworkList.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1110">
-              <caret line="74" selection-start-line="74" selection-end-line="74" />
-              <folding>
-                <element signature="e#0#50#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="150">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -120,7 +114,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>saveState</find>
       <find>storage</find>
       <find>neoscan</find>
       <find>getBalance</find>
@@ -150,6 +143,7 @@
       <find>wallet</find>
       <find>truncate</find>
       <find>int</find>
+      <find>head</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -213,10 +207,10 @@
         <option value="$PROJECT_DIR$/__tests__/containers/Send.test.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/src/app/utils/neonWrappers.js" />
-        <option value="$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.js" />
         <option value="$PROJECT_DIR$/src/app/components/confirmPages/SendConfirmCard/index.js" />
         <option value="$PROJECT_DIR$/src/app/components/NetworkSwitcher/index.js" />
         <option value="$PROJECT_DIR$/src/app/components/TransactionCard/index.js" />
+        <option value="$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.js" />
       </list>
     </option>
   </component>
@@ -773,11 +767,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1110">
-          <caret line="74" selection-start-line="74" selection-end-line="74" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="150">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
