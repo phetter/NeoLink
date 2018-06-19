@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b69fa9f0-fa01-4bd6-a677-d260332dc8d5" name="Default" comment="" />
+    <list default="true" id="b69fa9f0-fa01-4bd6-a677-d260332dc8d5" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/src/app/containers/SwitchAccount/SwitchAccount.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/containers/SwitchAccount/SwitchAccount.js" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,7 +50,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CustomNetworkList.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CustomNetworkList.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="255">
@@ -93,7 +95,7 @@
       <file leaf-file-name="neonWrappers.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/utils/neonWrappers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
+            <state relative-caret-position="-771">
               <caret line="4" column="50" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
               <folding>
                 <element signature="e#0#62#0" expanded="true" />
@@ -102,10 +104,19 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="SwitchAccount.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/app/containers/SwitchAccount/SwitchAccount.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="29" lean-forward="true" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="NeonJsHelpers.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app/utils/NeonJsHelpers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="664">
+            <state relative-caret-position="1050">
               <caret line="70" column="4" selection-start-line="58" selection-start-column="1" selection-end-line="70" selection-end-column="4" />
             </state>
           </provider>
@@ -115,7 +126,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>neoscan</find>
       <find>getBalance</find>
       <find>NeoScan.getBalance</find>
       <find>this.state</find>
@@ -140,11 +150,12 @@
       <find>networks</find>
       <find>&lt;&lt;</find>
       <find>api</find>
-      <find>wallet</find>
       <find>int</find>
       <find>head</find>
       <find>truncateUrl</find>
       <find>truncate</find>
+      <find>truncateurl</find>
+      <find>wallet</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -212,6 +223,7 @@
         <option value="$PROJECT_DIR$/src/app/components/NetworkSwitcher/index.js" />
         <option value="$PROJECT_DIR$/src/app/components/TransactionCard/index.js" />
         <option value="$PROJECT_DIR$/src/app/containers/CustomNetworkList/CustomNetworkList.js" />
+        <option value="$PROJECT_DIR$/src/app/containers/SwitchAccount/SwitchAccount.js" />
       </list>
     </option>
   </component>
@@ -297,6 +309,14 @@
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="containers" type="462c0819:PsiDirectoryNode" />
               <item name="CustomNetworkList" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
+              <item name="NeoLink" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="app" type="462c0819:PsiDirectoryNode" />
+              <item name="containers" type="462c0819:PsiDirectoryNode" />
+              <item name="SwitchAccount" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="NeoLink" type="b2602c69:ProjectViewProjectNode" />
@@ -426,21 +446,11 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/js/options.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/js/background/popupWindow.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/js/content.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/app.bundle.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-23608">
-          <caret line="3632" column="1955" selection-start-line="3632" selection-start-column="1955" selection-end-line="3632" selection-end-column="1955" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app/actions/config.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -709,23 +719,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/utils/NeonJsHelpers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="664">
-          <caret line="70" column="4" selection-start-line="58" selection-start-column="1" selection-end-line="70" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/app/utils/neonWrappers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="50" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
-          <folding>
-            <element signature="e#0#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/app/components/confirmPages/SendConfirmCard/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="720">
@@ -773,6 +766,37 @@
           <folding>
             <element signature="e#0#50#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/utils/NeonJsHelpers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1050">
+          <caret line="70" column="4" selection-start-line="58" selection-start-column="1" selection-end-line="70" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/app.bundle.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="7314" column="4355" selection-start-line="7314" selection-start-column="4355" selection-end-line="7314" selection-end-column="4355" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/utils/neonWrappers.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-771">
+          <caret line="4" column="50" selection-start-line="4" selection-start-column="50" selection-end-line="4" selection-end-column="50" />
+          <folding>
+            <element signature="e#0#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/app/containers/SwitchAccount/SwitchAccount.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="29" lean-forward="true" selection-start-line="3" selection-start-column="29" selection-end-line="3" selection-end-column="29" />
         </state>
       </provider>
     </entry>

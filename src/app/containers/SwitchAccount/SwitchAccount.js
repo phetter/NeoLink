@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { getBalance } from '../../utils/helpers'
+import { getBalance } from '../utils/helpers'
 
 import SwitchAccountCard from '../../components/SwitchAccountCard'
 
