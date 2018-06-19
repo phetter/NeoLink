@@ -72,12 +72,8 @@ class CustomNetworkList extends Component {
         networkRows.push(
           <CustomNetworkCard
             name={ network.name }
-<<<<<<< HEAD
             url={ this._truncateUrl(network.url) }
             // txUrl={ this._truncateUrl(network.txUrl) }
-=======
-            url={ truncateString(network.url, 19) }
->>>>>>> 2e9e850d6f730539c42ba37486afc9e098643a64
             key={ network.name }
             dropDownContent={ this._generateDropDownContent(index, network.name) }
           />

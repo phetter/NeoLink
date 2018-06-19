@@ -11,6 +11,8 @@ import flask from '../../../img/flask.svg'
 
 import * as Neoscan from '../../utils/NeoscanApi'
 
+import { truncateString } from '../../utils/NeonJsHelpers'
+
 class NetworkSwitcher extends Component {
   changeNetwork = selectedNetworkId => {
     const { setNetwork, setTransactions, account, setBalance } = this.props

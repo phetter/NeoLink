@@ -32,7 +32,7 @@ const SendConfirmCard = ({ assetType, amount, address, remark, successClickHandl
       <button
 
         className={ style.confirmSendCardAcceptButton + ' ' + style.confirmSendButton }
-        onClick={ succesClickHandler }
+        onClick={ successClickHandler }
       >
         Accept
       </button>
