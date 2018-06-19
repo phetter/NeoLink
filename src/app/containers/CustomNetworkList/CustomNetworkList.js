@@ -15,7 +15,6 @@ import style from './CustomNetworkList.css'
 
 import { truncateUrl } from '../../utils/NeonJsHelpers'
 
-
 class CustomNetworkList extends Component {
   state = {
     showConfirmDelete: false,
