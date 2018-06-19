@@ -31,6 +31,7 @@ const setupMount = (addAccount = jest.fn, setAccount = jest.fn, manualWIF = fals
       addAccount={ addAccount }
       setAccount={ setAccount }
       history={ {} }
+      account={ accounts }
       accounts={ accounts }
       manualWIF={ manualWIF }
     />

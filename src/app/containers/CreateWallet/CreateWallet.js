@@ -8,7 +8,7 @@ import InputField from '../../components/common/form/InputField'
 import Box from '../../components/common/Box'
 import CreateWalletSucessPage from '../../components/successPages/CreateWalletSuccessPage'
 
-import { labelExists } from '../../utils/helpers'
+import { labelExists } from '../../utils/NeonJsHelpers'
 
 import style from './CreateWallet.css'
 import Loader from '../../components/Loader'

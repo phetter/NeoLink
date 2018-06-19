@@ -38,6 +38,11 @@
   color: #585858;
 }
 
+.transactionCardRemarks {
+  /* margin-right: 25px; */
+  color: #585858;
+}
+
 .transactionCardLink {
   text-decoration: none;
 }

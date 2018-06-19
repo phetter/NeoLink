@@ -17,6 +17,7 @@ export class EditCustomNetwork extends Component {
       id: this.props.match.params.id,
       name: 'somename',
       url: '',
+      txUrl: '',
       apiType: 'neoscan',
       showSuccess: false,
     }
@@ -32,7 +33,8 @@ export class EditCustomNetwork extends Component {
 
     const currentObject = networks[currentObjectName]
 
-    this.props.initialize({ name: currentObject.name, url: currentObject.url, apiType: currentObject.apiType })
+    // TODO fix this to work with composable system
+    this.props.initialize({ name: currentObject.name, url: currentObject.url, txUrl: currentObject.txUrl, apiType: currentObject.apiType })
   }
 
   _validateName = input => {
@@ -58,18 +60,20 @@ export class EditCustomNetwork extends Component {
 
   handleSubmit = (values, dispatch, formProps) => {
     const { reset } = formProps
-    const { name, url, apiType } = values
+    const { name, url, txUrl, apiType } = values
     const { id } = this.state
     const { editCustomNetwork } = this.props
 
     const validatedName = this._validateName(name)
     const validatedUrl = this._validateUrl(url)
+    const validatedTxUrl = this._validateUrl(txUrl)
 
-    if (validatedName && validatedUrl && apiType) {
-      editCustomNetwork(name, url, apiType, id)
+    if (validatedName && validatedUrl && validatedTxUrl && apiType) {
+      editCustomNetwork(name, url, txUrl, apiType, id)
       this.setState({
         name: '',
         url: '',
+        txUrl: '',
         apiType: '',
         showSuccess: true,
       })

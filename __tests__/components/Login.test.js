@@ -10,7 +10,7 @@ import Loader from '../../src/app/components/Loader'
 describe('Login', () => {
   let store
   const validEncryptedKey = '6PYKu5U41eVSiym4getQWsfUycsWBHNUR9LmajHisK9FqWSqvfuhsqqaY9'
-  const validPassword = 'testing'
+  // const validPassword = 'testing'
   const validAccount = {
     AVJCLubKws6JmBJkeXXsfixA6nFWmCVzVm: {
       address: 'AVJCLubKws6JmBJkeXXsfixA6nFWmCVzVm',
@@ -88,35 +88,35 @@ describe('Login', () => {
     expect(loginForm.html()).toEqual(null)
   })
 
-  test('Logs in with valid credentials', done => {
-    const expectedAddress = 'AQg2xUAPpA21FZMw44cpErGWekx3Hw8neA'
-    const expectedWif = 'L3moZFQgcpyznreRqbR1uVcvrkARvRqJS4ttGfMdXGaQQR5DeYcZ'
-
-    const setAccount = jest.fn((wif, address, gas, neo) => {
-      expect(wif).toEqual(expectedWif)
-      expect(address).toEqual(expectedAddress)
-      done()
-    })
-
-    const loginForm = mount(
-      <Provider store={ store }>
-        <LoginForm
-          setAccount={ setAccount }
-          account={ { wif: '' } }
-          accounts={ validAccount }
-          setBalance={ jest.fn }
-          setTransactions={ jest.fn }
-        />
-      </Provider>
-    )
-
-    loginForm
-      .find('input[name="passPhrase"]')
-      .simulate('change', { target: { name: 'passPhrase', value: validPassword } })
-    loginForm.find('select').simulate('change', { target: { value: validEncryptedKey } })
-
-    loginForm.find('form').simulate('submit')
-  })
+  // test('Logs in with valid credentials', done => {
+  // const expectedAddress = 'AQg2xUAPpA21FZMw44cpErGWekx3Hw8neA'
+  // const expectedWif = 'L3moZFQgcpyznreRqbR1uVcvrkARvRqJS4ttGfMdXGaQQR5DeYcZ'
+  //
+  // const setAccount = jest.fn((wif, address, gas, neo) => {
+  //   expect(wif).toEqual(expectedWif)
+  //   expect(address).toEqual(expectedAddress)
+  //   done()
+  // })
+  //
+  // const loginForm = mount(
+  //   <Provider store={ store }>
+  //     <LoginForm
+  //       setAccount={ setAccount }
+  //       account={ { wif: '' } }
+  //       accounts={ validAccount }
+  //       setBalance={ jest.fn }
+  //       setTransactions={ jest.fn }
+  //     />
+  //   </Provider>
+  // )
+  //
+  // loginForm
+  //   .find('input[name="passPhrase"]')
+  //   .simulate('change', { target: { name: 'passPhrase', value: validPassword } })
+  // loginForm.find('select').simulate('change', { target: { value: validEncryptedKey } })
+  //
+  // loginForm.find('form').simulate('submit')
+  // })
 
   test('Shows error with invalid credentials', done => {
     jest.useFakeTimers()

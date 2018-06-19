@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import Root from '../app/Root'
 import '../../vendor/fontawesome-all.min'
 
+// TODO add API neon-js settings configuration if using neon-js
+
 chrome.storage.local.get('stateVersion', stateVersion => {
   chrome.storage.local.get('state', obj => {
     const { state } = obj
@@ -24,26 +26,31 @@ chrome.storage.local.get('stateVersion', stateVersion => {
   })
 })
 
-// Moving defaults from neondb to neoscan.
+// Moved defaults from neondb to neoscan.
+// TODO MORE COMPOSABLE
+
 function upgradeToStateVersion1(initialState) {
   if (initialState && initialState.config && initialState.config.networks) {
     Object.keys(initialState.config.networks).forEach(function (key) {
       if (initialState.config.networks[key].apiType === 'neonDB') {
         initialState.config.networks[key].apiType = 'neondb'
       }
-      if (initialState.config.networks[key].apiType === 'neondb') {
-        if (key === 'MainNet') {
-          initialState.config.networks[key].apiType = 'neoscan'
-          initialState.config.networks[key].url = 'https://api.neoscan.io/api/main_net'
-        } else if (key === 'TestNet') {
-          initialState.config.networks[key].apiType = 'neoscan'
-          initialState.config.networks[key].url = 'https://neoscan-testnet.io/api/test_net'
-        } else if (key === 'CoZTestNet') {
-          initialState.config.networks[key].apiType = 'neoscan'
-          initialState.config.networks[key].url = 'https://coz.neoscan-testnet.io/api/main_net'
-        } else {
-          initialState.config.networks[key].apiType = 'neonDB'
-        }
+      if (initialState.config.networks[key].apiType === 'neoscan') {
+        initialState.config.networks[key].apiType = 'neoscan'
+        initialState.config.neoscan = {}
+        initialState.config.neoscan.active = {}
+        initialState.config.neoscan.mainNet = {}
+        initialState.config.neoscan.mainNet.rootUrl = initialState.config.networks[key].url = 'https://neoscan.io/api/main_net/'
+        initialState.config.neoscan.mainNet.txByIdUrl = initialState.config.networks[key].txUrl = 'https://neoscan.io/api/main_net/v1/get_transaction/'
+        initialState.config.neoscan.mainNet.txsByAddressUrl = initialState.config.networks[key].txsUrl = 'https://neoscan.io/api/main_net/v1/get_last_transactions_by_address/'
+        initialState.config.neoscan.mainNet.balanceUrl = initialState.config.networks[key].balanceUrl = 'https://neoscan.io/api/main_net/v1/get_balance/'
+        initialState.config.neoscan.testNet = {}
+        initialState.config.neoscan.testNet.rootUrl = initialState.config.networks[key].url = 'https://neoscan-testnet.io/api/test_net/'
+        initialState.config.neoscan.testNet.txByIdUrl = initialState.config.networks[key].txUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/'
+        initialState.config.neoscan.testNet.txsByAddressUrl = initialState.config.networks[key].txsUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_last_transactions_by_address/'
+        initialState.config.neoscan.testNet.balanceUrl = initialState.config.networks[key].balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_balance/'
+      } else {
+        initialState.config.networks[key].apiType = 'custom'
       }
     })
   }
