@@ -70,6 +70,7 @@ class CustomNetworkList extends Component {
           <CustomNetworkCard
             name={ network.name }
             url={ this._truncateUrl(network.url) }
+            // txUrl={ this._truncateUrl(network.txUrl) }
             key={ network.name }
             dropDownContent={ this._generateDropDownContent(index, network.name) }
           />

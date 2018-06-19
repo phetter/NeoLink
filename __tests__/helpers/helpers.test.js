@@ -1,4 +1,4 @@
-import { formatGas } from '../../src/app/utils/helpers'
+import { formatGas } from '../../src/app/utils/NeonJsHelpers'
 
 test('formatGas formats gas under 1 correctly', () => {
   const formattedGas = formatGas([0, 1323242])

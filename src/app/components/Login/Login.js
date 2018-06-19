@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
 import { Field, reduxForm } from 'redux-form'
-import { getBalance, getTransactions } from '../../utils/helpers'
 
 import PrimaryButton from '../common/buttons/PrimaryButton'
 import Box from '../common/Box'
@@ -12,6 +11,7 @@ import StartPage from '../StartPage'
 import withForm from '../HoC/withForm'
 
 import style from './Login.css'
+import * as Neoscan from '../../utils/NeoscanApi'
 
 export class Login extends Component {
   state = {
@@ -35,13 +35,15 @@ export class Login extends Component {
 
     const {
       setAccount,
-      history,
       selectedNetworkId,
-      networks,
+      history,
       setBalance,
       setTransactions,
       setFormFieldError,
     } = this.props
+
+    // console.log('encryptedWif: ' + encryptedWif)
+    // console.log('werd: ' + passPhrase)
 
     wallet
       .decryptAsync(encryptedWif, passPhrase)
@@ -49,16 +51,19 @@ export class Login extends Component {
         const account = new wallet.Account(wif)
 
         reset()
-        setAccount(wif, account.address)
+        // NOTE NEVER 'setAccount(wif' like was previously done
+        setAccount(encryptedWif, account.address)
         this.setState({ loading: false })
         history.push('/home')
 
-        getBalance(networks, selectedNetworkId, account).then(results => {
-          setBalance(results.neo, results.gas)
-        })
-        getTransactions(networks, selectedNetworkId, account).then(transactions => setTransactions(transactions))
+        // getBalance(networks, selectedNetworkId, account).then(results => {
+        //   setBalance(results.neo, results.gas)
+        // })
+        // getTransactions(networks, selectedNetworkId, account).then(transactions => setTransactions(transactions))
+        Neoscan.setNet(selectedNetworkId)
+        Neoscan.getBalance(account.address).then(results => setBalance(results.neo, results.gas))
+        Neoscan.getTxsByAddress(account.address).then(results => setTransactions(results))
       })
-
       .catch(e => {
         this.setState({ loading: false }, () => setFormFieldError('passPhrase', 'Wrong password'))
       })
@@ -68,10 +73,9 @@ export class Login extends Component {
     const options = [{ label: 'Select Account', value: '' }]
 
     Object.keys(accounts).forEach(index => {
-      const account = accounts[index]
-      options.push({ label: account.label, value: account.key })
+      const accountn = accounts[index]
+      options.push({ label: accountn.label, value: accountn.key })
     })
-
     return options
   }
 
@@ -128,13 +132,12 @@ Login.propTypes = {
   accounts: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   history: PropTypes.object,
-  selectedNetworkId: PropTypes.string,
-  networks: PropTypes.object,
   clearFormFieldError: PropTypes.func.isRequired,
   setFormFieldError: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   renderTextField: PropTypes.func.isRequired,
   renderSelectField: PropTypes.func.isRequired,
+  selectedNetworkId: PropTypes.string,
 }
 
 export default reduxForm({ form: 'login', destroyOnUnmount: false })(withForm(Login))

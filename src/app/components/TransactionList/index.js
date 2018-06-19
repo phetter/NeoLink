@@ -1,28 +1,46 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import TransactionCard from '../TransactionCard'
+import Transaction from '../../containers/Transaction'
 import SecondaryButton from '../common/buttons/SecondaryButton'
 import FlashMessage from '../FlashMessage'
 
 import style from './TransactionList.css'
 
-const TransactionList = ({ transactions, transactionHistoryError, getTransactions }) => {
-  const transactionCards = transactions.map(transaction => {
-    const amounts = {
-      neo: transaction.change.NEO ? Number(transaction.change.NEO) : 0,
-      gas: transaction.change.GAS ? Math.abs(Number(transaction.change.GAS)) : 0,
-    }
+import Neon from '@cityofzion/neon-js/'
+import { Fixed8 } from '../../utils/math'
 
-    return (
-      <TransactionCard
-        key={ transaction.txid }
-        transactionId={ transaction.txid }
-        neoSent={ amounts.neo > 0 }
-        amounts={ amounts }
-      />
-    )
-  })
+// TODO add sort
+
+const TransactionList = ({ transactions, transactionHistoryError, getTransactions }) => {
+  let transactionCards = []
+
+  if (transactions && transactions.data && transactions.data.length) {
+    transactionCards = transactions.data.map(tx => {
+      // TODO: implement change code in utils/rpc.js to hide business from pres
+      const vin = tx.vin.filter(i => i.address_hash === transactions.address)
+      const vout = tx.vouts.filter(o => o.address_hash === transactions.address)
+
+      const change = {
+        NEO: vin.filter(i => i.asset === Neon.CONST.ASSET_ID.NEO).reduce((p, c) => p.add(c.value), new Fixed8(0)),
+        GAS: vout.filter(i => i.asset === Neon.CONST.ASSET_ID.GAS).reduce((p, c) => p.add(c.value), new Fixed8(0)),
+      }
+
+      const amounts = {
+        neo: change.NEO ? Number(change.NEO) : 0,
+        gas: change.GAS ? Math.abs(Number(change.GAS)) : 0,
+      }
+
+      return (
+        <Transaction
+          key={ tx.txid }
+          transaction={ tx }
+          neoSent={ amounts.neo > 0 }
+          amounts={ amounts }
+        />
+      )
+    })
+  }
 
   let content
 
@@ -39,7 +57,14 @@ const TransactionList = ({ transactions, transactionHistoryError, getTransaction
     )
   } else {
     if (transactionCards.length > 0) {
-      content = transactionCards
+      content = (
+        <div>
+          <div align='center'>
+            { transactions.data.length }
+          </div>
+          <div>{ transactionCards }</div>
+        </div>
+      )
     } else {
       content = <h5 className={ style.transactionListNoTransactions }>No transactions to display.</h5>
     }

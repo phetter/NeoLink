@@ -10,16 +10,27 @@ import chevron from '../../../img/chevron-down.svg'
 import neoImg from '../../../img/icon-34.png'
 import flask from '../../../img/flask.svg'
 
-import { getBalance, getTransactions } from '../../utils/helpers'
+// import { getBalance, getTransactions } from '../../utils/NeonJsHelpers'
+import * as Neoscan from '../../utils/NeoscanApi'
 
 class NetworkSwitcher extends Component {
   changeNetwork = selectedNetworkId => {
-    const { setNetwork, setTransactions, account, setBalance, networks } = this.props
+    const { setNetwork, setTransactions, account, setBalance } = this.props
 
     if (selectedNetworkId) {
       setNetwork(selectedNetworkId)
-      getBalance(networks, selectedNetworkId, account).then(results => setBalance(results.neo, results.gas))
-      getTransactions(networks, selectedNetworkId, account).then(results => setTransactions(results))
+      console.log('switching to net: ' + selectedNetworkId)
+      // neon-js / neondb
+      // getBalance(networks, selectedNetworkId, account).then(results => setBalance(results.neo, results.gas))
+      // getTransactions(networks, selectedNetworkId, account).then(results => setTransactions(results))
+
+      if (Neoscan.switchNetwork(selectedNetworkId)) {
+        console.log('switching to : ' + selectedNetworkId)
+        Neoscan.getBalance(account.address).then(results => setBalance(results.neo, results.gas))
+        Neoscan.getTxsByAddress(account.address).then(results => setTransactions(results))
+      } else { // most likely a custom network, other than MainNet or TestNet, was passed— currently unhandled by neoscanapi.js
+        // TODO add error handling and recovery
+      }
     }
   }
 

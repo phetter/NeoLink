@@ -2,13 +2,14 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 
-import Neon, { wallet } from '@cityofzion/neon-js'
+import { wallet } from '@cityofzion/neon-js'
 
-import { getBalance, getAccountName } from '../../utils/helpers'
+import { getBalance, getAccountName } from '../../utils/NeonJsHelpers'
+
+import { sendAsset } from '../../utils/neonWrappers'
 
 import AccountInfo from '../../components/AccountInfo'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
-import SendConfirmCard from '../../components/confirmPages/SendConfirmCard'
 import sendSVG from '../../../img/paper-planeSolidWhite.svg'
 import Loader from '../../components/Loader'
 import ErrorCard from '../../components/errors/ErrorCard'
@@ -16,6 +17,10 @@ import SendSuccessPage from '../../components/successPages/SendSuccessPage'
 
 import withForm from '../../components/HoC/withForm'
 import { toNumber, toBigNumber } from '../../utils/math'
+
+import PasswordModal from '../../components/PasswordModal'
+
+import { logDeep } from '../../utils/debug'
 
 import style from './Send.css'
 
@@ -26,6 +31,7 @@ export class Send extends Component {
     assetType: '',
     address: '',
     amount: '',
+    remark: '',
     showConfirmation: false,
   }
 
@@ -36,6 +42,7 @@ export class Send extends Component {
       assetType: 1,
       address: '',
       amount: '',
+      remark: '',
     })
   }
 
@@ -83,8 +90,10 @@ export class Send extends Component {
   }
 
   handleSubmit = (values, dispatch, formProps) => {
-    const { assetType, address, amount } = values
+    const { assetType, address, amount, remark } = values
     const { setFormFieldError } = this.props
+
+    // console.log('rem: ' + remark)
 
     this.setState({
       txid: '',
@@ -103,20 +112,20 @@ export class Send extends Component {
     const validationPassed = (assetType === 'NEO' || assetType === 'GAS') && !amountErrorMessage && !addressErrorMessage
 
     if (validationPassed) {
-      this.setState({ assetType, address, amount, showConfirmation: true })
+      this.setState({ assetType, address, amount, remark, showConfirmation: true })
     }
   }
 
-  send = () => {
+  send = (wif) => {
     const { selectedNetworkId, account, reset, setFormFieldError } = this.props
-    const { assetType, address, amount } = this.state
+    const { assetType, address, amount, remark } = this.state
 
     this.setState({ loading: true })
-
+    console.log('wif:' + wif)
     let amounts = {}
     amounts[assetType] = toNumber(amount)
-    Neon.do
-      .sendAsset(selectedNetworkId, address, account.wif, amounts)
+    // Neon.do.sendAsset(selectedNetworkId, address, account.wif, amounts)
+    sendAsset(selectedNetworkId, address, account, wif, amounts, remark, 0)
       .then(result => {
         this.setState({
           loading: false,
@@ -142,7 +151,7 @@ export class Send extends Component {
   }
 
   render() {
-    const { txid, loading, showConfirmation, address, amount, assetType } = this.state
+    const { txid, loading, showConfirmation } = this.state
     const {
       handleSubmit,
       account,
@@ -160,14 +169,30 @@ export class Send extends Component {
     if (loading) {
       content = <Loader />
     } else if (showConfirmation) {
+      // console.log('showing form')
+      let accountLabel
+      if (accounts.length) {
+        Object.keys(accounts).forEach(index => {
+          if (account.address === accounts[index].address) accountLabel = accounts[index].label
+          logDeep('ac: ', accounts[index])
+        })
+      }
       content = (
+        <PasswordModal
+          accountLabel={ accountLabel }
+          successHandler={ this.send }
+          encryptedWif={ account.wif }
+        />
+        /*
         <SendConfirmCard
           address={ address }
           amount={ amount }
           assetType={ assetType }
-          succesClickHandler={ this.send }
+          remark={ remark }
+          successClickHandler={ this.send }
           rejectClickHandler={ this.rejectSend }
         />
+        */
       )
     } else if (txid) {
       content = (
@@ -218,6 +243,16 @@ export class Send extends Component {
                   label='Recipient'
                 />
               </section>
+              <section className={ style.sendRemark }>
+                <Field
+                  component={ renderTextField }
+                  type='text'
+                  placeholder='Optional Remarks'
+                  error={ errors.address }
+                  name='remark'
+                  label='Remarks'
+                />
+              </section>
               <section className={ style.sendAmount }>
                 <Field
                   component={ renderTextField }
@@ -248,12 +283,13 @@ Send.propTypes = {
   networks: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
-  history: PropTypes.object,
   errors: PropTypes.object.isRequired,
   setFormFieldError: PropTypes.func.isRequired,
   clearFormFieldError: PropTypes.func.isRequired,
   renderTextField: PropTypes.func.isRequired,
   renderSelectField: PropTypes.func.isRequired,
+  history: PropTypes.object,
+  // getWerd: PropTypes.bool,
 }
 
 export default reduxForm({ form: 'send', destroyOnUnmount: false, initialValues: { assetType: 'NEO' } })(withForm(Send))

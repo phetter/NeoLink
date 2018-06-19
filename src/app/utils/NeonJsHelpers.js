@@ -27,10 +27,11 @@ export const labelExists = (label, accounts) => {
   return !!labelExists
 }
 
+// TODO why is this written with networks and networks? Refactor.
 export const getBalance = (networks, network, account) => {
   return new Promise((resolve, reject) => {
     api[networks[network].apiType]
-      .getBalance(networks[network]['url'], account.address)
+      .getBalance(networks[network].url, account.address)
       .then(results => {
         let amounts
         if (results.address === 'not found') {

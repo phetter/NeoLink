@@ -1,7 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import { getAccountName, validateLength, getBalance, getTransactions } from '../../utils/helpers'
+import * as Neoscan from '../../utils/NeoscanApi'
+
+import { getAccountName, validateLength } from '../../utils/NeonJsHelpers'
 
 import AccountInfo from '../../components/AccountInfo'
 import RenameAccount from '../../components/RenameAccount'
@@ -32,20 +34,23 @@ class Home extends Component {
   }
 
   getHomeScreenBalance = network => {
-    const { account, accountActions, networks } = this.props
+    const { account, accountActions } = this.props
     this.setState({ amountsError: '' }, () => {
-      getBalance(networks, network, account)
+      Neoscan.setNet(network)
+      Neoscan.getBalance(account.address)
         .then(results => accountActions.setBalance(results.neo, results.gas))
-        .catch(() => this.setState({ amountsError: 'Could not retrieve amount' }))
+        .catch(() => this.setState({ amountsError: 'Could not retrieve amounts.' }))
     })
   }
 
   getHomeScreenTransactions = network => {
-    const { account, networks, accountActions } = this.props
+    const { account, accountActions } = this.props
 
     this.setState({ transactionHistoryError: '' }, () => {
-      getTransactions(networks, network, account)
-        .then(results => accountActions.setTransactions(results))
+      Neoscan.getTxsByAddress(account.address)
+        .then(results => {
+          if (results) accountActions.setTransactions(results)
+        })
         .catch(() =>
           this.setState({
             transactionHistoryError: 'Could not retrieve transactions.',
@@ -110,7 +115,7 @@ class Home extends Component {
           <TransactionList
             transactions={ account.transactions || [] }
             transactionHistoryError={ transactionHistoryError }
-            getTransactions={ this.getHomeScreenTransactions }
+            getTransactions={ () => this.getHomeScreenTransactions(selectedNetworkId) }
           />
         </section>
       </Fragment>
@@ -122,9 +127,10 @@ export default Home
 
 Home.propTypes = {
   walletActions: PropTypes.object.isRequired,
-  networks: PropTypes.object,
+  // networks: PropTypes.object,
   selectedNetworkId: PropTypes.string.isRequired,
   account: PropTypes.object.isRequired,
   accountActions: PropTypes.object,
   accounts: PropTypes.object.isRequired,
+  // txs: PropTypes.array
 }
