@@ -6,3 +6,4 @@ secrets.*.js
 /coverage
 yarn.lock
 .idea
+package-lock.json
