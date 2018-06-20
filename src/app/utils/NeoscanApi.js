@@ -11,7 +11,6 @@ import axios from 'axios'
 // import { logDeep } from './debug'
 
 import Promise from 'bluebird'
-// import { api } from '@cityofzion/neon-js/src/index'
 
 // TODO Reintegrate this with state tree
 
@@ -28,8 +27,6 @@ neoscanIni.testNet.rootUrl = 'https://neoscan-testnet.io/api/test_net/'
 neoscanIni.testNet.txByIdUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/'
 neoscanIni.testNet.txsByAddressUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_last_transactions_by_address/'
 neoscanIni.testNet.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_balance/'
-
-// const neoscan = neoscanIni
 
 let curState = {}
 
@@ -50,8 +47,6 @@ const validateUrl = (url) => {
     }
   })
 }
-
-// export const validateUrl = Promise.promisify(validateUrlt)
 
 export const setNet = networkId => {
   return switchNetwork(networkId)

@@ -6,14 +6,14 @@ import style from './SendConfirmCard.css'
 const SendConfirmCard = ({ assetType, amount, address, remark, successClickHandler, rejectClickHandler }) => (
   <section className={ style.confirmSendCard }>
     <div className={ style.confirmSendCardContainer }>
-      <i className={ `${style.confirmSendCardMainIcon} far fa-paper-plane` } />
+      <i className={ style.confirmSendCardMainIcon } />
       <h2 className={ style.confirmSendHeader }>You are about to send</h2>
       <h3>
         {amount} {assetType} {remark}
       </h3>
       <h4 className={ style.confirmSendCardDetailsHeading }>Details</h4>
       <section className={ style.confirmSendCardDetails }>
-        <i className={ `${style.confirmSendSecondaryIcon} far fa-paper-plane` } />
+        <i className={ style.confirmSendSecondaryIcon } />
         <p className={ style.confirmSendDetailsText }>
           You are about to send {amount} {assetType} {remark} to the following address
         </p>
@@ -22,13 +22,13 @@ const SendConfirmCard = ({ assetType, amount, address, remark, successClickHandl
     </div>
     <section className={ style.confirmSendButtons }>
       <button
-        className={ `${style.confirmSendCardRejectButton} ${style.confirmSendButton}` }
+        className={ style.confirmSendCardRejectButton + ' ' + style.confirmSendButton }
         onClick={ rejectClickHandler }
       >
         Reject
       </button>
       <button
-        className={ `${style.confirmSendCardAcceptButton} ${style.confirmSendButton}` }
+        className={ style.confirmSendCardAcceptButton + ' ' + style.confirmSendButton }
         onClick={ successClickHandler }
       >
         Accept

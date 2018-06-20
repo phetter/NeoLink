@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import style from './SuccessPage.css'
 
 const SuccessPage = ({ title, children, classNames }) => (
-  <section className={ `${style.successPage} ${classNames}` }>
+  <section className={ style.successPage + ' ' + classNames }>
     <div className={ style.successPageIconContainer }>
       <i className='fas fa-check' />
     </div>

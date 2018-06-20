@@ -9,7 +9,7 @@ const PrimaryButton = ({ buttonText, icon, classNames, onClickHandler }) => (
   <Button
     buttonText={ buttonText }
     icon={ icon }
-    classNames={ `${style.primaryButton} ${classNames}` }
+    classNames={ style.primaryButton + ' ' + classNames }
     onClickHandler={ onClickHandler }
   />
 )
