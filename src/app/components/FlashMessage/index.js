@@ -7,11 +7,7 @@ import style from './FlashMessage.css'
 
 const FlashMessage = ({ flashMessage, classNames }) => (
   <h5 className={ style.flashMessage + ' ' + classNames }>
-<<<<<<< HEAD
     <img src={ exclamationSVG } alt='exclamation mark' className={ style.flashMessageImage } />
-=======
-    <i className='fas fa-exclamation' />
->>>>>>> phetter-cleanup
     {flashMessage}
   </h5>
 )
