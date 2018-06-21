@@ -17,6 +17,8 @@
   align-items: center;
 }
 
-.settingsNavigationButton svg {
+.settingsNavigationButtonImage {
   margin-right: 5px;
+  width: 17px;
+  pointer-events: none;
 }

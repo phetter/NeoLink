@@ -28,6 +28,7 @@
 }
 
 .startPageIcon {
-  font-size: 1.2rem;
+  width: 17px;
   margin: 0 25px;
+  pointer-events: none;
 }

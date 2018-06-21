@@ -12,3 +12,18 @@
   width: 200px;
   margin: auto;
 }
+
+.btn {
+  flex-grow: 1;
+  order: 2;
+}
+
+.argsWrapper {
+  margin-top: -30px;
+  display: flex;
+  flex-direction: row;
+  padding-top: 20px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}

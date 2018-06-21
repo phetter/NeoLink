@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import exclamationSVG from '../../../img/exclamationGrey.svg'
+
 import style from './FlashMessage.css'
 
 const FlashMessage = ({ flashMessage, classNames }) => (
   <h5 className={ style.flashMessage + ' ' + classNames }>
-    <i className='fas fa-exclamation' />
+    <img src={ exclamationSVG } alt='exclamation mark' className={ style.flashMessageImage } />
     {flashMessage}
   </h5>
 )

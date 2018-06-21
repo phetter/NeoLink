@@ -37,8 +37,10 @@
   align-items: center;
 }
 
-.customNetworkLink svg {
+.customNetworkDropDownButtonImage {
+  width: 12px;
   margin-right: 3px;
+  pointer-events: none;
 }
 
 .customNetworkDropDownButton:hover,

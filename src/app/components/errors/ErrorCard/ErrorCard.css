@@ -13,9 +13,9 @@
 }
 
 .errorCardIcon {
-  font-size: 1.4rem;
+  width: 20px;
   margin-right: 10px;
-  color: #7f0303;
+  pointer-events: none;
 }
 
 .errorCardText {
@@ -35,4 +35,9 @@
   height: 100%;
   width: 40px;
   font-size: 0.8rem;
+}
+
+.errorCardExitButtonImage {
+  width: 12px;
+  pointer-events: none;
 }

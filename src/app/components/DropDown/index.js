@@ -31,14 +31,14 @@ class DropDown extends Component {
   render() {
     const { buttonContent, buttonStyles, classNames, dropDownContent, dropDownContentClassNames } = this.props
     const { showDropDown } = this.state
-    const dropDownStyles = showDropDown ? `${style.dropDown} ${style.showDropDown}` : style.dropDown
+    const dropDownStyles = showDropDown ? style.dropDown + ' ' + style.showDropDown : style.dropDown
 
     return (
-      <section className={ `${style.dropDownContainer} ${classNames}` } ref={ node => (this.node = node) }>
-        <button className={ `${style.dropDownButton} ${buttonStyles}` } onClick={ this.toggleDropDown }>
+      <section className={ style.dropDownContainer + ' ' + classNames } ref={ node => (this.node = node) }>
+        <button className={ style.dropDownButton + ' ' + buttonStyles } onClick={ this.toggleDropDown }>
           {buttonContent}
         </button>
-        <div className={ `${dropDownStyles} ${dropDownContentClassNames}` }>{dropDownContent}</div>
+        <div className={ dropDownStyles + ' ' + dropDownContentClassNames }>{dropDownContent}</div>
       </section>
     )
   }

@@ -1,19 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import paperPlaneSVG from '../../../../img/paper-planeThin.svg'
+
 import style from './SendConfirmCard.css'
 
 const SendConfirmCard = ({ assetType, amount, address, remark, successClickHandler, rejectClickHandler }) => (
   <section className={ style.confirmSendCard }>
     <div className={ style.confirmSendCardContainer }>
-      <i className={ style.confirmSendCardMainIcon } />
+      <img src={ paperPlaneSVG } alt='paper plane' className={ style.confirmSendCardMainIcon } />
       <h2 className={ style.confirmSendHeader }>You are about to send</h2>
       <h3>
         {amount} {assetType} {remark}
       </h3>
       <h4 className={ style.confirmSendCardDetailsHeading }>Details</h4>
       <section className={ style.confirmSendCardDetails }>
-        <i className={ style.confirmSendSecondaryIcon } />
+        <img src={ paperPlaneSVG } alt='paper plane' className={ style.confirmSendSecondaryIcon } />
         <p className={ style.confirmSendDetailsText }>
           You are about to send {amount} {assetType} {remark} to the following address
         </p>

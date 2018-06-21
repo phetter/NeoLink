@@ -19,9 +19,8 @@
   background-color: #ededed;
 }
 
-.dropDownLinks svg,
-.dropDownLinksButton svg {
+.dropDownLinksImage {
   margin-right: 5px;
-  color: #585858;
-  font-size: 1rem;
+  width: 15px;
+  pointer-events: none;
 }

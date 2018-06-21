@@ -2,13 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Box from '../../components/common/Box'
 
+import exclamationSVG from '../../../img/exclamation.svg'
+
 import style from './ConfirmDelete.css'
 
 const ConfirmDelete = ({ onClickAcceptHandler, onClickRejectHandler, item }) => (
   <section className={ style.confirmDeleteCard }>
     <Box classNames={ style.confirmDeleteBox }>
       <div className={ style.confirmDeleteBoxContainer }>
-        <i className='fas fa-exclamation' />
+        <img src={ exclamationSVG } alt='exclamation mark' className={ style.confirmDeleteBoxImage } />
         <h3 className={ style.confirmDeleteHeading }>You are about to delete:</h3>
         <h3 className={ style.confirmDeleteItem }>{item}</h3>
         <h3 className={ style.confirmDeleteSecondHeading }>This action can not be undone.</h3>

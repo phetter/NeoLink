@@ -84,7 +84,8 @@
     "redux": "^3.7.2",
     "redux-form": "^7.2.3",
     "redux-thunk": "^2.2.0",
-    "rmwc": "0.0.1-rc13"
+    "rmwc": "0.0.1-rc13",
+    "what-input": "^5.1.0"
   },
   "jest": {
     "transform": {
