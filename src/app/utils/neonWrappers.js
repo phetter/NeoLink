@@ -1,4 +1,4 @@
-import Neon, { api, tx } from '@cityofzion/neon-js'
+import Neon, { u, wallet, api, tx } from '@cityofzion/neon-js'
 import { toNumber } from './math'
 import { logDeep } from './debug'
 import base58 from 'bs58'
@@ -10,30 +10,32 @@ export function callInvoke (networkUrl, account, input) {
       reject(new Error('Invalid asset type specified'))
     }
 
-    const txArgs = [input.arg1, input.arg2]
-    const args = []
-    txArgs.forEach((arg) => {
-      if (arg) {
-        args.push(arg)
-      }
-    })
-
     const myAccount = Neon.create.account(account.wif)
+
+    const parsedArgs = input.args.map(arg => {
+      if (wallet.isAddress(arg)) return u.reverseHex(wallet.getScriptHashFromAddress(arg))
+      if (typeof arg === 'string') return u.str2hexstring(arg)
+      if (typeof arg === 'number') return u.int2hex(arg)
+    })
 
     const config = {
       net: networkUrl,
-      privateKey: myAccount.privateKey,
+      script: Neon.create.script({
+        scriptHash: input.scriptHash,
+        operation: input.operation,
+        args: parsedArgs,
+      }),
       address: myAccount.address,
+      privateKey: myAccount.privateKey,
       intents: [{
         assetId: Neon.CONST.ASSET_ID[input.assetType],
-        value: toNumber(input.amount),
+        value: toNumber(input.assetAmount),
         scriptHash: input.scriptHash,
       }],
-      script: { scriptHash: input.scriptHash, operation: input.operation, args: args },
       gas: 0,
     }
 
-    api.doInvoke(config)
+    Neon.doInvoke(config)
       .then(res => resolve(res))
       .catch(e => reject(e))
   })

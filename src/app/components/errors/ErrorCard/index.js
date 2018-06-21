@@ -1,14 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import exclamationTriangleSVG from '../../../../img/exclamation-triangle.svg'
+import crossSVG from '../../../../img/times.svg'
+
 import style from './ErrorCard.css'
 
 const ErrorCard = ({ onClickHandler, message, classNames }) => (
   <div className={ style.errorCard + ' ' + classNames }>
-    <i className={ style.errorCardIcon } />
+    <img src={ exclamationTriangleSVG } alt='Exclamation triangle' className={ style.errorCardIcon } />
     <p className={ style.errorCardText }>{message}</p>
     <button className={ style.errorCardCloseButton } onClick={ onClickHandler }>
-      <i className='fas fa-times' />
+      <img src={ crossSVG } alt='cross' className={ style.errorCardExitButtonImage } />
     </button>
   </div>
 )

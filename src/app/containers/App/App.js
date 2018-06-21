@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import 'what-input'
+
 import Home from '../Home'
 import Send from '../Send'
 import TestInvoke from '../TestInvoke'
@@ -20,6 +22,7 @@ import Settings from '../../components/Settings'
 import AddCustomNetwork from '../../containers/AddCustomNetwork'
 import CustomNetworkList from '../../containers/CustomNetworkList'
 import EditCustomNetwork from '../../containers/EditCustomNetwork'
+import SwitchAccount from '../../containers/SwitchAccount'
 
 import style from './App.css'
 
@@ -50,6 +53,7 @@ export default class App extends Component {
             <Route path='/addCustomNetwork' component={ AddCustomNetwork } />
             <Route path='/editCustomNetwork/:id' component={ EditCustomNetwork } />
             <Route path='/manageNetworks' component={ CustomNetworkList } />
+            <Route path='/switchAccounts' component={ SwitchAccount } />
             <Route path='/' component={ StartPage } />
           </ConnectedSwitch>
         </ContentWrapper>

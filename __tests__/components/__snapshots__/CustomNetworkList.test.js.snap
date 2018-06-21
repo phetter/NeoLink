@@ -64,8 +64,10 @@ exports[`CustomNetworkList renders without crashing 1`] = `
               className="settingsNavigationButton"
               onClick={[Function]}
             >
-              <i
-                className="fa fa-arrow-left"
+              <img
+                alt="arrow left"
+                className="settingsNavigationButtonImage"
+                src="test-file-stub"
               />
               Back
             </button>
@@ -89,8 +91,10 @@ exports[`CustomNetworkList renders without crashing 1`] = `
                     className="customNetworkDropDownButton"
                     onClick={[Function]}
                   >
-                    <i
-                      className="fas fa-trash"
+                    <img
+                      alt="trashcan"
+                      className="customNetworkDropDownButtonImage"
+                      src="test-file-stub"
                     />
                      Delete
                   </button>
@@ -99,8 +103,10 @@ exports[`CustomNetworkList renders without crashing 1`] = `
                     replace={false}
                     to="/editCustomNetwork/local"
                   >
-                    <i
-                      className="fas fa-edit"
+                    <img
+                      alt="pen on paper"
+                      className="customNetworkDropDownButtonImage"
+                      src="test-file-stub"
                     />
                     Edit
                   </Link>
@@ -109,7 +115,7 @@ exports[`CustomNetworkList renders without crashing 1`] = `
             }
             key="local"
             name="local"
-            url="http://127.0.0.1:50..."
+            url="http://127.0.0.1:5000"
           >
             <section
               className="customNetworkCard"
@@ -130,13 +136,15 @@ exports[`CustomNetworkList renders without crashing 1`] = `
                 <h3
                   className="customNetworkUrl"
                 >
-                  http://127.0.0.1:50...
+                  http://127.0.0.1:5000
                 </h3>
               </div>
               <DropDown
                 buttonContent={
-                  <i
-                    className="fas fa-ellipsis-v"
+                  <img
+                    alt="three vertical dots"
+                    className="customNetworkCardDropdownImage"
+                    src="test-file-stub"
                   />
                 }
                 buttonStyles="customNetworkDropdownButton"
@@ -150,8 +158,10 @@ exports[`CustomNetworkList renders without crashing 1`] = `
                         className="customNetworkDropDownButton"
                         onClick={[Function]}
                       >
-                        <i
-                          className="fas fa-trash"
+                        <img
+                          alt="trashcan"
+                          className="customNetworkDropDownButtonImage"
+                          src="test-file-stub"
                         />
                          Delete
                       </button>
@@ -160,8 +170,10 @@ exports[`CustomNetworkList renders without crashing 1`] = `
                         replace={false}
                         to="/editCustomNetwork/local"
                       >
-                        <i
-                          className="fas fa-edit"
+                        <img
+                          alt="pen on paper"
+                          className="customNetworkDropDownButtonImage"
+                          src="test-file-stub"
                         />
                         Edit
                       </Link>
@@ -176,8 +188,10 @@ exports[`CustomNetworkList renders without crashing 1`] = `
                     className="dropDownButton customNetworkDropdownButton"
                     onClick={[Function]}
                   >
-                    <i
-                      className="fas fa-ellipsis-v"
+                    <img
+                      alt="three vertical dots"
+                      className="customNetworkCardDropdownImage"
+                      src="test-file-stub"
                     />
                   </button>
                   <div
@@ -191,8 +205,10 @@ exports[`CustomNetworkList renders without crashing 1`] = `
                           className="customNetworkDropDownButton"
                           onClick={[Function]}
                         >
-                          <i
-                            className="fas fa-trash"
+                          <img
+                            alt="trashcan"
+                            className="customNetworkDropDownButtonImage"
+                            src="test-file-stub"
                           />
                            Delete
                         </button>
@@ -206,8 +222,10 @@ exports[`CustomNetworkList renders without crashing 1`] = `
                             href="/editCustomNetwork/local"
                             onClick={[Function]}
                           >
-                            <i
-                              className="fas fa-edit"
+                            <img
+                              alt="pen on paper"
+                              className="customNetworkDropDownButtonImage"
+                              src="test-file-stub"
                             />
                             Edit
                           </a>

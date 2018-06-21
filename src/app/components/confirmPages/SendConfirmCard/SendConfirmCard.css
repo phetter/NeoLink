@@ -13,9 +13,8 @@
 }
 
 .confirmSendCardMainIcon {
-  font-size: 1.7rem;
+  width: 30px;
   margin: 10px;
-  color: #36b049;
 }
 
 .confirmSendCardDetailsHeading {
@@ -25,14 +24,15 @@
 
 .confirmSendCardDetails {
   display: flex;
+  align-items: center;
   width: 80%;
 }
 
 .confirmSendSecondaryIcon {
-  font-size: 1.1rem;
-  margin-right: 10px;
-  transform: translateY(5px);
-  color: #36b049;
+    width: 15px;
+    display: inline-block;
+    margin-right: 10px;
+    transform: translateY(-23px);
 }
 
 .confirmSendDetailsText {

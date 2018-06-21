@@ -30,13 +30,17 @@ h6 {
   background-color: #eaeaea;
 }
 
+::-webkit-scrollbar {
+    display: none;
+}
+
+[data-whatintent="mouse"] :focus {
+    outline-width: 0;
+}
+
 /* Temporary styling to make WIP pages more usable */
 .tempFormStyle {
   padding: 20px;
   display: flex;
   flex-direction: column;
-}
-
-::-webkit-scrollbar {
-  display: none;
 }

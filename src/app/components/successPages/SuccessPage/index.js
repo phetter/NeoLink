@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import checkSVG from '../../../../img/checkGreen.svg'
+
 import style from './SuccessPage.css'
 
 const SuccessPage = ({ title, children, classNames }) => (
   <section className={ style.successPage + ' ' + classNames }>
     <div className={ style.successPageIconContainer }>
-      <i className='fas fa-check' />
+      <img src={ checkSVG } alt='checkmark' className={ style.successPageIconImage } />
     </div>
     <h2 className={ style.successPageHeading }>{title}</h2>
     {children}

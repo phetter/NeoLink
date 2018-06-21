@@ -21,6 +21,10 @@
   align-items: center;
 }
 
+.successPageIconImage {
+  width: 25px;
+}
+
 .successPageHeading {
   margin-bottom: 30px;
 }
