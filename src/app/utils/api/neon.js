@@ -207,4 +207,3 @@ export const sendAsset = (netUrl, toAddress, account, wif, assetAmounts, remark,
       return res
     })
 }
-

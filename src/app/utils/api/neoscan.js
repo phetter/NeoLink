@@ -52,6 +52,7 @@ const validateUrl = (url) => {
   return new Promise((resolve, reject) => {
     try {
       const u = new URL(url)
+      console.log('host: ' + u)
       resolve(url)
     } catch (error) {
       console.log('neoscan: validateUrl: ' + error.message)
