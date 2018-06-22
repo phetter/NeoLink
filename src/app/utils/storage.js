@@ -1,4 +1,4 @@
-import * as Neoscan from './NeoscanApi'
+import * as Neoscan from './api/neoscan'
 
 function saveState(state) {
   chrome.storage.local.set({ state: JSON.stringify(state) })

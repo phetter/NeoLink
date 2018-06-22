@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
-import * as Neoscan from '../../utils/NeoscanApi'
+import * as Neoscan from '../../utils/api/neoscan'
 
-import { getAccountName, validateLength } from '../../utils/NeonJsHelpers'
+import { getAccountName, validateLength } from '../../utils/api/neon'
 
 import AccountInfo from '../../components/AccountInfo'
 import RenameAccount from '../../components/RenameAccount'

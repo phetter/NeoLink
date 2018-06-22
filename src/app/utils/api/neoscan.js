@@ -1,18 +1,17 @@
-// NeoscanApi.js
-// This is really a Neolink API but it's mainly for neoscan right now.
+// Neoscan.js
+// This contains utility helpers for accessing Neoscan API
 
 // TODO abstract api choice into an api config option and dynamically map to selected at runtime
-// TODO mkdir neoscan and move to file called api.js or main.js
 // TODO composable url retrieval
 
 import axios from 'axios'
 
-// import { Fixed8 } from './math'
-// import { logDeep } from './debug'
+// import { Fixed8 } from '../math'
+// import { logDeep } from '../debug'
 
 import Promise from 'bluebird'
 
-// TODO Reintegrate this with state tree
+// TODO Reintegrate this (neoscanIni bits) with state tree
 
 let neoscanIni = {}
 
@@ -22,24 +21,37 @@ neoscanIni.mainNet.rootUrl = 'https://neoscan.io/api/main_net/'
 neoscanIni.mainNet.txByIdUrl = 'https://neoscan.io/api/main_net/v1/get_transaction/'
 neoscanIni.mainNet.txsByAddressUrl = 'https://neoscan.io/api/main_net/v1/get_last_transactions_by_address/'
 neoscanIni.mainNet.balanceUrl = 'https://neoscan.io/api/main_net/v1/get_balance/'
+
 neoscanIni.testNet = {}
 neoscanIni.testNet.rootUrl = 'https://neoscan-testnet.io/api/test_net/'
 neoscanIni.testNet.txByIdUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/'
 neoscanIni.testNet.txsByAddressUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_last_transactions_by_address/'
 neoscanIni.testNet.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_balance/'
 
+// Stub this out for any custom net that may come along.
+// Rather than make these an array, let's create them by a custom name right on the object - neoscainIni.myCustom, for example
+// Then just set neoscanIni.active to that entry.
+// Store the whole thing for later management.
+neoscanIni.custom = {}
+neoscanIni.custom.rootUrl = 'https://neoscan-testnet.io/api/test_net/'
+neoscanIni.testNet.txByIdUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/'
+neoscanIni.testNet.txsByAddressUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_last_transactions_by_address/'
+neoscanIni.testNet.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_balance/'
+
 let curState = {}
 
+// ../storage.js adds this as a subscriber to listen for state changes.
+// I'm not sure this is the right approach as we still can't sync state yet.
+// TODO figure out how to sync state and do this whole bit properly
 export const syncState = (state) => {
   curState = state
-  // logDeep('rootUrl: ', curState.config.neoscan.rootUrl)
 }
 
+// Check if our url is properly formed. If url can't construct it in try, it isn't.
 const validateUrl = (url) => {
   return new Promise((resolve, reject) => {
     try {
       const u = new URL(url)
-      console.log(u.hostname)
       resolve(url)
     } catch (error) {
       console.log('neoscan: validateUrl: ' + error.message)
@@ -95,6 +107,12 @@ export const switchNetwork = networkId => {
       }
       break
     default:
+      // TODO need to write this case to properly handle custom networks in neoscan
+      // pseudo:
+      // loop over curState looking for a curState.config.neoscan['custom_name_literal'] that matches networkId
+      // build the json object if it isn't built.
+      // set net and active to the matched net
+      // return the net if we found one, return null if not
       return undefined
   }
   return net

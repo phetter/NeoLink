@@ -9,7 +9,7 @@ import '@material/button/dist/mdc.button.min.css'
 import '@material/textfield/dist/mdc.textfield.min.css'
 import '@material/select/dist/mdc.select.min.css'
 
-import { callInvoke } from '../../utils/neonWrappers'
+import { callInvoke } from '../../utils/api/neon'
 
 import style from './SendInvoke.css'
 import tempStyle from '../App/App.css'

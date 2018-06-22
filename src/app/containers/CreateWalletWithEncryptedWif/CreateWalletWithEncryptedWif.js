@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { wallet } from '@cityofzion/neon-js'
-import { labelExists } from '../../utils/NeonJsHelpers'
+import { labelExists } from '../../utils/api/neon'
 
 import Box from '../../components/common/Box'
 import InputField from '../../components/common/form/InputField'

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Button } from 'rmwc/Button'
 import '@material/button/dist/mdc.button.min.css'
 
-import { callInvoke } from '../../utils/neonWrappers'
+import { callInvoke } from '../../utils/api/neon'
 
 import style from './SendInvoke.css'
 import globalStyle from '../../components/ContentWrapper/ContentWrapper.css'

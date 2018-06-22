@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { getBalance } from '../../utils/NeonJsHelpers'
+import { getBalance } from '../../utils/api/neon'
 
 import SwitchAccountCard from '../../components/SwitchAccountCard'
 
