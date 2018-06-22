@@ -1,4 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
+// a
 
 exports[`CustomNetworkList renders without crashing 1`] = `
 <StaticRouter
