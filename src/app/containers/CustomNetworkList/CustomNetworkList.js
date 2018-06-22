@@ -13,7 +13,7 @@ import editSVG from '../../../img/edit.svg'
 
 import style from './CustomNetworkList.css'
 
-// import { truncateUrl } from '../../utils/NeonJsHelpers'
+// import { truncateUrl } from '../../utils/api/neon'
 
 class CustomNetworkList extends Component {
   state = {

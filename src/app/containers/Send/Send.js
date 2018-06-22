@@ -4,9 +4,7 @@ import { Field, reduxForm } from 'redux-form'
 
 import { wallet } from '@cityofzion/neon-js'
 
-import { getBalance, getAccountName } from '../../utils/NeonJsHelpers'
-
-import { sendAsset } from '../../utils/neonWrappers'
+import { getBalance, getAccountName, sendAsset } from '../../utils/api/neon'
 
 import AccountInfo from '../../components/AccountInfo'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'

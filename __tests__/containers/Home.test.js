@@ -3,8 +3,8 @@ import { Provider } from 'react-redux'
 import { mount, shallow } from 'enzyme'
 import MockStore from '../../__mocks__/MockStore'
 import { StaticRouter } from 'react-router'
-// import * as helpers from '../../src/app/utils/NeonJsHelpers'
-import * as Neoscan from '../../src/app/utils/NeoscanApi'
+// import * as helpers from '../../src/app/utils/api/neon'
+import * as Neoscan from '../../src/app/utils/api/neoscan'
 
 import Home from '../../src/app/containers/Home/Home'
 

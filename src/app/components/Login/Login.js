@@ -11,7 +11,7 @@ import StartPage from '../StartPage'
 import withForm from '../HoC/withForm'
 
 import style from './Login.css'
-import * as Neoscan from '../../utils/NeoscanApi'
+import * as Neoscan from '../../utils/api/neoscan'
 
 export class Login extends Component {
   state = {

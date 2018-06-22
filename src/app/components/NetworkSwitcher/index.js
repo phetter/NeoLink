@@ -1,3 +1,5 @@
+// NetworkSwitcher/index.js
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
@@ -9,9 +11,9 @@ import chevron from '../../../img/chevron-down.svg'
 import neoImg from '../../../img/icon-34.png'
 import flask from '../../../img/flask.svg'
 
-import * as Neoscan from '../../utils/NeoscanApi'
+import * as Neoscan from '../../utils/api/neoscan'
 
-import { truncateString } from '../../utils/NeonJsHelpers'
+import { truncateString } from '../../utils/api/neon'
 
 class NetworkSwitcher extends Component {
   changeNetwork = selectedNetworkId => {
@@ -20,9 +22,9 @@ class NetworkSwitcher extends Component {
     if (selectedNetworkId) {
       setNetwork(selectedNetworkId)
       console.log('switching to net: ' + selectedNetworkId)
-      // neon-js / neondb
-      // getBalance(networks, selectedNetworkId, account).then(results => setBalance(results.neo, results.gas))
-      // getTransactions(networks, selectedNetworkId, account).then(results => setTransactions(results))
+      // neon-js / neondb version follows
+      //  getBalance(networks, selectedNetworkId, account).then(results => setBalance(results.neo, results.gas))
+      //  getTransactions(networks, selectedNetworkId, account).then(results => setTransactions(results))
 
       if (Neoscan.switchNetwork(selectedNetworkId)) {
         console.log('switching to : ' + selectedNetworkId)
