@@ -9,7 +9,3 @@ export const lookDeep = (o) => {
 export const logDeep = (msg, o) => {
   console.log(msg + ' ' + lookDeep(o))
 }
-
-// export const logdeep_i = (o) => {
-//
-// }
