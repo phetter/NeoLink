@@ -8,6 +8,8 @@ import SwitchAccountCard from '../../components/SwitchAccountCard'
 import SwitchAccountConfirm from '../../components/SwitchAccountConfirm'
 import Loader from '../../components/Loader'
 
+import switchSVG from '../../../img/syncSolid.svg'
+
 import style from './SwitchAccount.css'
 
 class SwitchAccount extends Component {
@@ -57,11 +59,20 @@ class SwitchAccount extends Component {
     const { accounts } = this.state
     let selectedAccountIndex
     const accountCards = accounts.map(({ label, neo, gas, address, encryptedKey }, index) => {
+      const selected = account.address === address
       let selectedStyles = null
-      if (account.address === address) {
+      let switchAccountButton = null
+      if (selected) {
         selectedStyles = style.accountSelected
         selectedAccountIndex = index
+      } else {
+        switchAccountButton = (
+          <button className={ style.switchAccountButton } onClick={ this.handleSwitchAccountCardClick }>
+            <img src={ switchSVG } alt='arrows in circle' />Switch
+          </button>
+        )
       }
+
       return (
         <SwitchAccountCard
           label={ label }
@@ -69,6 +80,7 @@ class SwitchAccount extends Component {
           gas={ gas }
           address={ address }
           encryptedKey={ encryptedKey }
+          switchAccountButton={ switchAccountButton }
           classNames={ selectedStyles }
           onClickHandler={ () => this.handleSwitchAccountCardClick(encryptedKey) }
           key={ address }

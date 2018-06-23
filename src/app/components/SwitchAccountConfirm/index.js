@@ -21,7 +21,6 @@ const SwitchAccountConfirm = ({
 }) => {
   return (
     <section>
-      {console.log(error)}
       {error && <ErrorCard message={ error } onClickHandler={ onErrorCloseHandler } />}
       <BackNavigation onClickHandler={ onClickHandler } />
       <section className={ style.switchAccountConfirmContainer }>
