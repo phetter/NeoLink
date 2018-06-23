@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { getBalance } from '../../utils/api/neon'
+import * as Neoscan from '../../utils/api/neoscan'
 
 import SwitchAccountCard from '../../components/SwitchAccountCard'
 
@@ -24,12 +24,12 @@ class SwitchAccount extends Component {
   }
 
   setAccountState = () => {
-    const { accounts, networks, selectedNetworkId } = this.props
+    const { accounts } = this.props
     const formattedAccounts = []
 
     const accountsArray = Object.keys(accounts)
     accountsArray.map((account, index) => {
-      getBalance(networks, selectedNetworkId, accounts[account].address).then(response => {
+      Neoscan.getBalance(accounts[account].address).then(response => {
         formattedAccounts.push({
           address: accounts[account].address,
           encryptedKey: accounts[account].key,
@@ -48,7 +48,6 @@ class SwitchAccount extends Component {
     const { account } = this.props
     const { accounts } = this.state
     let selectedAccountIndex
-
     const accountCards = accounts.map(({ label, neo, gas, address }, index) => {
       let selectedStyles = null
       if (account.address === address) {
@@ -66,10 +65,8 @@ class SwitchAccount extends Component {
         />
       )
     })
-
     const selectedAccount = accountCards.splice(selectedAccountIndex, 1)
     accountCards.unshift(selectedAccount)
-
     return accountCards
   }
 

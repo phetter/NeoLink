@@ -31,14 +31,7 @@ const TransactionList = ({ transactions, transactionHistoryError, getTransaction
         gas: change.GAS ? Math.abs(Number(change.GAS)) : 0,
       }
 
-      return (
-        <Transaction
-          key={ tx.txid }
-          transaction={ tx }
-          neoSent={ amounts.neo > 0 }
-          amounts={ amounts }
-        />
-      )
+      return <Transaction key={ tx.txid } transaction={ tx } neoSent={ amounts.neo > 0 } amounts={ amounts } />
     })
   }
 
@@ -59,10 +52,8 @@ const TransactionList = ({ transactions, transactionHistoryError, getTransaction
     if (transactionCards.length > 0) {
       content = (
         <div>
-          <div align='center'>
-            { transactions.data.length }
-          </div>
-          <div>{ transactionCards }</div>
+          <div align='center'>{transactions.data.length}</div>
+          <div>{transactionCards}</div>
         </div>
       )
     } else {

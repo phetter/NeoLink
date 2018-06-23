@@ -28,26 +28,28 @@ class Transaction extends Component {
   }
 
   render() {
-    Neoscan.getTxById(this.transactionId).then(tx => {
-      this.remarks = []
+    Neoscan.getTxById(this.transactionId)
+      .then(tx => {
+        this.remarks = []
 
-      tx.attributes.map((remark, i) => {
-        if (remark.usage === 'Remark') {
-          let s = string.hexstring2str(remark.data)
-          this.remarks.push(s)
-        }
+        tx.attributes.map((remark, i) => {
+          if (remark.usage === 'Remark') {
+            let s = string.hexstring2str(remark.data)
+            this.remarks.push(s)
+          }
+        })
+
+        // let d = new Date(0)
+        this.txTime = new Date(tx.time * 1000).toLocaleString()
       })
-
-      // let d = new Date(0)
-      this.txTime = new Date(tx.time * 1000).toLocaleString()
-    }).catch(error => {
-      console.log('error: ' + error)
-    })
+      .catch(error => {
+        console.log('error: ' + error)
+      })
 
     let remarks
     if (this.remarks && this.remarks.length) {
       remarks = this.remarks.map((remark, i) => {
-        return <li key={ this.transactionId + i }>{ remark}</li>
+        return <li key={ this.transactionId + i }>{remark}</li>
       })
     } else {
       remarks = ['']
@@ -57,31 +59,25 @@ class Transaction extends Component {
       <div>
         <div />
         <div className={ style.transactionCard }>
-
-          <a
-            href={ this.txUrl }
-            className={ style.transactionCardLink }
-            target='_blank'
-            rel='noopener'
-          >
+          <a href={ this.txUrl } className={ style.transactionCardLink } target='_blank' rel='noopener'>
             <h4 className={ style.transactionCardHeading }>{this.transactionId}</h4>
           </a>
 
           <p className={ style.transactionCardParagraph }>
             {this.icon}{' '}
             <span className={ style.transactionCardAmount }>
-              {this.amount} {this.amountText}</span>
+              {this.amount} {this.amountText}
+            </span>
           </p>
           <div>
             <p className={ style.transactionCardParagraph }>
-              <span className={ style.transactionCardRemarks }>{remarks}
-              </span>
+              <span className={ style.transactionCardRemarks }>{remarks}</span>
             </p>
           </div>
           <div>
             <p className={ style.transactionCardParagraph }>
               <span className={ style.transactionCardTime }>
-                <b>{ this.txTime }</b>
+                <b>{this.txTime}</b>
               </span>
             </p>
           </div>
@@ -101,7 +97,6 @@ Transaction.propTypes = {
   amounts: PropTypes.object.isRequired,
   // remarks: PropTypes.array,
   // addTransactionRemark: PropTypes.func,
-
 }
 
 export default Transaction
