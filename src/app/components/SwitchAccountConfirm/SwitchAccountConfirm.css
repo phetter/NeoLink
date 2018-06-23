@@ -20,3 +20,10 @@
 .switchAccountBox {
     padding: 30px 20px;
 }
+
+.switchAccountConfirmForm {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

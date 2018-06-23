@@ -15,6 +15,7 @@ class SwitchAccount extends Component {
     accounts: [],
     showPasswordPrompt: false,
     loading: false,
+    switchAccountError: '',
     password: '',
     encryptedWif: '',
   }
@@ -99,18 +100,22 @@ class SwitchAccount extends Component {
         setAccount(encryptedWif, account.address)
         history.push('/home')
       })
-      .catch(error => {
-        this.setState({ loading: false })
-        console.log(error)
+      .catch(() => {
+        this.setState({
+          loading: false,
+          switchAccountError: 'We could not switch your account. Please make sure your password is correct.',
+        })
       })
   }
 
   handleChange = e => this.setState({ password: e.target.value })
 
+  handleErrorClose = e => this.setState({ switchAccountError: '' })
+
   resetAccountInfo = () => this.setState({ encryptedWif: '', showPasswordPrompt: false })
 
   render() {
-    const { showPasswordPrompt, password, loading } = this.state
+    const { showPasswordPrompt, password, loading, switchAccountError } = this.state
     return (
       <Fragment>
         {loading && <Loader />}
@@ -127,7 +132,9 @@ class SwitchAccount extends Component {
               onClickHandler={ this.resetAccountInfo }
               onSubmitHandler={ this.handlePasswordSubmit }
               onChangeHandler={ this.handleChange }
+              onErrorCloseHandler={ this.handleErrorClose }
               value={ password }
+              error={ switchAccountError }
             />
           )}
       </Fragment>
