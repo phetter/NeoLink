@@ -1,0 +1,22 @@
+.switchAccountConfirmContainer {
+    padding: 20px;
+}
+
+.switchAccountConfirmParagraph {
+    font-size: 0.9rem;
+    color: #585858;
+    text-align: center;
+    margin-top: 0;
+}
+
+.switchAccountConfirmImage {
+    width: 30px;
+}
+
+.switchAccountInputField {
+    margin: 25px 0;
+}
+
+.switchAccountBox {
+    padding: 30px 10px;
+}

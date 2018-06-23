@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import * as Neoscan from '../../utils/api/neoscan'
 
 import SwitchAccountCard from '../../components/SwitchAccountCard'
+import SwitchAccountConfirm from '../../components/SwitchAccountConfirm'
 
 import style from './SwitchAccount.css'
 
@@ -30,7 +31,6 @@ class SwitchAccount extends Component {
     const formattedAccounts = []
 
     const accountsArray = Object.keys(accounts)
-    console.log(accountsArray.length)
     accountsArray.map((account, index) => {
       Neoscan.getBalance(accounts[account].address).then(response => {
         formattedAccounts.push({
@@ -84,16 +84,17 @@ class SwitchAccount extends Component {
 
   render() {
     const { showPasswordPrompt } = this.state
+    const { history } = this.props
     return (
-      <section className={ style.switchAccountContainer }>
+      <Fragment>
         {!showPasswordPrompt && (
-          <Fragment>
+          <section className={ style.switchAccountContainer }>
             <h1 className={ style.switchAccountHeading }>Switch Account</h1>
             {this.generateAccountCards()}
-          </Fragment>
+          </section>
         )}
-        {showPasswordPrompt && <div>Password</div>}
-      </section>
+        {showPasswordPrompt && <SwitchAccountConfirm history={ history } />}
+      </Fragment>
     )
   }
 }
@@ -101,7 +102,6 @@ class SwitchAccount extends Component {
 SwitchAccount.propTypes = {
   accounts: PropTypes.object,
   account: PropTypes.object,
-  networks: PropTypes.object,
   selectedNetworkId: PropTypes.object,
 }
 
