@@ -12,6 +12,7 @@ class SwitchAccount extends Component {
   state = {
     accounts: [],
     showPasswordPrompt: false,
+    password: '',
     encryptedKey: '',
   }
 
@@ -82,9 +83,12 @@ class SwitchAccount extends Component {
     }
   }
 
+  handlePasswordSubmit = () => {}
+
+  resetAccountInfo = () => this.setState({ encryptedKey: '', showPasswordPrompt: false })
+
   render() {
-    const { showPasswordPrompt } = this.state
-    const { history } = this.props
+    const { showPasswordPrompt, password } = this.state
     return (
       <Fragment>
         {!showPasswordPrompt && (
@@ -93,7 +97,13 @@ class SwitchAccount extends Component {
             {this.generateAccountCards()}
           </section>
         )}
-        {showPasswordPrompt && <SwitchAccountConfirm history={ history } />}
+        {showPasswordPrompt && (
+          <SwitchAccountConfirm
+            onClickHandler={ this.resetAccountInfo }
+            onSubmitHandler={ this.handlePasswordSubmit }
+            value={ password }
+          />
+        )}
       </Fragment>
     )
   }

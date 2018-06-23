@@ -4,16 +4,16 @@ import PropTypes from 'prop-types'
 import InputField from '../../components/common/form/InputField'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 import Box from '../../components/common/Box'
-import SettingsNavigation from '../../components/SettingsNavigation'
+import BackNavigation from '../../components/BackNavigation'
 
 import keySVG from '../../../img/key.svg'
 
 import style from './SwitchAccountConfirm.css'
 
-const SwitchAccountConfirm = ({ history }) => {
+const SwitchAccountConfirm = ({ onClickHandler, password }) => {
   return (
     <section>
-      <SettingsNavigation path='/switchAccounts' history={ history } />
+      <BackNavigation onClickHandler={ onClickHandler } />
       <section className={ style.switchAccountConfirmContainer }>
         <Box classNames={ style.switchAccountBox }>
           <img src={ keySVG } alt='key' className={ style.switchAccountConfirmImage } />
@@ -23,6 +23,7 @@ const SwitchAccountConfirm = ({ history }) => {
           </p>
           <InputField
             type='password'
+            value={ password }
             onChange={ () => {} }
             placeholder={ 'Password' }
             classNames={ style.switchAccountInputField }
@@ -35,7 +36,8 @@ const SwitchAccountConfirm = ({ history }) => {
 }
 
 SwitchAccountConfirm.propTypes = {
-  history: PropTypes.object,
+  onClickHandler: PropTypes.func,
+  password: PropTypes.string,
 }
 
 export default SwitchAccountConfirm

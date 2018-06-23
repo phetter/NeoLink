@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
-import SettingsNavigation from '../../components/SettingsNavigation'
+import BackNavigation from '../../components/BackNavigation'
 import CustomNetworkCard from '../../components/CustomNetworkCard'
 import Overlay from '../../components/Overlay'
 import ConfirmDelete from '../../components/ConfirmDelete'
@@ -109,7 +109,7 @@ class CustomNetworkList extends Component {
             />
           </Overlay>
         )}
-        <SettingsNavigation history={ history } />
+        <BackNavigation onClickHandler={ () => history.push('/settings') } />
         <section className={ style.manageNetworksContainer }>
           <h1 className={ style.manageNetworksHeading }>Manage Networks</h1>
           {content}

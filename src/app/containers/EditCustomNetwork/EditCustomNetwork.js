@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { reduxForm } from 'redux-form'
 
-import SettingsNavigation from '../../components/SettingsNavigation'
+import BackNavigation from '../../components/BackNavigation'
 import NetworkSuccessPage from '../../components/successPages/NetworkSuccessPage'
 import CustomNetworkForm from '../../components/common/form/CustomNetworkForm'
 import CustomNetworkContainer from '../../components/CustomNetworkContainer'
@@ -34,7 +34,12 @@ export class EditCustomNetwork extends Component {
     const currentObject = networks[currentObjectName]
 
     // TODO fix this to work with composable system
-    this.props.initialize({ name: currentObject.name, url: currentObject.url, txUrl: currentObject.txUrl, apiType: currentObject.apiType })
+    this.props.initialize({
+      name: currentObject.name,
+      url: currentObject.url,
+      txUrl: currentObject.txUrl,
+      apiType: currentObject.apiType,
+    })
   }
 
   _validateName = input => {
@@ -91,7 +96,7 @@ export class EditCustomNetwork extends Component {
           <NetworkSuccessPage history={ history } title={ 'Network Updated' } />
         ) : (
           <Fragment>
-            <SettingsNavigation history={ history } path='/manageNetworks' />
+            <BackNavigation onClickHandler={ () => history.push('/manageNetworks') } />
             <CustomNetworkContainer title='Edit Network'>
               <CustomNetworkForm
                 onSubmit={ handleSubmit(this.handleSubmit) }
