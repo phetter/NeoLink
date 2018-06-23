@@ -30,6 +30,7 @@ class SwitchAccount extends Component {
     const formattedAccounts = []
 
     const accountsArray = Object.keys(accounts)
+    console.log(accountsArray.length)
     accountsArray.map((account, index) => {
       Neoscan.getBalance(accounts[account].address).then(response => {
         formattedAccounts.push({
@@ -40,7 +41,7 @@ class SwitchAccount extends Component {
           gas: response.gas,
         })
         if (index === accountsArray.length - 1) {
-          this.setState({ accounts: formattedAccounts })
+          setTimeout(() => this.setState({ accounts: formattedAccounts }), 0)
         }
       })
     })
