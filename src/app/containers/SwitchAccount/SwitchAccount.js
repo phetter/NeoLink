@@ -1,10 +1,12 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import { wallet } from '@cityofzion/neon-js'
 
 import * as Neoscan from '../../utils/api/neoscan'
 
 import SwitchAccountCard from '../../components/SwitchAccountCard'
 import SwitchAccountConfirm from '../../components/SwitchAccountConfirm'
+import Loader from '../../components/Loader'
 
 import style from './SwitchAccount.css'
 
@@ -12,8 +14,9 @@ class SwitchAccount extends Component {
   state = {
     accounts: [],
     showPasswordPrompt: false,
+    loading: false,
     password: '',
-    encryptedKey: '',
+    encryptedWif: '',
   }
 
   componentDidMount() {
@@ -76,34 +79,57 @@ class SwitchAccount extends Component {
     return accountCards
   }
 
-  handleSwitchAccountCardClick = encryptedKey => {
+  handleSwitchAccountCardClick = encryptedWif => {
     const { account } = this.props
-    if (encryptedKey !== account.wif) {
-      this.setState({ showPasswordPrompt: true, encryptedKey })
+    if (encryptedWif !== account.wif) {
+      this.setState({ showPasswordPrompt: true, encryptedWif })
     }
   }
 
-  handlePasswordSubmit = () => {}
+  handlePasswordSubmit = () => {
+    const { encryptedWif, password } = this.state
+    const { setAccount, history } = this.props
+    this.setState({ loading: true })
+    console.log(encryptedWif, password)
+    wallet
+      .decryptAsync(encryptedWif, password)
+      .then(wif => {
+        const account = new wallet.Account(wif)
 
-  resetAccountInfo = () => this.setState({ encryptedKey: '', showPasswordPrompt: false })
+        setAccount(encryptedWif, account.address)
+        history.push('/home')
+      })
+      .catch(error => {
+        this.setState({ loading: false })
+        console.log(error)
+      })
+  }
+
+  handleChange = e => this.setState({ password: e.target.value })
+
+  resetAccountInfo = () => this.setState({ encryptedWif: '', showPasswordPrompt: false })
 
   render() {
-    const { showPasswordPrompt, password } = this.state
+    const { showPasswordPrompt, password, loading } = this.state
     return (
       <Fragment>
-        {!showPasswordPrompt && (
-          <section className={ style.switchAccountContainer }>
-            <h1 className={ style.switchAccountHeading }>Switch Account</h1>
-            {this.generateAccountCards()}
-          </section>
-        )}
-        {showPasswordPrompt && (
-          <SwitchAccountConfirm
-            onClickHandler={ this.resetAccountInfo }
-            onSubmitHandler={ this.handlePasswordSubmit }
-            value={ password }
-          />
-        )}
+        {loading && <Loader />}
+        {!showPasswordPrompt &&
+          !loading && (
+            <section className={ style.switchAccountContainer }>
+              <h1 className={ style.switchAccountHeading }>Switch Account</h1>
+              {this.generateAccountCards()}
+            </section>
+          )}
+        {showPasswordPrompt &&
+          !loading && (
+            <SwitchAccountConfirm
+              onClickHandler={ this.resetAccountInfo }
+              onSubmitHandler={ this.handlePasswordSubmit }
+              onChangeHandler={ this.handleChange }
+              value={ password }
+            />
+          )}
       </Fragment>
     )
   }
@@ -113,6 +139,8 @@ SwitchAccount.propTypes = {
   accounts: PropTypes.object,
   account: PropTypes.object,
   selectedNetworkId: PropTypes.object,
+  setAccount: PropTypes.func,
+  history: PropTypes.object,
 }
 
 export default SwitchAccount

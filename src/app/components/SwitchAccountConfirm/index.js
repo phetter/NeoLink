@@ -10,7 +10,7 @@ import keySVG from '../../../img/key.svg'
 
 import style from './SwitchAccountConfirm.css'
 
-const SwitchAccountConfirm = ({ onClickHandler, password }) => {
+const SwitchAccountConfirm = ({ onClickHandler, password, onChangeHandler, onSubmitHandler }) => {
   return (
     <section>
       <BackNavigation onClickHandler={ onClickHandler } />
@@ -24,11 +24,11 @@ const SwitchAccountConfirm = ({ onClickHandler, password }) => {
           <InputField
             type='password'
             value={ password }
-            onChange={ () => {} }
+            onChangeHandler={ onChangeHandler }
             placeholder={ 'Password' }
             classNames={ style.switchAccountInputField }
           />
-          <PrimaryButton buttonText='Confirm Switch' />
+          <PrimaryButton buttonText='Confirm Switch' onClickHandler={ onSubmitHandler } />
         </Box>
       </section>
     </section>
@@ -37,6 +37,8 @@ const SwitchAccountConfirm = ({ onClickHandler, password }) => {
 
 SwitchAccountConfirm.propTypes = {
   onClickHandler: PropTypes.func,
+  onChangeHandler: PropTypes.func,
+  onSubmitHandler: PropTypes.func,
   password: PropTypes.string,
 }
 
