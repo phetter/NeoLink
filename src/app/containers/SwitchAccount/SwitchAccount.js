@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 
 import * as Neoscan from '../../utils/api/neoscan'
@@ -10,6 +10,8 @@ import style from './SwitchAccount.css'
 class SwitchAccount extends Component {
   state = {
     accounts: [],
+    showPasswordPrompt: false,
+    encryptedKey: '',
   }
 
   componentDidMount() {
@@ -48,7 +50,7 @@ class SwitchAccount extends Component {
     const { account } = this.props
     const { accounts } = this.state
     let selectedAccountIndex
-    const accountCards = accounts.map(({ label, neo, gas, address }, index) => {
+    const accountCards = accounts.map(({ label, neo, gas, address, encryptedKey }, index) => {
       let selectedStyles = null
       if (account.address === address) {
         selectedStyles = style.accountSelected
@@ -60,7 +62,9 @@ class SwitchAccount extends Component {
           neo={ neo }
           gas={ gas }
           address={ address }
+          encryptedKey={ encryptedKey }
           classNames={ selectedStyles }
+          onClickHandler={ () => this.handleSwitchAccountCardClick(encryptedKey) }
           key={ address }
         />
       )
@@ -70,11 +74,24 @@ class SwitchAccount extends Component {
     return accountCards
   }
 
+  handleSwitchAccountCardClick = encryptedKey => {
+    const { account } = this.props
+    if (encryptedKey !== account.wif) {
+      this.setState({ showPasswordPrompt: true, encryptedKey })
+    }
+  }
+
   render() {
+    const { showPasswordPrompt } = this.state
     return (
       <section className={ style.switchAccountContainer }>
-        <h1 className={ style.switchAccountHeading }>Switch Account</h1>
-        {this.generateAccountCards()}
+        {!showPasswordPrompt && (
+          <Fragment>
+            <h1 className={ style.switchAccountHeading }>Switch Account</h1>
+            {this.generateAccountCards()}
+          </Fragment>
+        )}
+        {showPasswordPrompt && <div>Password</div>}
       </section>
     )
   }
