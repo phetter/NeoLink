@@ -157,12 +157,7 @@ export const getTxsByAddressUrl = address => {
 export const getBalanceUrl = address => {
   console.log(curState.config.neoscan.active.balanceUrl, address)
   if (address) {
-    return validateUrl(
-      (curState.config.neoscan.active.balanceUrl || 'https://neoscan-testnet.io/api/test_net/v1/get_balance/') +
-        '/' +
-        address +
-        '/'
-    )
+    return validateUrl(curState.config.neoscan.active.balanceUrl + '/' + address + '/')
   } else return validateUrl(curState.config.neoscan.active.balanceUrl)
 }
 
