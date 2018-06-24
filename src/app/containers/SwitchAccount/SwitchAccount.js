@@ -83,7 +83,7 @@ class SwitchAccount extends Component {
           switchAccountButton={ switchAccountButton }
           classNames={ selectedStyles }
           onClickHandler={ () => this.handleSwitchAccountCardClick(encryptedKey) }
-          key={ encryptedKey }
+          key={ address }
         />
       )
     })
