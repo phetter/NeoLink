@@ -150,9 +150,6 @@ export const getTxsByAddressUrl = address => {
 
 // Returns the full URL all the way up to the args.
 // I.e., 'https://neoscan.io/api/main_net/v1/get_transaction/'
-// TODO getBalanceUrl curState.config is broken. It won't always stay synced with data,
-// resulting in failing calls. I've added a failsafe to use the literal string as a fallback
-// until we can fix the underlying issue.
 
 export const getBalanceUrl = address => {
   console.log(curState.config.neoscan.active.balanceUrl, address)
