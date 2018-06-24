@@ -15,7 +15,8 @@
     "Promise": true,
     "setInterval": true,
     "setTimeout": true,
-    "window": true
+    "window": true,
+    "URL": true
   },
   "extends": ["standard", "standard-react"],
   "rules": {
