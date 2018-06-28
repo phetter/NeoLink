@@ -31,9 +31,8 @@ class SendInvokeReadonly extends Component {
     const txConfig = {
       scriptHash: transaction.scriptHash,
       operation: transaction.operation,
-      arg1: transaction.args[0],
-      arg2: transaction.args[1],
-      amount: transaction.amount,
+      args: transaction.args,
+      assetAmount: transaction.amount,
       assetType: transaction.type,
     }
 
