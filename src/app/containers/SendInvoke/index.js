@@ -16,12 +16,6 @@ import tempStyle from '../App/App.css'
 
 import withLoginCheck from '../../components/Login/withLoginCheck'
 
-@connect(state => ({
-  networks: state.config.networks,
-  selectedNetworkId: state.config.selectedNetworkId,
-  account: state.account,
-}))
-
 class SendInvoke extends Component {
   state = {
     loading: false,
@@ -190,10 +184,16 @@ class SendInvoke extends Component {
   }
 }
 
-export default withLoginCheck(SendInvoke)
-
 SendInvoke.propTypes = {
   account: PropTypes.object,
   networks: PropTypes.object,
   selectedNetworkId: PropTypes.string,
 }
+
+const mapStateToProps = state => ({
+  networks: state.config.networks,
+  selectedNetworkId: state.config.selectedNetworkId,
+  account: state.account,
+})
+
+export default withLoginCheck(connect(mapStateToProps)(SendInvoke))

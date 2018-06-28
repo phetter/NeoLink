@@ -11,12 +11,9 @@ import '@material/textfield/dist/mdc.textfield.min.css'
 
 import tempStyle from '../App/App.css'
 import styles from './testInvoke.css'
+import withLoginCheck from "../../components/Login/withLoginCheck";
 
-@connect(state => ({
-  selectedNetworkId: state.config.selectedNetworkId,
-  networks: state.config.networks,
-}))
-export default class TestInvoke extends Component {
+class TestInvoke extends Component {
   state = {
     errorMsg: '',
     loading: false,
@@ -189,3 +186,10 @@ TestInvoke.propTypes = {
   selectedNetworkId: PropTypes.string,
   networks: PropTypes.object,
 }
+
+const mapStateToProps = state => ({
+  selectedNetworkId: state.config.selectedNetworkId,
+  networks: state.config.networks,
+})
+
+export default withLoginCheck(connect(mapStateToProps)(TestInvoke))

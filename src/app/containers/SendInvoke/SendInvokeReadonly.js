@@ -9,16 +9,9 @@ import { callInvoke } from '../../utils/api/neon'
 
 import style from './SendInvoke.css'
 import globalStyle from '../../components/ContentWrapper/ContentWrapper.css'
+import withLoginCheck from "../../components/Login/withLoginCheck";
 
-@connect(
-  state => ({
-    selectedNetworkId: state.config.selectedNetworkId,
-    networks: state.config.networks,
-    account: state.account,
-  })
-)
-
-export default class SendInvokeReadonly extends Component {
+class SendInvokeReadonly extends Component {
   state = {
     loading: false,
     errorMsg: '',
@@ -136,3 +129,11 @@ SendInvokeReadonly.propTypes = {
   transaction: PropTypes.object,
   onSuccess: PropTypes.func,
 }
+
+const mapStateToProps = state => ({
+  selectedNetworkId: state.config.selectedNetworkId,
+  networks: state.config.networks,
+  account: state.account,
+})
+
+export default withLoginCheck(connect(mapStateToProps)(SendInvokeReadonly))
