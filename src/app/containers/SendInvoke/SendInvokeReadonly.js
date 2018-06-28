@@ -9,7 +9,7 @@ import { callInvoke } from '../../utils/api/neon'
 
 import style from './SendInvoke.css'
 import globalStyle from '../../components/ContentWrapper/ContentWrapper.css'
-import withLoginCheck from "../../components/Login/withLoginCheck";
+import withLoginCheck from '../../components/Login/withLoginCheck'
 
 class SendInvokeReadonly extends Component {
   state = {

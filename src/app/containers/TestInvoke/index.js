@@ -11,7 +11,7 @@ import '@material/textfield/dist/mdc.textfield.min.css'
 
 import tempStyle from '../App/App.css'
 import styles from './testInvoke.css'
-import withLoginCheck from "../../components/Login/withLoginCheck";
+import withLoginCheck from '../../components/Login/withLoginCheck'
 
 class TestInvoke extends Component {
   state = {
