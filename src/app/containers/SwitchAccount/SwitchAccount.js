@@ -62,6 +62,7 @@ class SwitchAccount extends Component {
       const selected = account.address === address
       let selectedStyles = null
       let switchAccountButton = null
+
       if (selected) {
         selectedStyles = style.accountSelected
         selectedAccountIndex = index
