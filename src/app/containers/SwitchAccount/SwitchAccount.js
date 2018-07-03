@@ -129,27 +129,27 @@ class SwitchAccount extends Component {
 
   render() {
     const { showPasswordPrompt, password, loading, switchAccountError } = this.state
+    const showSwitchAccountCards = !showPasswordPrompt && !loading
+    const showSwitchAccountConfirm = showPasswordPrompt && !loading
     return (
       <Fragment>
         {loading && <Loader />}
-        {!showPasswordPrompt &&
-          !loading && (
-            <section className={ style.switchAccountContainer }>
-              <h1 className={ style.switchAccountHeading }>Switch Account</h1>
-              {this.generateAccountCards()}
-            </section>
-          )}
-        {showPasswordPrompt &&
-          !loading && (
-            <SwitchAccountConfirm
-              onClickHandler={ this.resetAccountInfo }
-              onSubmitHandler={ this.handlePasswordSubmit }
-              onChangeHandler={ this.handleChange }
-              onErrorCloseHandler={ this.handleErrorClose }
-              value={ password }
-              error={ switchAccountError }
-            />
-          )}
+        {showSwitchAccountCards && (
+          <section className={ style.switchAccountContainer }>
+            <h1 className={ style.switchAccountHeading }>Switch Account</h1>
+            {this.generateAccountCards()}
+          </section>
+        )}
+        {showSwitchAccountConfirm && (
+          <SwitchAccountConfirm
+            onClickHandler={ this.resetAccountInfo }
+            onSubmitHandler={ this.handlePasswordSubmit }
+            onChangeHandler={ this.handleChange }
+            onErrorCloseHandler={ this.handleErrorClose }
+            value={ password }
+            error={ switchAccountError }
+          />
+        )}
       </Fragment>
     )
   }
