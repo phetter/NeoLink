@@ -21,13 +21,8 @@ const TransactionCard = ({ transaction, neoSent, amounts, remarks }) => {
   const txUrl = ''
   return (
     <div className={ style.transactionCard }>
-      <a
-        href={ txUrl }
-        className={ style.transactionCardLink }
-        target='_blank'
-        rel='noopener'
-      >
-        <h4 className={ style.transactionCardHeading }>{ transactionId }</h4>
+      <a href={ txUrl } className={ style.transactionCardLink } target='_blank' rel='noopener'>
+        <h4 className={ style.transactionCardHeading }>{transactionId}</h4>
       </a>
 
       <p className={ style.transactionCardParagraph }>
@@ -49,7 +44,6 @@ TransactionCard.propTypes = {
   amounts: PropTypes.object.isRequired,
   remarks: PropTypes.array,
   // addTransactionRemark: PropTypes.func,
-
 }
 
 export default TransactionCard
