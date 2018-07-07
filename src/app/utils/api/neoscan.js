@@ -43,12 +43,12 @@ let curState = {}
 // ../storage.js adds this as a subscriber to listen for state changes.
 // I'm not sure this is the right approach as we still can't sync state yet.
 // TODO figure out how to sync state and do this whole bit properly
-export const syncState = (state) => {
+export const syncState = state => {
   curState = state
 }
 
 // Check if our url is properly formed. If url can't construct it in try, it isn't.
-const validateUrl = (url) => {
+const validateUrl = url => {
   return new Promise((resolve, reject) => {
     try {
       const u = new URL(url)
@@ -82,8 +82,9 @@ export const switchNetwork = networkId => {
   let net
   switch (networkId) {
     case 'MainNet':
-      if (curState && curState.config && curState.config.neoscan) net = curState.config.neoscan.active = curState.config.neoscan.mainNet
-      else {
+      if (curState && curState.config && curState.config.neoscan) {
+        net = curState.config.neoscan.active = curState.config.neoscan.mainNet
+      } else {
         curState = {
           config: {
             neoscan: {
@@ -95,8 +96,9 @@ export const switchNetwork = networkId => {
       }
       break
     case 'TestNet':
-      if (curState && curState.config && curState.config.neoscan) net = curState.config.neoscan.active = curState.config.neoscan.testNet
-      else {
+      if (curState && curState.config && curState.config.neoscan) {
+        net = curState.config.neoscan.active = curState.config.neoscan.testNet
+      } else {
         curState = {
           config: {
             neoscan: {
@@ -129,7 +131,7 @@ export const getRootUrl = () => {
 // Returns the full URL all the way up to the args.
 // I.e., 'https://neoscan.io/api/main_net/v1/get_transaction/'
 
-export const getTxByIdUrl = (txid) => {
+export const getTxByIdUrl = txid => {
   if (txid) {
     return validateUrl(curState.config.neoscan.active.txByIdUrl + '/' + txid + '/')
   } else {
@@ -141,7 +143,7 @@ export const getTxByIdUrl = (txid) => {
 // I.e., 'https://neoscan.io/api/main_net/v1/get_last_transactions_by_address/'
 // TODO add page argument format = address + '/' + page
 
-export const getTxsByAddressUrl = (address) => {
+export const getTxsByAddressUrl = address => {
   if (address) return validateUrl(curState.config.neoscan.active.txsByAddressUrl + '/' + address + '/')
   else return validateUrl(curState.config.neoscan.active.txsByAddressUrl)
 }
@@ -149,16 +151,19 @@ export const getTxsByAddressUrl = (address) => {
 // Returns the full URL all the way up to the args.
 // I.e., 'https://neoscan.io/api/main_net/v1/get_transaction/'
 
-export const getBalanceUrl = (address) => {
-  if (address) return validateUrl(curState.config.neoscan.active.balanceUrl + '/' + address + '/')
-  else return validateUrl(curState.config.neoscan.active.balanceUrl)
+export const getBalanceUrl = address => {
+  console.log(curState.config.neoscan.active.balanceUrl, address)
+  if (address) {
+    return validateUrl(curState.config.neoscan.active.balanceUrl + '/' + address + '/')
+  } else return validateUrl(curState.config.neoscan.active.balanceUrl)
 }
 
 // Get all transactions for an address
 
-export const getTxsByAddress = (address) => {
+export const getTxsByAddress = address => {
   return new Promise((resolve, reject) => {
     getTxsByAddressUrl(address).then(url => {
+      console.log(url)
       return axios
         .get(url)
         .then(response => {
@@ -175,7 +180,7 @@ export const getTxsByAddress = (address) => {
 
 // Get a single transaction
 
-export const getTxById = (txid) => {
+export const getTxById = txid => {
   return new Promise((resolve, reject) => {
     getTxByIdUrl(txid).then(url => {
       console.log(`Retrieving ${txid} History from neoscan ${url}`)
@@ -191,7 +196,7 @@ export const getTxById = (txid) => {
   })
 }
 
-export const getBalance = (address) => {
+export const getBalance = address => {
   return new Promise((resolve, reject) => {
     getBalanceUrl(address).then(url => {
       console.log(`Retrieving balance for ${address} from neoscan ${url}`)

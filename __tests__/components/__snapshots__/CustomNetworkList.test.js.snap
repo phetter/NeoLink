@@ -53,25 +53,25 @@ exports[`CustomNetworkList renders without crashing 1`] = `
       setNetwork={[MockFunction]}
     >
       <div>
-        <SettingsNavigation
-          history={Object {}}
+        <BackNavigation
+          onClickHandler={[Function]}
         >
           <section
-            className="settingsNavigation"
+            className="backNavigation"
           >
             <button
-              className="settingsNavigationButton"
+              className="backNavigationButton"
               onClick={[Function]}
             >
               <img
                 alt="arrow left"
-                className="settingsNavigationButtonImage"
+                className="backNavigationButtonImage"
                 src="test-file-stub"
               />
               Back
             </button>
           </section>
-        </SettingsNavigation>
+        </BackNavigation>
         <section
           className="manageNetworksContainer"
         >

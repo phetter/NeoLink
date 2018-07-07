@@ -1,4 +1,8 @@
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+
+import { setAccount } from '../../actions/account'
+
 import SwitchAccount from './SwitchAccount'
 
 const mapStateToProps = state => ({
@@ -8,4 +12,13 @@ const mapStateToProps = state => ({
   selectedNetworkId: state.config.selectedNetworkId,
 })
 
-export default connect(mapStateToProps)(SwitchAccount)
+const actionCreators = {
+  setAccount,
+}
+
+const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch)
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SwitchAccount)

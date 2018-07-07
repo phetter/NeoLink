@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { reduxForm } from 'redux-form'
 
-import SettingsNavigation from '../../components/SettingsNavigation'
+import BackNavigation from '../../components/BackNavigation'
 import NetworkSuccessPage from '../../components/successPages/NetworkSuccessPage'
 import CustomNetworkForm from '../../components/common/form/CustomNetworkForm'
 import CustomNetworkContainer from '../../components/CustomNetworkContainer'
@@ -86,7 +86,7 @@ export class AddCustomNetwork extends Component {
           <NetworkSuccessPage history={ history } title={ 'Network Added' } />
         ) : (
           <Fragment>
-            <SettingsNavigation history={ history } />
+            <BackNavigation onClickHandler={ () => history.push('/settings') } />
             <CustomNetworkContainer title={ 'Add Network' }>
               <CustomNetworkForm
                 onSubmit={ handleSubmit(this.handleSubmit) }
