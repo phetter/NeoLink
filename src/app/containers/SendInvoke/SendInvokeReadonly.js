@@ -87,15 +87,11 @@ class SendInvokeReadonly extends Component {
             <span className={ globalStyle.infoText }>{ transaction.operation }</span>
           </div>
           {
-            transaction.args.map((arg, index) => {
-              console.log(transaction);
-              console.log(arg);
-              return (              <div className={ style.entryItem } key={`tx-args-readonly-${index}`}>
+            transaction.args.map((arg, index) =>
+              (<div className={ style.entryItem } key={ `tx-args-readonly-${index}` }>
                 <span className={ style.label }>Argument {index}:</span>
                 <span className={ globalStyle.infoText }>{ arg }</span>
               </div>)
-            }
-
             )
           }
           <div className={ style.entryItem }>
