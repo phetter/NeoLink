@@ -5,7 +5,7 @@ import withLoginCheck from '../../components/Login/withLoginCheck'
 
 import { setBalance } from '../../actions/account'
 
-const mapStateToProps = (state: Object) => ({
+const mapStateToProps = (state) => ({
   networks: state.config.networks,
   selectedNetworkId: state.config.selectedNetworkId,
   account: state.account,

@@ -9,16 +9,9 @@ import { callInvoke } from '../../utils/api/neon'
 
 import style from './SendInvoke.css'
 import globalStyle from '../../components/ContentWrapper/ContentWrapper.css'
+import withLoginCheck from '../../components/Login/withLoginCheck'
 
-@connect(
-  state => ({
-    selectedNetworkId: state.config.selectedNetworkId,
-    networks: state.config.networks,
-    account: state.account,
-  })
-)
-
-export default class SendInvokeReadonly extends Component {
+class SendInvokeReadonly extends Component {
   state = {
     loading: false,
     errorMsg: '',
@@ -38,9 +31,8 @@ export default class SendInvokeReadonly extends Component {
     const txConfig = {
       scriptHash: transaction.scriptHash,
       operation: transaction.operation,
-      arg1: transaction.args[0],
-      arg2: transaction.args[1],
-      amount: transaction.amount,
+      args: transaction.args,
+      assetAmount: transaction.amount,
       assetType: transaction.type,
     }
 
@@ -94,14 +86,14 @@ export default class SendInvokeReadonly extends Component {
             <span className={ style.label }>Operation:</span>
             <span className={ globalStyle.infoText }>{ transaction.operation }</span>
           </div>
-          <div className={ style.entryItem }>
-            <span className={ style.label }>Argument 1:</span>
-            <span className={ globalStyle.infoText }>{ transaction.args[0] }</span>
-          </div>
-          <div className={ style.entryItem }>
-            <span className={ style.label }>Argument 2:</span>
-            <span className={ globalStyle.infoText }>{ transaction.args[1] }</span>
-          </div>
+          {
+            transaction.args.map((arg, index) =>
+              (<div className={ style.entryItem } key={ `tx-args-readonly-${index}` }>
+                <span className={ style.label }>Argument {index}:</span>
+                <span className={ globalStyle.infoText }>{ arg }</span>
+              </div>)
+            )
+          }
           <div className={ style.entryItem }>
             <span className={ style.label }>Amount:</span>
             <span className={ globalStyle.infoText }>{ transaction.amount }</span>
@@ -136,3 +128,11 @@ SendInvokeReadonly.propTypes = {
   transaction: PropTypes.object,
   onSuccess: PropTypes.func,
 }
+
+const mapStateToProps = state => ({
+  selectedNetworkId: state.config.selectedNetworkId,
+  networks: state.config.networks,
+  account: state.account,
+})
+
+export default withLoginCheck(connect(mapStateToProps)(SendInvokeReadonly))
