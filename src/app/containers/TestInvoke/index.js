@@ -115,52 +115,52 @@ class TestInvoke extends Component {
     const { result, loading, errorMsg } = this.state
     return (
       <React.Fragment>
-        <form className={styles.formWrapper}>
+        <form className={ styles.formWrapper }>
           <Input
             type='text'
             placeholder='Script Hash'
-            value={this.state.scriptHash}
+            value={ this.state.scriptHash }
             id='scriptHash'
-            onChange={this._handleInputChange}
+            onChange={ this._handleInputChange }
           />
           <Input
             type='text'
             placeholder='Operation'
-            value={this.state.operation}
+            value={ this.state.operation }
             id='operation'
-            onChange={this._handleInputChange}
+            onChange={ this._handleInputChange }
           />
-          <div className={styles.argsWrapper}>
+          <div className={ styles.argsWrapper }>
             {this.state.args.map((arg, idx) => (
               <div
-                key={`testInvoke-Args-${idx + 1}`}
-                className={styles.innerArgsWrapper}
+                key={ `testInvoke-Args-${idx + 1}` }
+                className={ styles.innerArgsWrapper }
               >
                 <Input
-                  style={{ flexGrow: 1, order: 1 }}
+                  style={ { flexGrow: 1, order: 1 } }
                   type='text'
-                  placeholder={`Argument #${idx + 1}`}
-                  value={arg}
-                  id={`Argument #${idx + 1} name`}
-                  onChange={(event) => this._handleArgChange(idx, event)}
+                  placeholder={ `Argument #${idx + 1}` }
+                  value={ arg }
+                  id={ `Argument #${idx + 1} name` }
+                  onChange={ (event) => this._handleArgChange(idx, event) }
                 />
                 <Button
-                  style={{ flexGrow: 0, order: 0 }}
-                  buttonText={"-"}
-                  onClickHandler={(event) => this._handleRemoveArg(idx, event)}/>
+                  style={ { flexGrow: 0, order: 0 } }
+                  buttonText={ '-' }
+                  onClickHandler={ (event) => this._handleRemoveArg(idx, event) } />
               </div>
             ))}
           </div>
-          <div className={styles.btnWrapper}>
+          <div className={ styles.btnWrapper }>
             <Button
-              classNames={styles.btn}
-              style={{ marginRight: "2px" }}
-              onClickHandler={this._handleAddArgument}
-              buttonText={"Add Argument"}/>
+              classNames={ styles.btn }
+              style={ { marginRight: '2px' } }
+              onClickHandler={ this._handleAddArgument }
+              buttonText={ 'Add Argument' } />
 
             <Button
-              onClickHandler={this._handleSubmit}
-              buttonText={"Invoke"}/>
+              onClickHandler={ this._handleSubmit }
+              buttonText={ 'Invoke' } />
           </div>
         </form>
         {result && (

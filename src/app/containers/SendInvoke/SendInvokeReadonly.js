@@ -103,8 +103,8 @@ class SendInvokeReadonly extends Component {
           </div>
           <Button
             disabled={ this.state.loading || this.state.success }
-            buttonText={"Invoke"}
-            onClickHandler={this.handleSubmit}
+            buttonText={ 'Invoke' }
+            onClickHandler={ this.handleSubmit }
           />
         </form>
         { txid &&

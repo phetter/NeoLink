@@ -108,24 +108,24 @@ class SendInvoke extends Component {
             onChange={ this._handleInputChange }
           />
 
-          <div className={style.argsWrapper}>
+          <div className={ style.argsWrapper }>
             {this.state.args.map((arg, idx) => (
               <div
-                key={`Invoke-Args-${idx + 1}`}
-                className={style.innerArgsWrapper}
+                key={ `Invoke-Args-${idx + 1}` }
+                className={ style.innerArgsWrapper }
               >
                 <Input
-                  style={{ flexGrow: 1, order: 1 }}
+                  style={ { flexGrow: 1, order: 1 } }
                   type='text'
-                  placeholder={`Argument #${idx + 1}`}
-                  value={arg}
-                  id={`Argument #${idx + 1} name`}
-                  onChange={(event) => this._handleArgChange(idx, event)}
+                  placeholder={ `Argument #${idx + 1}` }
+                  value={ arg }
+                  id={ `Argument #${idx + 1} name` }
+                  onChange={ (event) => this._handleArgChange(idx, event) }
                 />
                 <Button
-                  style={{ flexGrow: 0, order: 0 }}
-                  buttonText={"-"}
-                  onClickHandler={(event) => this._handleRemoveArg(idx, event)}/>
+                  style={ { flexGrow: 0, order: 0 } }
+                  buttonText={ '-' }
+                  onClickHandler={ (event) => this._handleRemoveArg(idx, event) } />
               </div>
             ))}
           </div>
@@ -156,16 +156,16 @@ class SendInvoke extends Component {
               },
             ] }
           />
-          <div className={style.btnWrapper}>
+          <div className={ style.btnWrapper }>
             <Button
-              classNames={style.btn}
-              style={{ marginRight: "2px" }}
-              onClickHandler={this._handleAddArgument}
-              buttonText={"Add Argument"}/>
+              classNames={ style.btn }
+              style={ { marginRight: '2px' } }
+              onClickHandler={ this._handleAddArgument }
+              buttonText={ 'Add Argument' } />
 
             <Button
-              onClickHandler={this._handleSubmit}
-              buttonText={"Invoke"}/>
+              onClickHandler={ this._handleSubmit }
+              buttonText={ 'Invoke' } />
           </div>
         </form>
 
