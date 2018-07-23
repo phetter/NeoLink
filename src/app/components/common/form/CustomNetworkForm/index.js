@@ -11,22 +11,22 @@ const CustomNetworkForm = ({ renderTextField, renderSelectField, errors, onSubmi
     <form onSubmit={ onSubmit } className={ style.customNetworkForm }>
       <Field component={ renderTextField } type='text' name='name' label='Network Name' error={ errors.name } />
       <Field component={ renderTextField } type='text' name='url' label='Network URL' error={ errors.url } />
-      <Field component={ renderTextField } type='text' name='txUrl' label='Transaction URL' error={ errors.url } />
-      <Field
-        label='API Type'
-        component={ renderSelectField }
-        name='apiType'
-        options={ [
-          {
-            label: 'neoscan',
-            value: 'neoscan',
-          },
-          {
-            label: 'neonDB',
-            value: 'neonDB',
-          },
-        ] }
-      />
+      {/*<Field component={ renderTextField } type='text' name='txUrl' label='Transaction URL' error={ errors.url } />*/}
+      {/*<Field*/}
+        {/*label='API Type'*/}
+        {/*component={ renderSelectField }*/}
+        {/*name='apiType'*/}
+        {/*options={ [*/}
+          {/*{*/}
+            {/*label: 'neoscan',*/}
+            {/*value: 'neoscan',*/}
+          {/*},*/}
+          {/*{*/}
+            {/*label: 'neonDB',*/}
+            {/*value: 'neonDB',*/}
+          {/*},*/}
+        {/*] }*/}
+      {/*/>*/}
       <PrimaryButton buttonText='Add Network' classNames={ style.customNetworkButton } />
     </form>
   )
