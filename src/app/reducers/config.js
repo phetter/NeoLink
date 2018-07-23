@@ -1,4 +1,3 @@
-import uuidv4 from 'uuid/v4'
 
 import * as ActionTypes from '../constants/ActionTypes'
 
