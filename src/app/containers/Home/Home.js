@@ -92,8 +92,7 @@ class Home extends Component {
       for (let key in account.results) {
         if (account.results.hasOwnProperty(key)) {
           if (key !== 'neo' && key !== 'gas') {
-            // assets.push(key + ': ' + account.results[key])
-            assets.push(<Asset assetName={ key } assetAmount={ account.results[key] }/>)
+            assets.push(<Asset assetName={ key } assetAmount={ account.results[key] } />)
           }
         }
       }
