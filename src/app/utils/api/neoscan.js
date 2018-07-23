@@ -223,7 +223,6 @@ export const getBalance = address => {
       return axios
         .get(url)
         .then(response => {
-          let neo, gas, mct, rht
           let assets = {}
           let data = response.data
           if (data.address === 'not found') {
