@@ -112,8 +112,8 @@ class Home extends Component {
             ) : (
               <AccountInfo
                 onClickHandler={ this.showInputField }
-                neo={ Number(account.results.neo) }
-                gas={ Number(account.results.gas) }
+                neo={ Number(account.neo) }
+                gas={ Number(account.gas) }
                 label={ label }
                 address={ account.address }
                 amountsError={ amountsError }
