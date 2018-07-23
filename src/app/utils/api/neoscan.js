@@ -80,8 +80,6 @@ export const formatGas = gasArray => {
 
 export const switchNetwork = networkId => {
   let net
-  logDeep('Network: ', curState.config.networks)
-
   switch (networkId) {
     case 'MainNet':
       if (curState && curState.config && curState.config.neoscan) {
