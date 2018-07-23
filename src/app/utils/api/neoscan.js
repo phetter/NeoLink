@@ -223,31 +223,46 @@ export const getBalance = address => {
       return axios
         .get(url)
         .then(response => {
-          let amounts, neo, gas
+          let assets = {}
           let data = response.data
           if (data.address === 'not found') {
-            amounts = {
+            assets = {
               neo: 0,
               gas: 0,
             }
           } else {
+            // TODO rewrite to dynamically populate assets
             data.balance.map(b => {
-              switch (b.asset) {
-                case 'NEO':
-                  neo = b.amount
-                  break
-                case 'GAS':
-                  gas = '' + b.amount
-                  break
+              // switch (b.asset) {
+              //   case 'NEO':
+              //     neo = b.amount
+              //     break
+              //   case 'GAS':
+              //     gas = '' + b.amount
+              //     break
+              //   case 'Redeemable HashPuppy Token':
+              //     rht = '' + b.amount
+              //     console.log('rht: '+ rht)
+              //     break
+              //   case 'Master Contract Token':
+              //     mct = '' + b.amount
+              //     console.log('mct: '+ mct)
+              //     break
+              // }
+
+              let ast = {}
+              ast[b.asset] = b.amount
+
+              if (b.asset === 'NEO') {
+                assets['neo'] = b.amount
+              } else if (b.asset === 'GAS') {
+                assets['gas'] = b.amount
+              } else if (b.amount) {
+                assets[b.asset] = b.amount
               }
             })
-
-            amounts = {
-              neo: neo,
-              gas: gas,
-            }
           }
-          resolve(amounts)
+          resolve(assets)
         })
         .catch(error => {
           reject(error)

@@ -19,8 +19,9 @@ const actionsMap = {
   [ActionTypes.SET_BALANCE](state, action) {
     return {
       ...state,
-      neo: action.neo,
-      gas: action.gas,
+      results: action.results,
+      neo: action.results.neo,
+      gas: action.results.gas,
     }
   },
   [ActionTypes.LOG_OUT](state, action) {
