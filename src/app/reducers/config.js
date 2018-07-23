@@ -1,4 +1,3 @@
-import uuidv4 from 'uuid/v4'
 
 import * as ActionTypes from '../constants/ActionTypes'
 
@@ -48,7 +47,7 @@ const actionsMap = {
   },
   [ActionTypes.ADD_CUSTOM_NETWORK](state, action) { // TODO fix add custom network code to work with composable config
     const networks = { ...state.networks }
-    networks[uuidv4()] = {
+    networks[action.name] = {
       name: action.name,
       url: action.url,
       txUrl: action.txUrl,

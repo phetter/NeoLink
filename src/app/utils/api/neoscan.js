@@ -7,7 +7,7 @@
 import axios from 'axios'
 
 // import { Fixed8 } from '../math'
-// import { logDeep } from '../debug'
+import { logDeep } from '../debug'
 
 import Promise from 'bluebird'
 
@@ -34,9 +34,9 @@ neoscanIni.testNet.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_
 // Store the whole thing for later management.
 neoscanIni.custom = {}
 neoscanIni.custom.rootUrl = 'https://neoscan-testnet.io/api/test_net/'
-neoscanIni.testNet.txByIdUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/'
-neoscanIni.testNet.txsByAddressUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_last_transactions_by_address/'
-neoscanIni.testNet.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_balance/'
+neoscanIni.custom.txByIdUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/'
+neoscanIni.custom.txsByAddressUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_last_transactions_by_address/'
+neoscanIni.custom.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_balance/'
 
 let curState = {}
 
@@ -110,13 +110,33 @@ export const switchNetwork = networkId => {
       }
       break
     default:
-      // TODO need to write this case to properly handle custom networks in neoscan
-      // pseudo:
-      // loop over curState looking for a curState.config.neoscan['custom_name_literal'] that matches networkId
-      // build the json object if it isn't built.
-      // set net and active to the matched net
-      // return the net if we found one, return null if not
-      return undefined
+      if (!networkId) return undefined
+
+      if (curState && curState.config && curState.config.neoscan && curState.config.networks && curState.config.networks[networkId]) {
+        net = curState.config.neoscan.active = curState.config.networks[networkId]
+      } else {
+        // if (curState.config.neoscan[networkId].apiType !== 'neoscan') return undefined
+        console.log('networkId' + networkId)
+        let u = curState.config.neoscan[networkId].url
+        let custom = {}
+        custom.name = curState.config.neoscan[networkId].name
+        custom.rootUrl = u + '/api/test_net/'
+        custom.txByIdUrl = u + '/api/test_net/v1/get_transaction/'
+        custom.txsByAddressUrl = u + '/api/test_net/v1/get_last_transactions_by_address/'
+        custom.balanceUrl = u + '/api/test_net/v1/get_balance/'
+        custom.canDelete = true
+        custom.apiType = 'neoscan'
+        curState = {
+          config: {
+            neoscan: {
+              active: custom,
+            },
+          },
+        }
+        net = curState.config.neoscan.active
+        logDeep('net', net)
+      }
+      break
   }
   return net
 }
