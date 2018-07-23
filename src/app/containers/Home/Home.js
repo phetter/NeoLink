@@ -88,9 +88,7 @@ class Home extends Component {
     const { showInputField, amountsError, label, transactionHistoryError, labelError } = this.state
 
     let assets = []
-
     if (account.results) {
-
       for (let key in account.results) {
         if (account.results.hasOwnProperty(key)) {
           if (key !== 'neo' && key !== 'gas') {

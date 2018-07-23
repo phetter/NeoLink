@@ -223,15 +223,13 @@ export const getBalance = address => {
       return axios
         .get(url)
         .then(response => {
-          let amounts, neo, gas, mct, rht
+          let neo, gas, mct, rht
           let assets = {}
           let data = response.data
           if (data.address === 'not found') {
-            amounts = {
+            assets = {
               neo: 0,
               gas: 0,
-              rht: 0,
-              mct: 0
             }
           } else {
             // TODO rewrite to dynamically populate assets
@@ -264,13 +262,6 @@ export const getBalance = address => {
                 assets[b.asset] = b.amount
               }
             })
-
-            amounts = {
-              neo: neo,
-              gas: gas,
-              rht: rht,
-              mct: mct
-            }
           }
           resolve(assets)
         })

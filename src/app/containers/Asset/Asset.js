@@ -16,7 +16,6 @@ class Asset extends Component {
     // this.icon = neoSent === true ? <img src={ neoPNG } alt='neo' /> : <i className='fas fa-tint' />
     this.amount = assetAmount
     this.name = assetName
-    console.log('amount: '+this.amount)
   }
 
   render() {
