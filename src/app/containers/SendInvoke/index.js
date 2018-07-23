@@ -2,17 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { Button } from 'rmwc/Button'
-import { TextField } from 'rmwc/TextField'
-import { Select } from 'rmwc/Select'
-import '@material/button/dist/mdc.button.min.css'
-import '@material/textfield/dist/mdc.textfield.min.css'
-import '@material/select/dist/mdc.select.min.css'
+import Input from '../../components/common/form/InputField'
+import Select from '../../components/common/form/SelectBox'
+import Button from '../../components/common/buttons/PrimaryButton'
 
 import { callInvoke } from '../../utils/api/neon'
 
 import style from './SendInvoke.css'
-import tempStyle from '../App/App.css'
 
 import withLoginCheck from '../../components/Login/withLoginCheck'
 
@@ -26,7 +22,7 @@ class SendInvoke extends Component {
     assetAmount: '0.00025',
   }
 
-  _handleTextFieldChange = e => {
+  _handleInputChange = e => {
     const key = e.target.id
     this.setState({
       [key]: e.target.value,
@@ -96,51 +92,49 @@ class SendInvoke extends Component {
 
     return (
       <React.Fragment>
-        <form onSubmit={ this.handleSubmit } style={ { paddingTop: '35px' } } className={ tempStyle.tempFormStyle }>
-          <TextField
+        <form style={ { paddingTop: '35px' } } className={ style.formWrapper }>
+          <Input
             type='text'
             placeholder='Script Hash'
             value={ this.state.scriptHash }
             id='scriptHash'
-            onChange={ this._handleTextFieldChange }
+            onChange={ this._handleInputChange }
           />
-          <TextField
+          <Input
             type='text'
             placeholder='Operation'
             value={ this.state.operation }
             id='operation'
-            onChange={ this._handleTextFieldChange }
+            onChange={ this._handleInputChange }
           />
 
-          <div className={ style.argsWrapper } style={ { marginBottom: '-20px' } }>
+          <div className={ style.argsWrapper }>
             {this.state.args.map((arg, idx) => (
-              <React.Fragment>
-                <TextField
+              <div
+                key={ `Invoke-Args-${idx + 1}` }
+                className={ style.innerArgsWrapper }
+              >
+                <Input
                   style={ { flexGrow: 1, order: 1 } }
                   type='text'
-                  key={ `input-${idx + 1}` }
                   placeholder={ `Argument #${idx + 1}` }
                   value={ arg }
                   id={ `Argument #${idx + 1} name` }
                   onChange={ (event) => this._handleArgChange(idx, event) }
                 />
                 <Button
-                  key={ `btn-${idx + 1}` }
-                  raised
-                  ripple
                   style={ { flexGrow: 0, order: 0 } }
-                  onClick={ (event) => this._handleRemoveArg(idx, event) }>
-                  -
-                </Button>
-              </React.Fragment>
+                  buttonText={ '-' }
+                  onClickHandler={ (event) => this._handleRemoveArg(idx, event) } />
+              </div>
             ))}
           </div>
-          <TextField
+          <Input
             type='text'
             placeholder='Amount'
             value={ this.state.assetAmount }
             id='assetAmount'
-            onChange={ this._handleTextFieldChange }
+            onChange={ this._handleInputChange }
           />
           <Select
             cssOnly
@@ -162,13 +156,16 @@ class SendInvoke extends Component {
               },
             ] }
           />
-          <div className={ style.argsWrapper } style={ { marginTop: '0px' } }>
+          <div className={ style.btnWrapper }>
+            <Button
+              classNames={ style.btn }
+              style={ { marginRight: '2px' } }
+              onClickHandler={ this._handleAddArgument }
+              buttonText={ 'Add Argument' } />
 
-            <Button className={ style.btn } style={ { marginLeft: 2, order: 3 } } raised ripple onClick={ this._handleAddArgument }>Add
-            Argument</Button>
-            <Button className={ style.btn } style={ { marginRight: 2 } } raised ripple disabled={ this.state.loading }>
-            Invoke
-            </Button>
+            <Button
+              onClickHandler={ this._handleSubmit }
+              buttonText={ 'Invoke' } />
           </div>
         </form>
 

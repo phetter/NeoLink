@@ -14,16 +14,30 @@
 }
 
 .btn {
-  flex-grow: 1;
-  order: 2;
+  margin-right: 4px;
+}
+
+.formWrapper {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .argsWrapper {
-  margin-top: -30px;
   display: flex;
-  flex-direction: row;
-  padding-top: 20px;
-  align-items: baseline;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: space-between;
 }
+
+.innerArgsWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.btnWrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+

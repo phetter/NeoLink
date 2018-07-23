@@ -4,12 +4,9 @@ import { connect } from 'react-redux'
 
 import Neon, { api, u, rpc } from '@cityofzion/neon-js'
 
-import { Button } from 'rmwc/Button'
-import { TextField } from 'rmwc/TextField'
-import '@material/button/dist/mdc.button.min.css'
-import '@material/textfield/dist/mdc.textfield.min.css'
+import Input from '../../components/common/form/InputField'
+import Button from '../../components/common/buttons/PrimaryButton'
 
-import tempStyle from '../App/App.css'
 import styles from './testInvoke.css'
 import withLoginCheck from '../../components/Login/withLoginCheck'
 
@@ -32,7 +29,7 @@ class TestInvoke extends Component {
     })
   }
 
-  _handleTextFieldChange = e => {
+  _handleInputChange = e => {
     const key = e.target.id
     this.setState({
       [key]: e.target.value,
@@ -118,56 +115,53 @@ class TestInvoke extends Component {
     const { result, loading, errorMsg } = this.state
     return (
       <React.Fragment>
-        <form>
-          <div className={ tempStyle.tempFormStyle }>
-            <TextField
-              type='text'
-              placeholder='Script Hash'
-              value={ this.state.scriptHash }
-              id='scriptHash'
-              onChange={ this._handleTextFieldChange }
-            />
-            <TextField
-              type='text'
-              placeholder='Operation'
-              value={ this.state.operation }
-              id='operation'
-              onChange={ this._handleTextFieldChange }
-            />
-          </div>
+        <form className={ styles.formWrapper }>
+          <Input
+            type='text'
+            placeholder='Script Hash'
+            value={ this.state.scriptHash }
+            id='scriptHash'
+            onChange={ this._handleInputChange }
+          />
+          <Input
+            type='text'
+            placeholder='Operation'
+            value={ this.state.operation }
+            id='operation'
+            onChange={ this._handleInputChange }
+          />
           <div className={ styles.argsWrapper }>
-
             {this.state.args.map((arg, idx) => (
-              <React.Fragment>
-                <TextField
+              <div
+                key={ `testInvoke-Args-${idx + 1}` }
+                className={ styles.innerArgsWrapper }
+              >
+                <Input
                   style={ { flexGrow: 1, order: 1 } }
                   type='text'
-                  key={ idx + 1 }
                   placeholder={ `Argument #${idx + 1}` }
                   value={ arg }
                   id={ `Argument #${idx + 1} name` }
                   onChange={ (event) => this._handleArgChange(idx, event) }
                 />
                 <Button
-                  key={ `btn-${idx + 1}` }
-                  raised
-                  ripple
                   style={ { flexGrow: 0, order: 0 } }
-                  onClick={ (event) => this._handleRemoveArg(idx, event) }>
-                  -
-                </Button>
-              </React.Fragment>
+                  buttonText={ '-' }
+                  onClickHandler={ (event) => this._handleRemoveArg(idx, event) } />
+              </div>
             ))}
-            <Button className={ styles.btn } style={ { marginRight: 2 } } raised ripple onClick={ this._handleAddArgument }>Add
-              Argument</Button>
-
-            <Button raised ripple className={ styles.btn } style={ { marginLeft: 2 } }
-              onClick={ this._handleSubmit }
-            >
-              Invoke
-            </Button>
           </div>
+          <div className={ styles.btnWrapper }>
+            <Button
+              classNames={ styles.btn }
+              style={ { marginRight: '2px' } }
+              onClickHandler={ this._handleAddArgument }
+              buttonText={ 'Add Argument' } />
 
+            <Button
+              onClickHandler={ this._handleSubmit }
+              buttonText={ 'Invoke' } />
+          </div>
         </form>
         {result && (
           <div>
