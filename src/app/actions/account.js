@@ -4,8 +4,8 @@ export function setAccount(wif, address) {
   return { type: types.SET_ACCOUNT, wif, address }
 }
 
-export function setBalance(neo, gas) {
-  return { type: types.SET_BALANCE, neo, gas }
+export function setBalance(results) {
+  return { type: types.SET_BALANCE, results }
 }
 
 export function setTransactions(transactions) {

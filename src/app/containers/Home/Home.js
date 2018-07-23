@@ -9,6 +9,8 @@ import AccountInfo from '../../components/AccountInfo'
 import RenameAccount from '../../components/RenameAccount'
 import TransactionList from '../../components/TransactionList'
 
+import Asset from '../Asset'
+
 import style from './Home.css'
 
 class Home extends Component {
@@ -38,7 +40,8 @@ class Home extends Component {
     this.setState({ amountsError: '' }, () => {
       Neoscan.setNet(network)
       Neoscan.getBalance(account.address)
-        .then(results => accountActions.setBalance(results.neo, results.gas))
+        // .then(results => accountActions.setBalance(results.neo, results.gas))
+        .then(results => accountActions.setBalance(results))
         .catch(() => this.setState({ amountsError: 'Could not retrieve amounts.' }))
     })
   }
@@ -84,6 +87,20 @@ class Home extends Component {
     const { account, selectedNetworkId } = this.props
     const { showInputField, amountsError, label, transactionHistoryError, labelError } = this.state
 
+    let assets = []
+
+    if (account.results) {
+
+      for (let key in account.results) {
+        if (account.results.hasOwnProperty(key)) {
+          if (key !== 'neo' && key !== 'gas') {
+            // assets.push(key + ': ' + account.results[key])
+            assets.push(<Asset assetName={ key } assetAmount={ account.results[key] }/>)
+          }
+        }
+      }
+    }
+
     return (
       <Fragment>
         <section className={ style.accountInfoWrapper }>
@@ -98,8 +115,8 @@ class Home extends Component {
             ) : (
               <AccountInfo
                 onClickHandler={ this.showInputField }
-                neo={ Number(account.neo) }
-                gas={ Number(account.gas) }
+                neo={ Number(account.results.neo) }
+                gas={ Number(account.results.gas) }
                 label={ label }
                 address={ account.address }
                 amountsError={ amountsError }
@@ -109,6 +126,12 @@ class Home extends Component {
               />
             )}
           </section>
+        </section>
+        <section className={ style.transactionInfo }>
+          <h2 className={ style.assetsInfoHeader }>Other Assets</h2>
+          <div>
+            {assets}
+          </div>
         </section>
         <section className={ style.transactionInfo }>
           <h2 className={ style.transactionInfoHeader }>Transactions</h2>
