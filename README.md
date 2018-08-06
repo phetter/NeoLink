@@ -74,7 +74,7 @@ Add the following code to your dApp:
 
 <button id="runInvokeButton">Invoke</button>
 <script>
-document.getElementById("runInvokeButton).addEventListener("click",
+document.getElementById("runInvokeButton").addEventListener("click",
     function() {
       var scriptHash = document.getElementById("contractScriptHash").value
       var operation = document.getElementById("operationName").value
