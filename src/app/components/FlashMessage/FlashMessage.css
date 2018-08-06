@@ -1,0 +1,16 @@
+.flashMessage {
+  padding: 8px;
+  border-radius: 3px;
+  background-color: rgba(152, 143, 143, 0.4);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #585858;
+}
+
+.flashMessageImage {
+  width: 8px;
+  margin-right: 5px;
+}

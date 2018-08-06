@@ -2,53 +2,51 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { Button } from 'rmwc/Button'
-import { TextField } from 'rmwc/TextField'
-import { Select } from 'rmwc/Select'
-import '@material/button/dist/mdc.button.min.css'
-import '@material/textfield/dist/mdc.textfield.min.css'
-import '@material/select/dist/mdc.select.min.css'
+import Input from '../../components/common/form/InputField'
+import Select from '../../components/common/form/SelectBox'
+import Button from '../../components/common/buttons/PrimaryButton'
 
-import { callInvoke } from '../../utils/neonWrappers'
+import { callInvoke } from '../../utils/api/neon'
 
 import style from './SendInvoke.css'
+
 import withLoginCheck from '../../components/Login/withLoginCheck'
-
-@connect(
-  state => ({
-    networks: state.config.networks,
-    selectedNetworkId: state.config.selectedNetworkId,
-    account: state.account,
-  })
-)
-
-/*
-  Test call ...
-  {
-    scriptHash: 'b3a14d99a3fb6646c78bf2f4e2f25a7964d2956a',
-    operation: 'putvalue',
-    arg1: 'test',
-    arg2: '1',
-    assetType: 'GAS',
-    assetAmount: '.00025'
-  }
-*/
 
 class SendInvoke extends Component {
   state = {
     loading: false,
     errorMsg: '',
     txid: '',
+    args: [''],
+    assetType: 'GAS',
+    assetAmount: '0.00025',
   }
 
-  _handleTextFieldChange = (e) => {
+  _handleInputChange = e => {
     const key = e.target.id
     this.setState({
       [key]: e.target.value,
     })
   }
 
-  handleSubmit = (event) => {
+  _handleArgChange = (id, e) => {
+    const myArgs = this.state.args
+    myArgs[id] = e.target.value
+
+    this.setState({ args: myArgs })
+  }
+
+  _handleAddArgument = e => {
+    e.preventDefault()
+    this.setState({ args: this.state.args.concat(['']) })
+  }
+
+  _handleRemoveArg = (id, e) => {
+    e.preventDefault()
+    this.setState({ args: this.state.args.filter((s, idx) => id !== idx) })
+  }
+
+  handleSubmit = event => {
     event.preventDefault()
     const { selectedNetworkId, networks, account } = this.props
 
@@ -68,7 +66,7 @@ class SendInvoke extends Component {
     }
 
     callInvoke(networks[selectedNetworkId].url, account, this.state)
-      .then((c) => {
+      .then(c => {
         if (c.response.result === true) {
           this.setState({
             loading: false,
@@ -81,8 +79,7 @@ class SendInvoke extends Component {
           })
         }
       })
-      .catch((e) => {
-        console.log('e', e)
+      .catch(e => {
         this.setState({
           loading: false,
           errorMsg: 'Invoke failed',
@@ -94,46 +91,56 @@ class SendInvoke extends Component {
     const { loading, txid, errorMsg } = this.state
 
     return (
-      <div>
-        <form onSubmit={ this.handleSubmit } style={ { paddingTop: '35px' } }>
-          <TextField
+      <React.Fragment>
+        <form style={ { paddingTop: '35px' } } className={ style.formWrapper }>
+          <Input
             type='text'
             placeholder='Script Hash'
             value={ this.state.scriptHash }
             id='scriptHash'
-            onChange={ this._handleTextFieldChange }
+            onChange={ this._handleInputChange }
           />
-          <TextField
+          <Input
             type='text'
             placeholder='Operation'
             value={ this.state.operation }
             id='operation'
-            onChange={ this._handleTextFieldChange }
+            onChange={ this._handleInputChange }
           />
-          <TextField
-            type='text'
-            placeholder='Argument 1'
-            value={ this.state.arg1 }
-            id='arg1'
-            onChange={ this._handleTextFieldChange }
-          />
-          <TextField
-            type='text'
-            placeholder='Argument 2'
-            value={ this.state.arg2 }
-            id='arg2'
-            onChange={ this._handleTextFieldChange }
-          />
-          <TextField
+
+          <div className={ style.argsWrapper }>
+            {this.state.args.map((arg, idx) => (
+              <div
+                key={ `Invoke-Args-${idx + 1}` }
+                className={ style.innerArgsWrapper }
+              >
+                <Input
+                  style={ { flexGrow: 1, order: 1 } }
+                  type='text'
+                  placeholder={ `Argument #${idx + 1}` }
+                  value={ arg }
+                  id={ `Argument #${idx + 1} name` }
+                  onChange={ (event) => this._handleArgChange(idx, event) }
+                />
+                <Button
+                  style={ { flexGrow: 0, order: 0 } }
+                  buttonText={ '-' }
+                  onClickHandler={ (event) => this._handleRemoveArg(idx, event) } />
+              </div>
+            ))}
+          </div>
+          <Input
             type='text'
             placeholder='Amount'
-            value={ this.state.amount }
-            id='amount'
-            onChange={ this._handleTextFieldChange }
+            value={ this.state.assetAmount }
+            id='assetAmount'
+            onChange={ this._handleInputChange }
           />
-          <Select cssOnly label='Asset'
+          <Select
+            cssOnly
+            label='Asset'
             value={ this.state.assetType }
-            onChange={ (e) => {
+            onChange={ e => {
               this.setState({
                 assetType: e.target.value,
               })
@@ -149,29 +156,41 @@ class SendInvoke extends Component {
               },
             ] }
           />
-          <Button raised ripple disabled={ this.state.loading }>Invoke</Button>
+          <div className={ style.btnWrapper }>
+            <Button
+              classNames={ style.btn }
+              style={ { marginRight: '2px' } }
+              onClickHandler={ this._handleAddArgument }
+              buttonText={ 'Add Argument' } />
+
+            <Button
+              onClickHandler={ this._handleSubmit }
+              buttonText={ 'Invoke' } />
+          </div>
         </form>
 
-        { txid &&
+        {txid && (
           <div className={ style.statusBox }>
-            Success! txid: <span className={ style.transactionId }>{ txid }</span>
+            Success! txid: <span className={ style.transactionId }>{txid}</span>
           </div>
-        }
-        { loading &&
-          <div className={ style.statusBox }>Loading...</div>
-        }
-        { errorMsg !== '' &&
-          <div className={ style.statusBox }>ERROR: {errorMsg}</div>
-        }
-      </div>
+        )}
+        {loading && <div className={ style.statusBox }>Loading...</div>}
+        {errorMsg !== '' && <div className={ style.statusBox }>ERROR: {errorMsg}</div>}
+      </React.Fragment>
     )
   }
 }
-
-export default withLoginCheck(SendInvoke)
 
 SendInvoke.propTypes = {
   account: PropTypes.object,
   networks: PropTypes.object,
   selectedNetworkId: PropTypes.string,
 }
+
+const mapStateToProps = state => ({
+  networks: state.config.networks,
+  selectedNetworkId: state.config.selectedNetworkId,
+  account: state.account,
+})
+
+export default withLoginCheck(connect(mapStateToProps)(SendInvoke))

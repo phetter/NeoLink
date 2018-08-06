@@ -1,43 +1,121 @@
+// NetworkSwitcher/index.js
+
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import DropDown from '../DropDown'
+
 import style from './NetworkSwitcher.css'
 
+import chevron from '../../../img/chevron-down.svg'
+import neoImg from '../../../img/icon-34.png'
+import flask from '../../../img/flask.svg'
+
+import * as Neoscan from '../../utils/api/neoscan'
+
+import { truncateString } from '../../utils/api/neon'
+
 class NetworkSwitcher extends Component {
-  change = (event) => {
-    const { setNetwork } = this.props
-    setNetwork(event.target.value)
+  changeNetwork = selectedNetworkId => {
+    const { setNetwork, setTransactions, account, setBalance } = this.props
+
+    if (selectedNetworkId) {
+      setNetwork(selectedNetworkId)
+      console.log('switching to net: ' + selectedNetworkId)
+      // neon-js / neondb version follows
+      //  getBalance(networks, selectedNetworkId, account).then(results => setBalance(results.neo, results.gas))
+      //  getTransactions(networks, selectedNetworkId, account).then(results => setTransactions(results))
+
+      if (Neoscan.switchNetwork(selectedNetworkId)) {
+        console.log('switching to : ' + selectedNetworkId)
+        Neoscan.getBalance(account.address).then(results => setBalance(results.neo, results.gas))
+        Neoscan.getTxsByAddress(account.address).then(results => setTransactions(results))
+      } else { // most likely a custom network, other than MainNet or TestNet, was passed— currently unhandled by neoscanapi.js
+        // TODO add error handling and recovery
+      }
+    }
   }
 
-  generateNetworkOptions(networks) {
-    const networkOptions = []
+  getIndicator = (networks, index) => {
+    let indicator
+    const networkName = networks[index].name
 
-    Object.keys(networks).forEach((index) => {
-      networkOptions.push((
-        <option key={ `option-key-${index}` } value={ index }>{ networks[index].name }</option>
-      ))
+    if (networkName === 'MainNet') {
+      indicator = <img src={ neoImg } alt='neo' className={ style.mainNetNeoImg } />
+    } else if (networkName === 'TestNet') {
+      indicator = <img src={ flask } alt='flask' className={ style.networkOptionIcon } />
+    } else {
+      indicator = (
+        <div
+          style={ {
+            height: '13px',
+            width: '15px',
+            marginRight: '8px',
+            borderRadius: '3px',
+            backgroundColor: '#f15c5c',
+          } }
+        />
+      )
+    }
+
+    return indicator
+  }
+
+  generateNetworkOptions() {
+    const networkOptions = []
+    const { selectedNetworkId, networks } = this.props
+
+    Object.keys(networks).forEach(index => {
+      const indicator = this.getIndicator(networks, index)
+
+      const selected = selectedNetworkId === index
+
+      networkOptions.push(
+        <button
+          key={ `option-key-${index}` }
+          className={ style.networkOptionButton }
+          onClick={ () => this.changeNetwork(index) }
+        >
+          {indicator}
+          {truncateString(networks[index].name, 12)}
+          {selected && <div className={ style.networkNavigationOptionSelected } />}
+        </button>
+      )
     })
     return networkOptions
   }
 
-  render () {
-    const { selectedNetworkId, networks } = this.props
+  render() {
+    const networkOptions = this.generateNetworkOptions()
+    const { selectedNetworkId } = this.props
 
-    const networkOptions = this.generateNetworkOptions(networks)
+    const buttonContent = (
+      <div className={ style.networkNavigationButtonContent }>
+        {truncateString(selectedNetworkId, 9)}
+        <img src={ chevron } className={ style.networkNavigationChevron } alt='chevron down' />
+      </div>
+    )
 
     return (
-      <div>
-        <select className={ style.switcher } defaultValue={ selectedNetworkId } onChange={ this.change }>
-          { networkOptions }
-        </select>
-      </div>
+      <section className={ style.networkNavigation }>
+        <DropDown
+          buttonContent={ buttonContent }
+          buttonStyles={ style.networkNavigationButton }
+          classNames={ style.networkNavigationButtonContainer }
+          dropDownContent={ networkOptions }
+          dropDownContentClassNames={ style.networkNavigationDropDownContainer }
+        />
+      </section>
     )
   }
 }
 
 NetworkSwitcher.propTypes = {
   selectedNetworkId: PropTypes.string,
+  setTransactions: PropTypes.func,
   setNetwork: PropTypes.func,
+  setBalance: PropTypes.func,
+  account: PropTypes.object,
   networks: PropTypes.object,
 }
 

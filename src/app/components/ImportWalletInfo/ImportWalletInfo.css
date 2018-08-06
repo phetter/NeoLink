@@ -1,0 +1,16 @@
+.importWalletInfo {
+    display: flex;
+    color: #585858;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.importWalletBookImage {
+    margin: 0 10px 0 5px;
+    width: 15px;
+    transform: translateY(-5px);
+}
+
+.importWalletInfoHeading {
+    font-size: 0.9rem;
+}

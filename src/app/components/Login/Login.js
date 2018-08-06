@@ -3,136 +3,141 @@ import PropTypes from 'prop-types'
 import { wallet } from '@cityofzion/neon-js'
 import { Field, reduxForm } from 'redux-form'
 
-import { Button } from 'rmwc/Button'
-import { TextField } from 'rmwc/TextField'
-import { Select } from 'rmwc/Select'
-import '@material/button/dist/mdc.button.min.css'
-import '@material/textfield/dist/mdc.textfield.min.css'
-import '@material/select/dist/mdc.select.min.css'
-
-import CreateOrImportWallet from '../CreateOrImportWallet'
+import PrimaryButton from '../common/buttons/PrimaryButton'
+import Box from '../common/Box'
 import Loader from '../Loader'
+import StartPage from '../StartPage'
+
+import withForm from '../HoC/withForm'
+
+import style from './Login.css'
+import * as Neoscan from '../../utils/api/neoscan'
 
 export class Login extends Component {
   state = {
-    errorMsg: '',
     loading: false,
     encryptedWif: '',
     passPhrase: '',
   }
 
-  _renderTextField = ({
-    input,
-    ...rest
-  }) => (
-    <TextField
-      { ...input }
-      { ...rest }
-      onChange={ (event) => input.onChange(event.target.value) }
-    />
-  )
-
-  _renderSelectField = ({
-    input,
-    ...rest
-  }) => (
-    <Select
-      { ...input }
-      { ...rest }
-      onChange={ (event) => input.onChange(event.target.value) }
-    />
-  )
-
   handleSubmit = (values, dispatch, formProps) => {
+    const { clearFormFieldError } = this.props
     const { reset } = formProps
     const encryptedWif = values.encryptedWif
     const passPhrase = values.passPhrase
 
-    this.setState({
-      loading: true,
-      errorMsg: '',
-    })
+    this.setState(
+      {
+        loading: true,
+      },
+      () => clearFormFieldError('passPhrase')
+    )
 
-    // Make wallet.decrypt() async.
-    setTimeout(() => {
-      try {
-        const { setAccount } = this.props
-        const wif = wallet.decrypt(encryptedWif, passPhrase)
+    const {
+      setAccount,
+      selectedNetworkId,
+      history,
+      setBalance,
+      setTransactions,
+      setFormFieldError,
+    } = this.props
+
+    // console.log('encryptedWif: ' + encryptedWif)
+    // console.log('werd: ' + passPhrase)
+
+    wallet
+      .decryptAsync(encryptedWif, passPhrase)
+      .then(wif => {
         const account = new wallet.Account(wif)
 
-        this.setState({ loading: false })
         reset()
-        setAccount(wif, account.address)
-      } catch (e) {
-        this.setState({ loading: false, errorMsg: e.message })
-      }
-    }, 500)
+        // NOTE NEVER 'setAccount(wif' like was previously done
+        setAccount(encryptedWif, account.address)
+        this.setState({ loading: false })
+        history.push('/home')
+
+        // getBalance(networks, selectedNetworkId, account).then(results => {
+        //   setBalance(results.neo, results.gas)
+        // })
+        // getTransactions(networks, selectedNetworkId, account).then(transactions => setTransactions(transactions))
+        Neoscan.setNet(selectedNetworkId)
+        Neoscan.getBalance(account.address).then(results => setBalance(results.neo, results.gas))
+        Neoscan.getTxsByAddress(account.address).then(results => setTransactions(results))
+      })
+      .catch(e => {
+        this.setState({ loading: false }, () => setFormFieldError('passPhrase', 'Wrong password'))
+      })
   }
 
   getAccountOptions(accounts) {
-    const options = [ { label: 'Select', value: '' } ]
+    const options = [{ label: 'Select Account', value: '' }]
 
-    Object.keys(accounts).forEach((index) => {
-      const account = accounts[index]
-      options.push({ label: account.label, value: account.key })
+    Object.keys(accounts).forEach(index => {
+      const accountn = accounts[index]
+      options.push({ label: accountn.label, value: accountn.key })
     })
-
     return options
   }
 
   render() {
-    const { loading, errorMsg } = this.state
-    const { accounts, account, handleSubmit } = this.props
+    const { loading } = this.state
+    const { accounts, account, handleSubmit, errors, renderSelectField, renderTextField } = this.props
 
     if (loading) {
-      return (
-        <Loader />
-      )
+      return <Loader />
     }
     if (account.wif !== '') {
       return null
     }
 
     if (Object.keys(accounts).length === 0) {
-      return (
-        <CreateOrImportWallet />
-      )
+      return <StartPage />
     }
 
     return (
-      <div>
-        <form onSubmit={ handleSubmit(this.handleSubmit) }>
-          <Field label='Account'
-            component={ this._renderSelectField }
-            cssOnly
-            name='encryptedWif'
-            options={ this.getAccountOptions(accounts) }
-          />
-          <Field
-            component={ this._renderTextField }
-            type='password'
-            placeholder='Passphrase'
-            name='passPhrase'
-            id='passPhrase'
-          />
-          <div>
-            <Button raised ripple onClick={ handleSubmit(this.handleSubmit) }>Login</Button>
-          </div>
-        </form>
-        {errorMsg !== '' &&
-          <div>ERROR: {errorMsg}</div>
-        }
-      </div>
+      <section className={ style.loginWrapper }>
+        <Box>
+          <h1 className={ style.loginHeading }>Login</h1>
+          <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.loginForm }>
+            <Field
+              label='Account'
+              component={ renderSelectField }
+              cssOnly
+              name='encryptedWif'
+              options={ this.getAccountOptions(accounts) }
+            />
+            <Field
+              component={ renderTextField }
+              type='password'
+              name='passPhrase'
+              id='passPhrase'
+              label='password'
+              error={ errors.passPhrase }
+            />
+            <div>
+              <PrimaryButton classNames={ style.loginButton } buttonText={ 'Login' } />
+            </div>
+          </form>
+        </Box>
+      </section>
     )
   }
 }
 
 Login.propTypes = {
   setAccount: PropTypes.func.isRequired,
+  setBalance: PropTypes.func.isRequired,
+  setTransactions: PropTypes.func.isRequired,
   account: PropTypes.object.isRequired,
   accounts: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
+  history: PropTypes.object,
+  clearFormFieldError: PropTypes.func.isRequired,
+  setFormFieldError: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  renderTextField: PropTypes.func.isRequired,
+  renderSelectField: PropTypes.func.isRequired,
+  selectedNetworkId: PropTypes.string,
 }
 
-export default reduxForm({ form: 'login', destroyOnUnmount: false })(Login)
+export default reduxForm({ form: 'login', destroyOnUnmount: false })(withForm(Login))

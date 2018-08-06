@@ -1,0 +1,29 @@
+.switchAccountContainer {
+    padding: 20px 0;
+}
+
+.switchAccountHeading {
+    text-align: center;
+    margin-top: 0;
+}
+
+.accountSelected {
+    border-top: 2px solid green;
+} 
+
+.switchAccountButton {
+    border: none;
+    background: transparent;
+    display: block;
+    cursor: pointer;
+    color: #585858;
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    margin: 15px auto;
+}
+
+.switchAccountButton img {
+    height: 20px;
+    margin-right: 5px;
+}

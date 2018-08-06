@@ -1,0 +1,60 @@
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router'
+
+import navData from '../../../data/mainNavigationData'
+import DropDown from '../../components/DropDown'
+
+import barsSVG from '../../../img/bars.svg'
+
+import style from './MainNav.css'
+
+class MainNav extends Component {
+  pushHistory = path => {
+    const { history } = this.props
+
+    history.push(path)
+  }
+
+  generateNavigationMarkup = () => {
+    return navData.map(navItem => {
+      const onClickHandler = navItem.title === 'Log Out' ? this.handleLogOut : () => this.pushHistory(navItem.path)
+      return (
+        <button className={ style.mainNavLinkButton } key={ navItem.id } onClick={ onClickHandler }>
+          <img src={ navItem.img } alt={ navItem.alt } className={ style.mainNavLinkButtonImg } />
+          {navItem.title}
+        </button>
+      )
+    })
+  }
+
+  handleLogOut = e => {
+    const { logOut, history } = this.props
+
+    e.preventDefault()
+    logOut()
+    history.push('/')
+  }
+
+  render() {
+    const navigationMarkup = this.generateNavigationMarkup()
+
+    return (
+      <nav>
+        <DropDown
+          buttonContent={ <img src={ barsSVG } alt='three horizontal bars' className={ style.mainNavButtonImage } /> }
+          buttonStyles={ style.mainNavButton }
+          dropDownContent={ navigationMarkup }
+          dropDownContentClassNames={ style.mainNavDropDownContent }
+        />
+      </nav>
+    )
+  }
+}
+
+export default withRouter(MainNav)
+
+MainNav.propTypes = {
+  history: PropTypes.object,
+  logOut: PropTypes.func,
+}

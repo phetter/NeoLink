@@ -1,0 +1,27 @@
+.btn {
+    margin-right: 4px;
+}
+
+.formWrapper {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.argsWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.innerArgsWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.btnWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

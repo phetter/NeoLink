@@ -1,58 +1,50 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Field, reduxForm } from 'redux-form'
 
-import { api, wallet } from '@cityofzion/neon-js'
-import { Button } from 'rmwc/Button'
-import { TextField } from 'rmwc/TextField'
-import { Select } from 'rmwc/Select'
-import '@material/button/dist/mdc.button.min.css'
-import '@material/textfield/dist/mdc.textfield.min.css'
-import '@material/select/dist/mdc.select.min.css'
+import { wallet } from '@cityofzion/neon-js'
 
+import { getBalance, getAccountName, sendAsset } from '../../utils/api/neon'
+
+import AccountInfo from '../../components/AccountInfo'
+import PrimaryButton from '../../components/common/buttons/PrimaryButton'
+import sendSVG from '../../../img/paper-planeSolidWhite.svg'
+import Loader from '../../components/Loader'
+import ErrorCard from '../../components/errors/ErrorCard'
+import SendSuccessPage from '../../components/successPages/SendSuccessPage'
+
+import withForm from '../../components/HoC/withForm'
 import { toNumber, toBigNumber } from '../../utils/math'
+
+import PasswordModal from '../../components/PasswordModal'
+
+import { logDeep } from '../../utils/debug'
+
+import style from './Send.css'
 
 export class Send extends Component {
   state = {
-    errorMsg: '',
     loading: false,
     txid: '',
+    assetType: '',
+    address: '',
+    amount: '',
+    remark: '',
+    showConfirmation: false,
   }
-
-  _renderTextField = ({
-    input,
-    ...rest
-  }) => (
-    <TextField
-      { ...input }
-      { ...rest }
-      onChange={ (event) => input.onChange(event.target.value) }
-    />
-  )
-
-  _renderSelectField = ({
-    input,
-    ...rest
-  }) => (
-    <Select
-      { ...input }
-      { ...rest }
-      onChange={ (event) => input.onChange(event.target.value) }
-    />
-  )
 
   resetState = () => {
     this.setState({
-      errorMsg: '',
       loading: false,
       txid: '',
       assetType: 1,
       address: '',
       amount: '',
+      remark: '',
     })
   }
 
-  validateAddress = (address) => {
+  validateAddress = address => {
     if (!address) {
       return 'Address field is required'
     }
@@ -72,138 +64,230 @@ export class Send extends Component {
     }
 
     try {
-      if (toBigNumber(amount).lte(0)) { // check for negative/zero asset
+      if (toBigNumber(amount).lte(0)) {
+        // check for negative/zero asset
         return 'You cannot send zero or negative amounts of an asset.'
       }
     } catch (e) {
       return 'You must enter a valid number.'
     }
 
-    if (assetType === 'NEO' && !toBigNumber(amount).isInteger()) { // check for fractional NEO
+    if (assetType === 'NEO' && !toBigNumber(amount).isInteger()) {
+      // check for fractional NEO
       return 'You cannot send fractional amounts of NEO.'
     }
   }
 
+  getHomeScreenBalance = network => {
+    const { account, setBalance, networks } = this.props
+    this.setState({ amountsError: '' }, () => {
+      getBalance(networks, network, account)
+        .then(results => setBalance(results.neo, results.gas))
+        .catch(() => this.setState({ amountsError: 'Could not retrieve amount' }))
+    })
+  }
+
   handleSubmit = (values, dispatch, formProps) => {
-    const { reset } = formProps
-    const { selectedNetworkId, networks, account } = this.props
-    const { assetType, address, amount } = values
+    const { assetType, address, amount, remark } = values
+    const { setFormFieldError } = this.props
+
+    // console.log('rem: ' + remark)
 
     this.setState({
-      loading: true,
-      errorMsg: '',
       txid: '',
     })
 
-    const errorMessages = []
     const addressErrorMessage = this.validateAddress(address)
     if (addressErrorMessage) {
-      errorMessages.push(addressErrorMessage)
+      setFormFieldError('address', addressErrorMessage)
     }
 
     const amountErrorMessage = this.validateAmount(amount, assetType)
     if (amountErrorMessage) {
-      errorMessages.push(amountErrorMessage)
+      setFormFieldError('amount', amountErrorMessage)
     }
 
-    // Validate Asset Type
-    if (assetType !== 'NEO' && assetType !== 'GAS') {
-      errorMessages.push('Asset Type invalid.')
+    const validationPassed = (assetType === 'NEO' || assetType === 'GAS') && !amountErrorMessage && !addressErrorMessage
+
+    if (validationPassed) {
+      this.setState({ assetType, address, amount, remark, showConfirmation: true })
     }
+  }
 
-    if (errorMessages.length > 0) {
-      this.setState({
-        loading: false,
-        errorMsg: errorMessages.join(' '),
-      })
+  send = (wif) => {
+    const { selectedNetworkId, account, reset, setFormFieldError } = this.props
+    const { assetType, address, amount, remark } = this.state
 
-      return
-    }
-
+    this.setState({ loading: true })
+    console.log('wif:' + wif)
     let amounts = {}
     amounts[assetType] = toNumber(amount)
-    api.neonDB.doSendAsset(networks[selectedNetworkId].url, address, account.wif, amounts)
-      .then((result) => {
-        console.log(result)
+    // Neon.do.sendAsset(selectedNetworkId, address, account.wif, amounts)
+    sendAsset(selectedNetworkId, address, account, wif, amounts, remark, 0)
+      .then(result => {
         this.setState({
           loading: false,
+          showConfirmation: false,
           txid: result.txid,
         })
         reset()
       })
-      .catch((e) => {
-        console.log(e)
+      .catch(e => {
+        reset()
         this.setState({
           loading: false,
-          errorMsg: e.message,
+          showConfirmation: false,
         })
+        setFormFieldError('send', e.message)
       })
   }
 
+  rejectSend = () => {
+    const { reset } = this.props
+    reset()
+    this.setState({ showConfirmation: false })
+  }
+
   render() {
-    const { txid, loading, errorMsg } = this.state
-    const { handleSubmit } = this.props
+    const { txid, loading, showConfirmation } = this.state
+    const {
+      handleSubmit,
+      account,
+      accounts,
+      history,
+      selectedNetworkId,
+      errors,
+      clearFormFieldError,
+      renderTextField,
+      renderSelectField,
+    } = this.props
 
-    return (
-      <div>
-        <form onSubmit={ handleSubmit(this.handleSubmit) }>
-          <Field
-            component={ this._renderTextField }
-            type='text'
-            placeholder='Address'
-            name='address'
-          />
-          <Field
-            component={ this._renderTextField }
-            type='text'
-            placeholder='Amount'
-            name='amount'
-          />
+    let content
 
-          <Field label='Asset'
-            component={ this._renderSelectField }
-            cssOnly
-            name='assetType'
-            options={ [
-              {
-                label: 'NEO',
-                value: 'NEO',
-              },
-              {
-                label: 'GAS',
-                value: 'GAS',
-              },
-            ] }
-          />
-          <Button raised ripple>Send</Button>
-        </form>
-        <br />
-        {txid &&
-          <div>
-            <div>Success!</div>
-            <div style={ { wordWrap: 'break-word', wordBreak: 'break-all' } }>
-              <div>Transaction ID:</div>
-              <div>{txid}</div>
-            </div>
-          </div>
-        }
-        {loading &&
-          <div>Loading...</div>
-        }
-        {errorMsg !== '' &&
-          <div>ERROR: {errorMsg}</div>
-        }
-      </div>
-    )
+    if (loading) {
+      content = <Loader />
+    } else if (showConfirmation) {
+      // console.log('showing form')
+      let accountLabel
+      if (accounts.length) {
+        Object.keys(accounts).forEach(index => {
+          if (account.address === accounts[index].address) accountLabel = accounts[index].label
+          logDeep('ac: ', accounts[index])
+        })
+      }
+      content = (
+        <PasswordModal
+          accountLabel={ accountLabel }
+          successHandler={ this.send }
+          encryptedWif={ account.wif }
+        />
+        /*
+        <SendConfirmCard
+          address={ address }
+          amount={ amount }
+          assetType={ assetType }
+          remark={ remark }
+          successClickHandler={ this.send }
+          rejectClickHandler={ this.rejectSend }
+        />
+        */
+      )
+    } else if (txid) {
+      content = (
+        <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } onClickHandler={ () => history.push('/') } />
+      )
+    } else {
+      content = (
+        <section className={ style.sendWrapper }>
+          <section className={ style.sendContainer }>
+            {errors.send ? (
+              <ErrorCard onClickHandler={ () => clearFormFieldError('send') } message={ errors.send } />
+            ) : null}
+            <AccountInfo
+              neo={ Number(account.neo) }
+              gas={ Number(account.gas) }
+              address={ account.address }
+              getBalance={ () => this.getHomeScreenBalance(selectedNetworkId) }
+              showOptions={ false }
+              label={ getAccountName(account, accounts) }
+            />
+            <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.sendForm }>
+              <section className={ style.sendSelectAsset }>
+                <p className={ style.sendSelectAssetText }>Send</p>
+                <Field
+                  component={ renderSelectField }
+                  classNames={ style.sendAssetSelectBox }
+                  cssOnly
+                  name='assetType'
+                  options={ [
+                    {
+                      label: 'NEO',
+                      value: 'NEO',
+                    },
+                    {
+                      label: 'GAS',
+                      value: 'GAS',
+                    },
+                  ] }
+                />
+              </section>
+              <section className={ style.sendAddress }>
+                <Field
+                  component={ renderTextField }
+                  type='text'
+                  placeholder='Address'
+                  error={ errors.address }
+                  name='address'
+                  label='Recipient'
+                />
+              </section>
+              <section className={ style.sendRemark }>
+                <Field
+                  component={ renderTextField }
+                  type='text'
+                  placeholder='Optional Remarks'
+                  error={ errors.address }
+                  name='remark'
+                  label='Remarks'
+                />
+              </section>
+              <section className={ style.sendAmount }>
+                <Field
+                  component={ renderTextField }
+                  type='text'
+                  placeholder='Eg: 1'
+                  error={ errors.amount }
+                  name='amount'
+                  label='Amount'
+                  classNames={ style.sendAmountsInputField }
+                />
+                <PrimaryButton buttonText='Send' icon={ sendSVG } classNames={ style.sendButton } />
+              </section>
+            </form>
+          </section>
+        </section>
+      )
+    }
+
+    return <Fragment>{content}</Fragment>
   }
 }
 
 Send.propTypes = {
   account: PropTypes.object.isRequired,
+  setBalance: PropTypes.func.isRequired,
+  accounts: PropTypes.object.isRequired,
   selectedNetworkId: PropTypes.string.isRequired,
   networks: PropTypes.object.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+  setFormFieldError: PropTypes.func.isRequired,
+  clearFormFieldError: PropTypes.func.isRequired,
+  renderTextField: PropTypes.func.isRequired,
+  renderSelectField: PropTypes.func.isRequired,
+  history: PropTypes.object,
+  // getWerd: PropTypes.bool,
 }
 
-export default reduxForm({ form: 'send', destroyOnUnmount: false, initialValues: { assetType: 'NEO' } })(Send)
+export default reduxForm({ form: 'send', destroyOnUnmount: false, initialValues: { assetType: 'NEO' } })(withForm(Send))

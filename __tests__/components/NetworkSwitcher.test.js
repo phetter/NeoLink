@@ -1,20 +1,34 @@
 import React from 'react'
 
-import { shallow } from 'enzyme'
+import { mount } from 'enzyme'
 
 import NetworkSwitcher from '../../src/app/components/NetworkSwitcher'
 
 const setup = () => {
   const props = {
     selectedNetworkId: 'MainNet',
+    account: {
+      address: 'ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be',
+    },
     networks: {
-      MainNet: { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false },
-      TestNet: { name: 'TestNet', url: 'http://testnet-api.wallet.cityofzion.io', canDelete: false },
-      CoZTestNet: { name: 'CoZ TestNet', url: 'http://coz-privatenet.herokuapp.com/', canDelete: false },
+      MainNet: { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false, apiType: 'neoscan' },
+      TestNet: {
+        name: 'TestNet',
+        url: 'http://testnet-api.wallet.cityofzion.io',
+        canDelete: false,
+        apiType: 'neoscan',
+      },
+      CoZTestNet: {
+        name: 'CoZ TestNet',
+        url: 'http://coz-privatenet.herokuapp.com/',
+        canDelete: false,
+        apiType: 'neoscan',
+      },
     },
     setNetwork: jest.fn(),
+    getBalance: jest.fn(),
   }
-  const wrapper = shallow(<NetworkSwitcher { ...props } />)
+  const wrapper = mount(<NetworkSwitcher { ...props } />)
 
   return {
     wrapper,
@@ -22,7 +36,7 @@ const setup = () => {
 }
 
 describe('NetworkSwitch', () => {
-  test('renders without crashing', (done) => {
+  test('renders without crashing', done => {
     const { wrapper } = setup()
     expect(wrapper).toMatchSnapshot()
     done()
@@ -30,22 +44,24 @@ describe('NetworkSwitch', () => {
 
   test('correctly renders MainNet initially', () => {
     const { wrapper } = setup()
+    wrapper.find('.dropDownButton').simulate('click')
+    const networkSelectorElement = wrapper.find('.networkOptionButton').at(0)
 
-    const networkSelectorElement = wrapper.find('select').getElement()
-
-    expect(networkSelectorElement.props.defaultValue).toEqual('MainNet')
+    expect(networkSelectorElement.contains(<div className='networkNavigationOptionSelected' />)).toBe(true)
   })
 
   test('switches to the correct network when chosen from the dropdown', async () => {
     const { wrapper } = setup()
 
     const instance = wrapper.instance()
-    const networkSelector = wrapper.find('select')
-    networkSelector.simulate('change', { target: { value: 'TestNet' } })
+    wrapper.find('.dropDownButton').simulate('click')
+    let networkSelectorElement = wrapper.find('.networkOptionButton').at(1)
+    networkSelectorElement.simulate('click')
 
     expect(instance.props.setNetwork).toHaveBeenCalledWith('TestNet')
 
-    networkSelector.simulate('change', { target: { value: 'MainNet' } })
+    networkSelectorElement = wrapper.find('.networkOptionButton').at(0)
+    networkSelectorElement.simulate('click')
 
     expect(instance.props.setNetwork).toHaveBeenCalledWith('MainNet')
   })
