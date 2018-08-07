@@ -13,7 +13,7 @@ const AccountInfoAmounts = ({ neo, getBalance, gas, showRefresh = true, classNam
     <div className={ style.accountInfoAmounts + ' ' + classNames }>
       <div className={ style.accountInfoNeoAmount }>
         <img src={ neonPNG } alt='Neo' className={ style.accountInfoNeoAmountImg } />
-        <p className={ style.accountInfoAmountParagraph }>{neo} NEO</p>
+        <p className={ style.accountInfoAmountParagraph }>{neo > 0 ? neo : 0} NEO</p>
       </div>
       {showRefresh && (
         <button className={ style.accountInfoRefreshButton } onClick={ getBalance }>

@@ -53,7 +53,7 @@
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^22.0.4",
-    "jest-cli": "^22.0.5",
+    "jest-cli": "^22.4.4",
     "postcss-loader": "^2.0.9",
     "redux-devtools": "^3.4.1",
     "redux-devtools-dock-monitor": "^1.1.3",
@@ -107,7 +107,8 @@
       "js",
       "jsx"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setupTests.js"
+    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setupTests.js",
+    "testURL": "http://localhost"
   },
   "license": "MIT"
 }
