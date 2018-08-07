@@ -5,35 +5,31 @@ This is a Chrome extension wallet for the Neo Smart Economy.
 Currently the project is undergoing heavy development. When running in development, the extension popup can
 be perceived as slow to start. Please be aware of this when running the unpacked extension build.
 
-![alt](https://i.gyazo.com/816b21e8fcbb35073919603c9d6030c1.gif)
+![alt](./neolink_alpha_ss.gif)
 
-## Current Features
+## Current Noteworthy Features
 
-* Open a wallet using an encyrpted WIF
-* Get a list of transactions for any known address - does not require login
-* Get the balance of any known address - does not require login
 * Send Neo or Gas to an address
-* Easily switch between Public & Private Net
-* Test invoke smart contracts, with parameters, to determine gas cost and test
-* Send invoke smart contracts with parameters and arguments
+* Easily switch between MainNet, TestNet & Custom User-Configurable Private Nets
+* Test invoke smart contracts, with variadic arguments, to determine gas cost and test
+* Send invoke smart contracts
 * Authorize both types of smart contract invocations as requested by third-party dApp
 * SemVer 2.0 compliant http://semver.org/
-* Easy selection of MainNet, TestNet, or custom private net
 * Persistent storage of user configuration
-* Create wallet
+* Create, Import, and Open Wallets (includes encrypted WIF aka NEP-2)
+* Transaction confirmation with password dialog
+* Transaction review with timestamps and remark support
+* Balance home screen now includes any NEP-5 tokens listend by Neoscan
+* Neoscan.io (MainNet, TestNet, and custom) support
 
 ## Future Features
 
-* Add progress indicator for all actions to show user something is happening
-* Add global status bar or modal system
-* Re-skin UI and layout
-* Refactor: lint, modularity, and clarity
+* Transaction Fee support
+* Add progress indicator for any actions that don't have them now to show user something is happening
+* Add dark theme
 * Contact book that remembers addresses used
 * Configurable watch wallet for any saved addresses to display balances all in one view
 * Claim Gas
-* Import Wallet
-* Export Wallet
-* Add arbitrary number of arguments for smart contract invocation
 * Ledger hardware support
 * Any ideas from the community!
 
@@ -43,7 +39,6 @@ be perceived as slow to start. Please be aware of this when running the unpacked
 * Product Landing Page
 * Firefox plug-in
 * Version 1.0 Release (Release packed plug-in on Google and Firefox)
-* neon-api integration (NEO's web3 equivalent)
 
 ## Setup
 
