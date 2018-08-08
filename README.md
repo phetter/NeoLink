@@ -31,11 +31,11 @@ be perceived as slow to start. Please be aware of this when running the unpacked
 * Configurable watch wallet for any saved addresses to display balances all in one view
 * Claim Gas
 * Ledger hardware support
+* NEP-6
 * Any ideas from the community!
 
 ## Roadmap
 
-* Finalize React version + Material Design
 * Product Landing Page
 * Firefox plug-in
 * Version 1.0 Release (Release packed plug-in on Google and Firefox)
@@ -73,16 +73,16 @@ document.getElementById("runInvokeButton").addEventListener("click",
     function() {
       var scriptHash = document.getElementById("contractScriptHash").value
       var operation = document.getElementById("operationName").value
-      var invokeArg1 = document.getElementById("runInvokeArgument1").value
-      var invokeArg2 = document.getElementById("runInvokeArgument2").value
+      var args = []
+      args.concat(document.getElementById("runInvokeArgument1").value)
+      args.concat(document.getElementById("runInvokeArgument2").value)
       var type = document.getElementById("assetType").value
       var amount = document.getElementById("assetAmount").value
 
       var invocationObject = {
         'scriptHash': scriptHash, // Your contract's script hash.
         'operation': operation,   // Operation as defined in your contract.
-        'arg1': invokeArg1,       // Depending on your input/contract, you may need to use u.str2hexstring, u.reverseHex
-        'arg2': invokeArg2,       // or other utility methods from neon-js for these arguments.
+        'args': args,             // or other utility methods from neon-js for these arguments.
         'assetType': type,        // NEO or GAS currently.
         'assetAmount': amount     // Amount, decimals allowed for GAS.
       }
@@ -91,8 +91,6 @@ document.getElementById("runInvokeButton").addEventListener("click",
 }, false);
 </script>
 ```
-
-Please note that currently the code is limited to a maximum of two arguments to the smart contract.
 
 ## NeoLink - Demo
 
