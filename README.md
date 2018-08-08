@@ -24,7 +24,7 @@ be perceived as slow to start. Please be aware of this when running the unpacked
 
 ## Future Features
 
-* Transaction Fee support
+* Transaction fee support
 * Add progress indicator for any actions that don't have them now to show user something is happening
 * Add dark theme
 * Contact book that remembers addresses used
@@ -33,7 +33,7 @@ be perceived as slow to start. Please be aware of this when running the unpacked
 * Ledger hardware support
 * Any ideas from the community!
 
-## Roadmap for Q1 2018
+## Roadmap
 
 * Finalize React version + Material Design
 * Product Landing Page
