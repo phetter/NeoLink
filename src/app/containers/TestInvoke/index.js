@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { Field, reduxForm } from 'redux-form'
 
 import Neon, { api, u, rpc } from '@cityofzion/neon-js'
 
@@ -10,7 +11,9 @@ import Button from '../../components/common/buttons/PrimaryButton'
 import styles from './testInvoke.css'
 import withLoginCheck from '../../components/Login/withLoginCheck'
 
-class TestInvoke extends Component {
+import { logDeep } from '../../utils/debug'
+
+export class TestInvoke extends Component {
   state = {
     errorMsg: '',
     loading: false,
@@ -30,17 +33,20 @@ class TestInvoke extends Component {
   }
 
   _handleInputChange = e => {
+    console.log('here')
     const key = e.target.id
     this.setState({
       [key]: e.target.value,
     })
+    logDeep('key: ', key + ' ' + e.target.value)
   }
 
   _handleArgChange = (id, e) => {
-    const myArgs = this.state.args
+    var myArgs = this.state.args
     myArgs[id] = e.target.value
 
     this.setState({ args: myArgs })
+    logDeep('args: ', myArgs);
   }
 
   _handleAddArgument = e => {
@@ -66,7 +72,7 @@ class TestInvoke extends Component {
     if (!scriptHash || !operation) {
       this.setState({
         loading: false,
-        errorMsg: 'Error! Script hash and operation are both required!',
+        errorMsg: 'Error! Script hash and operation are both required now!!',
       })
 
       return
@@ -82,6 +88,8 @@ class TestInvoke extends Component {
     }
 
     const parsedArgs = args.map(arg => u.str2hexstring(arg))
+
+    logDeep('pa: ', parsedArgs);
 
     const props = {
       scriptHash: scriptHash,
@@ -119,16 +127,16 @@ class TestInvoke extends Component {
           <Input
             type='text'
             placeholder='Script Hash'
-            value={ this.state.scriptHash }
+            defaultValue={ this.state.scriptHash }
             id='scriptHash'
-            onChange={ this._handleInputChange }
+            onChangeHandler={ this._handleInputChange }
           />
           <Input
             type='text'
             placeholder='Operation'
-            value={ this.state.operation }
+            defaultValue={ this.state.operation }
             id='operation'
-            onChange={ this._handleInputChange }
+            onChangeHandler={ this._handleInputChange }
           />
           <div className={ styles.argsWrapper }>
             {this.state.args.map((arg, idx) => (
@@ -140,9 +148,9 @@ class TestInvoke extends Component {
                   style={ { flexGrow: 1, order: 1 } }
                   type='text'
                   placeholder={ `Argument #${idx + 1}` }
-                  value={ arg }
+                  defaultValue={ arg }
                   id={ `Argument #${idx + 1} name` }
-                  onChange={ (event) => this._handleArgChange(idx, event) }
+                  onChangeHandler={ (event) => this._handleArgChange(idx, event) }
                 />
                 <Button
                   style={ { flexGrow: 0, order: 0 } }

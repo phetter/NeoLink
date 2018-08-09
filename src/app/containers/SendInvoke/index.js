@@ -12,6 +12,8 @@ import style from './SendInvoke.css'
 
 import withLoginCheck from '../../components/Login/withLoginCheck'
 
+import { logDeep } from '../../utils/debug'
+
 class SendInvoke extends Component {
   state = {
     loading: false,
@@ -27,13 +29,15 @@ class SendInvoke extends Component {
     this.setState({
       [key]: e.target.value,
     })
+    logDeep('key: ', key + ' ' + e.target.value)
   }
 
   _handleArgChange = (id, e) => {
-    const myArgs = this.state.args
+    var myArgs = this.state.args
     myArgs[id] = e.target.value
 
     this.setState({ args: myArgs })
+    logDeep('args: ', myArgs);
   }
 
   _handleAddArgument = e => {
@@ -46,9 +50,10 @@ class SendInvoke extends Component {
     this.setState({ args: this.state.args.filter((s, idx) => id !== idx) })
   }
 
-  handleSubmit = event => {
+  _handleSubmit = event => {
     event.preventDefault()
     const { selectedNetworkId, networks, account } = this.props
+    const { scriptHash, operation, args } = this.state
 
     this.setState({
       loading: true,
@@ -56,7 +61,7 @@ class SendInvoke extends Component {
       txid: '',
     })
 
-    if (!this.state.scriptHash || !this.state.operation || !this.state.amount) {
+    if (!scriptHash || !operation || !assetAmount) {
       this.setState({
         loading: false,
         errorMsg: 'Error! Script hash, operation and amount are all required!',
@@ -96,16 +101,16 @@ class SendInvoke extends Component {
           <Input
             type='text'
             placeholder='Script Hash'
-            value={ this.state.scriptHash }
+            defaultValue={ this.state.scriptHash }
             id='scriptHash'
-            onChange={ this._handleInputChange }
+            onChangeHandler={ this._handleInputChange }
           />
           <Input
             type='text'
             placeholder='Operation'
-            value={ this.state.operation }
+            defaultValue={ this.state.operation }
             id='operation'
-            onChange={ this._handleInputChange }
+            onChangeHandler={ this._handleInputChange }
           />
 
           <div className={ style.argsWrapper }>
@@ -118,9 +123,9 @@ class SendInvoke extends Component {
                   style={ { flexGrow: 1, order: 1 } }
                   type='text'
                   placeholder={ `Argument #${idx + 1}` }
-                  value={ arg }
+                  defaultValue={ arg }
                   id={ `Argument #${idx + 1} name` }
-                  onChange={ (event) => this._handleArgChange(idx, event) }
+                  onChangeHandler={ (event) => this._handleArgChange(idx, event) }
                 />
                 <Button
                   style={ { flexGrow: 0, order: 0 } }
@@ -134,13 +139,14 @@ class SendInvoke extends Component {
             placeholder='Amount'
             value={ this.state.assetAmount }
             id='assetAmount'
-            onChange={ this._handleInputChange }
+            onChangeHandler={ this._handleInputChange }
           />
           <Select
             cssOnly
             label='Asset'
             value={ this.state.assetType }
-            onChange={ e => {
+            onChangeHandler={ e => {
+              console.log('asset: '+e.target.value)
               this.setState({
                 assetType: e.target.value,
               })
