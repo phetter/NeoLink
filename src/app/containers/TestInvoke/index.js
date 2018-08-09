@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Field, reduxForm } from 'redux-form'
 
 import Neon, { api, u, rpc } from '@cityofzion/neon-js'
 
@@ -33,20 +32,20 @@ export class TestInvoke extends Component {
   }
 
   _handleInputChange = e => {
-    console.log('here')
     const key = e.target.id
     this.setState({
       [key]: e.target.value,
     })
+
     logDeep('key: ', key + ' ' + e.target.value)
   }
 
   _handleArgChange = (id, e) => {
-    var myArgs = this.state.args
+    let myArgs = this.state.args
     myArgs[id] = e.target.value
 
     this.setState({ args: myArgs })
-    logDeep('args: ', myArgs);
+    logDeep('args: ', myArgs)
   }
 
   _handleAddArgument = e => {
@@ -72,7 +71,7 @@ export class TestInvoke extends Component {
     if (!scriptHash || !operation) {
       this.setState({
         loading: false,
-        errorMsg: 'Error! Script hash and operation are both required now!!',
+        errorMsg: 'Error! Script hash and operation are both required!',
       })
 
       return
@@ -89,7 +88,7 @@ export class TestInvoke extends Component {
 
     const parsedArgs = args.map(arg => u.str2hexstring(arg))
 
-    logDeep('pa: ', parsedArgs);
+    logDeep('pa: ', parsedArgs)
 
     const props = {
       scriptHash: scriptHash,

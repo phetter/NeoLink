@@ -33,11 +33,11 @@ class SendInvoke extends Component {
   }
 
   _handleArgChange = (id, e) => {
-    var myArgs = this.state.args
+    let myArgs = this.state.args
     myArgs[id] = e.target.value
 
     this.setState({ args: myArgs })
-    logDeep('args: ', myArgs);
+    logDeep('args: ', myArgs)
   }
 
   _handleAddArgument = e => {
@@ -53,7 +53,7 @@ class SendInvoke extends Component {
   _handleSubmit = event => {
     event.preventDefault()
     const { selectedNetworkId, networks, account } = this.props
-    const { scriptHash, operation, args } = this.state
+    const { scriptHash, operation, assetAmount } = this.state
 
     this.setState({
       loading: true,
@@ -146,7 +146,7 @@ class SendInvoke extends Component {
             label='Asset'
             value={ this.state.assetType }
             onChangeHandler={ e => {
-              console.log('asset: '+e.target.value)
+              console.log('asset: ' + e.target.value)
               this.setState({
                 assetType: e.target.value,
               })
