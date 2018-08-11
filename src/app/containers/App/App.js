@@ -12,7 +12,6 @@ import CreateWallet from '../CreateWallet'
 import CreateWalletWithEncryptedWif from '../CreateWalletWithEncryptedWif'
 import ImportWallet from '../ImportWallet'
 import ExportWallet from '../ExportWallet'
-import Config from '../Config'
 import ContentWrapper from '../../components/ContentWrapper'
 import StartPage from '../../components/StartPage'
 import CreateAccountStartPage from '../../components/CreateAccountStartPage'
@@ -48,7 +47,6 @@ export default class App extends Component {
             <Route path='/newAccountFromWIF' render={ props => <CreateWallet manualWIF { ...props } /> } />
             <Route path='/importWallet' component={ ImportWallet } />
             <Route path='/exportWallet' component={ ExportWallet } />
-            <Route path='/config' component={ Config } />
             <Route path='/settings' component={ Settings } />
             <Route path='/addCustomNetwork' component={ AddCustomNetwork } />
             <Route path='/editCustomNetwork/:id' component={ EditCustomNetwork } />
