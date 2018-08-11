@@ -7,7 +7,7 @@ import Box from '../../components/common/Box'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 
 import style from './ExportWallet.css'
-import BackNavigation from "../../components/BackNavigation";
+import BackNavigation from '../../components/BackNavigation'
 
 export default class ExportWallet extends Component {
   state = {
@@ -59,7 +59,7 @@ export default class ExportWallet extends Component {
 
     return (
       <React.Fragment>
-        <BackNavigation onClickHandler={() => history.push('/settings')}/>
+        <BackNavigation onClickHandler={ () => history.push('/settings') } />
         <section className={ style.exportWallet }>
           <Box>
             <h1>Export Wallet</h1>
@@ -83,5 +83,5 @@ export default class ExportWallet extends Component {
 
 ExportWallet.propTypes = {
   accounts: PropTypes.object.isRequired,
-  history: PropTypes.object
+  history: PropTypes.object,
 }

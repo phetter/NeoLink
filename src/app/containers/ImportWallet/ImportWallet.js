@@ -10,7 +10,7 @@ import ErrorCard from '../../components/errors/ErrorCard'
 import ImportWalletInfo from '../../components/ImportWalletInfo'
 
 import style from './ImportWallet.css'
-import BackNavigation from "../../components/BackNavigation";
+import BackNavigation from '../../components/BackNavigation'
 
 export default class ImportWallet extends Component {
   state = {
@@ -92,26 +92,26 @@ export default class ImportWallet extends Component {
 
     return (
       <React.Fragment>
-        <BackNavigation onClickHandler={() => history.push('/settings')}/>
-        <section className={style.importWallet}>
-          {success && <ImportWalletSuccessPage history={history} title={'Successfully imported wallet(s)'}/>}
+        <BackNavigation onClickHandler={ () => history.push('/settings') } />
+        <section className={ style.importWallet }>
+          {success && <ImportWalletSuccessPage history={ history } title={ 'Successfully imported wallet(s)' } />}
           {!success && (
             <Box>
-              <h1 className={style.importWalletHeading}>Import Wallet</h1>
+              <h1 className={ style.importWalletHeading }>Import Wallet</h1>
               {importAccounts.length === 0 && (
-                <p className={style.importWalletSubtitle}>Click to upload your JSON keystore file.</p>
+                <p className={ style.importWalletSubtitle }>Click to upload your JSON keystore file.</p>
               )}
-              <form onSubmit={this.importWallet}>
+              <form onSubmit={ this.importWallet }>
                 <Fragment>
-                  {importAccounts.length === 0 && <FileUpload onChangeHandler={this.handleFileUpload}/>}
-                  {importAccounts.length > 0 && <ImportWalletInfo numWallets={importAccounts.length}/>}
+                  {importAccounts.length === 0 && <FileUpload onChangeHandler={ this.handleFileUpload } />}
+                  {importAccounts.length > 0 && <ImportWalletInfo numWallets={ importAccounts.length } />}
 
                   {importAccounts.length > 0 && (
-                    <PrimaryButton buttonText='Import Wallets' classNames={style.importAccountsButton}/>
+                    <PrimaryButton buttonText='Import Wallets' classNames={ style.importAccountsButton } />
                   )}
                 </Fragment>
               </form>
-              {errorMsg && <ErrorCard message={errorMsg} onClickHandler={() => this.setState({ errorMsg: '' })}/>}
+              {errorMsg && <ErrorCard message={ errorMsg } onClickHandler={ () => this.setState({ errorMsg: '' }) } />}
             </Box>
           )}
         </section>
