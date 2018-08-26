@@ -62,7 +62,6 @@ const validateUrl = url => {
 }
 
 export const setNet = networkId => {
-  console.log('here')
   return switchNetwork(networkId)
 }
 

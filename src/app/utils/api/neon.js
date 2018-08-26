@@ -182,7 +182,6 @@ export const sendAsset = (netUrl, toAddress, account, wif, assetAmounts, remark,
     console.log('hash: ' + signedTx.hash)
 
     api.neoscan.getRPCEndpoint(netUrl).then(rpcEndpt => {
-
       console.log('rpcEndpt: ' + rpcEndpt)
 
       const client = Neon.create.rpcClient(rpcEndpt)
