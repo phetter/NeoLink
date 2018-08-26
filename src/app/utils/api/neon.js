@@ -1,11 +1,9 @@
 // neon.js - neon-js api module
 
-import Neon, { u, wallet, api, tx, Query } from '@cityofzion/neon-js'
+import Neon, { u, wallet, api, tx } from '@cityofzion/neon-js'
 import { toNumber } from '../math'
 import { logDeep } from '../debug'
 import base58 from 'bs58'
-import * as neoscan from './neoscan'
-
 
 export const getAccountName = (account, accounts) => {
   let result
@@ -150,9 +148,6 @@ export const sendAsset = (netUrl, toAddress, account, wif, assetAmounts, remark,
   let fee
   if (txFee) fee = txFee
   else fee = 0
-  console.log('nu '+netUrl)
-
-  console.log('account: '+account.address)
 
   return api.neoscan.getBalance(netUrl, account.address).then(balance => {
     logDeep('balance: ', balance)
@@ -184,11 +179,11 @@ export const sendAsset = (netUrl, toAddress, account, wif, assetAmounts, remark,
     let signedTx = unsignedTx.sign(myAccount.privateKey)
 
     logDeep('signedTx: ', signedTx)
-    console.log('hash: '+signedTx.hash)
+    console.log('hash: ' + signedTx.hash)
 
     api.neoscan.getRPCEndpoint(netUrl).then(rpcEndpt => {
 
-      console.log('rpcEndpt: '+rpcEndpt)
+      console.log('rpcEndpt: ' + rpcEndpt)
 
       const client = Neon.create.rpcClient(rpcEndpt)
 
