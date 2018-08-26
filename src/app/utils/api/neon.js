@@ -1,9 +1,11 @@
 // neon.js - neon-js api module
 
-import Neon, { u, wallet, api, tx } from '@cityofzion/neon-js'
+import Neon, { u, wallet, api, tx, Query } from '@cityofzion/neon-js'
 import { toNumber } from '../math'
 import { logDeep } from '../debug'
 import base58 from 'bs58'
+import * as neoscan from './neoscan'
+
 
 export const getAccountName = (account, accounts) => {
   let result
@@ -145,65 +147,64 @@ export const getScriptHashFromAddress = (address) => {
  * @return {Promise<Response>} RPC Response
  */
 export const sendAsset = (netUrl, toAddress, account, wif, assetAmounts, remark, txFee, signingFunction) => {
-  // = (net, toAddress, from, assetAmounts, signingFunction) => {
   let fee
-
   if (txFee) fee = txFee
   else fee = 0
+  console.log('nu '+netUrl)
 
-  const rpcEndpointPromise = api.neoscan.getRPCEndpoint(netUrl)
+  console.log('account: '+account.address)
 
-  const balancePromise = api.neoscan.getBalance(netUrl, account.address)
+  return api.neoscan.getBalance(netUrl, account.address).then(balance => {
+    logDeep('balance: ', balance)
 
-  // logDeep('account: ', account)
+    const scriptHash = getScriptHashFromAddress(toAddress)
 
-  const scriptHash = getScriptHashFromAddress(toAddress)
+    logDeep('scriptHash: ', scriptHash)
 
-  logDeep('scriptHash: ', scriptHash)
-  logDeep('remark: ', remark)
+    if (remark) logDeep('remark: ', remark)
 
-  const intents = Object.keys(assetAmounts).map(key => {
-    return {
-      assetId: Neon.CONST.ASSET_ID[key],
-      value: assetAmounts[key],
-      scriptHash: scriptHash,
-    }
-  })
-  let signedTx
-  // let endpt
-  return Promise.all([rpcEndpointPromise, balancePromise])
-    .then(values => {
-      // endpt = values[0]
-      const balance = values[1]
-      // const unsignedTx = tx.Transaction.createContractTx(balance, intents)
-      const unsignedTx = tx.Transaction.createContractTx(balance, intents, {}, fee)
-      // const unsignedTx = tx.Transaction.createContractTx(balance, intents, {}, fee)
+    const intents = Object.keys(assetAmounts).map(key => {
+      return {
+        assetId: Neon.CONST.ASSET_ID[key],
+        value: assetAmounts[key],
+        scriptHash: scriptHash,
+      }
+    })
 
+    const unsignedTx = tx.Transaction.createContractTx(balance, intents, {}, fee)
+
+    if (remark) {
       let uTx = unsignedTx.addRemark(remark)
 
       logDeep('unsignedTx: ', uTx)
+    }
 
-      // if (signingFunction) {
-      //   return signingFunction(unsignedTx, fromAcct.publicKey)
-      // } else {
-      //   return unsignedTx.sign(fromAcct.privateKey)
-      // }
-      const myAccount = Neon.create.account(wif)
-      return unsignedTx.sign(myAccount.privateKey)
+    const myAccount = Neon.create.account(wif)
+
+    let signedTx = unsignedTx.sign(myAccount.privateKey)
+
+    logDeep('signedTx: ', signedTx)
+    console.log('hash: '+signedTx.hash)
+
+    api.neoscan.getRPCEndpoint(netUrl).then(rpcEndpt => {
+
+      console.log('rpcEndpt: '+rpcEndpt)
+
+      const client = Neon.create.rpcClient(rpcEndpt)
+
+      logDeep('client: ', client)
+
+      client.sendRawTransaction(signedTx).then(res => {
+        logDeep('tx Result: ', res)
+
+        if (res === true) {
+          return signedTx.hash
+        } else {
+          // console.log(`Transaction failed: ${signedTx.serialize()}`)
+          console.log('transaction failed')
+        }
+        return res
+      })
     })
-    .then(signedResult => {
-      signedTx = signedResult
-      logDeep('signedTx: ', signedTx)
-      const client = Neon.create.rpcClient(netUrl)
-      return client.sendRawTransaction(signedTx)
-    })
-    .then(res => {
-      logDeep('tx Result: ', res)
-      if (res === true) {
-        res.txid = signedTx.hash
-      } else {
-        console.log(`Transaction failed: ${signedTx.serialize()}`)
-      }
-      return res
-    })
+  })
 }

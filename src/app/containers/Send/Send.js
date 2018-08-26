@@ -128,7 +128,7 @@ export class Send extends Component {
         this.setState({
           loading: false,
           showConfirmation: false,
-          txid: result.txid,
+          txid: result,
         })
         reset()
       })
