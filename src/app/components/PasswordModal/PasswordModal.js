@@ -133,7 +133,7 @@ export class PasswordModal extends Component {
             </div>
           </form>
           <form>
-            <SecondaryButton classNames={ style.Button } buttonText={ 'cancel' } onClickHandler={ this.cancelSubmit }/>
+            <SecondaryButton classNames={ style.Button } buttonText={ 'cancel' } onClickHandler={ this.cancelSubmit } />
           </form>
         </Box>
       </section>

@@ -148,7 +148,6 @@ export const sendAsset = (netUrl, toAddress, account, wif, assetAmounts, remark,
   let fee
   if (txFee) fee = txFee
   else fee = 0
-  
   return new Promise((resolve, reject) => {
     return api.neoscan.getBalance(netUrl, account.address).then(balance => {
       logDeep('balance: ', balance)
@@ -197,6 +196,7 @@ export const sendAsset = (netUrl, toAddress, account, wif, assetAmounts, remark,
           } else {
             // console.log(`Transaction failed: ${signedTx.serialize()}`)
             console.log('transaction failed')
+            // eslint-disable-next-line
             reject('transaction failed')
           }
         })

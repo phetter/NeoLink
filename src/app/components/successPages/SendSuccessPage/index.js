@@ -19,7 +19,7 @@ SendSuccessPage.propTypes = {
   txid: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   onClickHandler: PropTypes.func.isRequired,
-  url: PropTypes.string.isRequired
+  url: PropTypes.string.isRequired,
 }
 
 export default SendSuccessPage

@@ -150,7 +150,7 @@ export class Send extends Component {
 
   rejectSend = () => {
     const { reset } = this.props
-    resetState()
+    reset()
     this.setState({ showConfirmation: false })
   }
 
@@ -167,8 +167,6 @@ export class Send extends Component {
       renderTextField,
       renderSelectField,
     } = this.props
-
-
 
     let content
 
@@ -211,7 +209,7 @@ export class Send extends Component {
       // TODO ELSE CUSTOM NET
 
       content = (
-        <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } onClickHandler={ () => history.push('/') } url={ successUrl }/>
+        <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } onClickHandler={ () => history.push('/') } url={ successUrl } />
       )
     } else {
       content = (
