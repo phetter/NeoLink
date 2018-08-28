@@ -28,7 +28,7 @@ export class PasswordModal extends Component {
   }
 
   handleSubmit = (values, dispatch, formProps) => {
-    const { clearFormFieldError, encryptedWif, successHandler, confirmationMessage } = this.props
+    const { clearFormFieldError, encryptedWif, successHandler } = this.props
     const { reset } = formProps
     const passPhrase = values.passPhrase
 
@@ -133,7 +133,7 @@ export class PasswordModal extends Component {
             </div>
           </form>
           <form>
-          <SecondaryButton classNames={ style.Button } buttonText={ 'cancel' } onClickHandler={ this.cancelSubmit }/>
+            <SecondaryButton classNames={ style.Button } buttonText={ 'cancel' } onClickHandler={ this.cancelSubmit }/>
           </form>
         </Box>
       </section>
@@ -146,7 +146,6 @@ PasswordModal.propTypes = {
   accountLabel: PropTypes.string.isRequired,
   confirmationMessage: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
-  cancelSubmit: PropTypes.func.isRequired,
   clearFormFieldError: PropTypes.func.isRequired,
   setFormFieldError: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,

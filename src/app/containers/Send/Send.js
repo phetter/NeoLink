@@ -31,7 +31,7 @@ export class Send extends Component {
     amount: '',
     remark: '',
     showConfirmation: false,
-    confirmationMessage: ''
+    confirmationMessage: '',
   }
 
   resetState = () => {
@@ -42,7 +42,7 @@ export class Send extends Component {
       address: '',
       amount: '',
       remark: '',
-      confirmationMessage: ''
+      confirmationMessage: '',
     })
   }
 
@@ -134,11 +134,10 @@ export class Send extends Component {
         showConfirmation: false,
         txid: result,
       })
-      console.log('result: '+ result)
+      console.log('result: ' + result)
       reset()
-    })
-    .catch(e => {
-      console.log('send: '+ e.message)
+    }).catch(e => {
+      console.log('send: ' + e.message)
 
       this.resetState()
       this.setState({
@@ -210,7 +209,7 @@ export class Send extends Component {
       if (selectedNetworkId === 'MainNet') successUrl = `https://neoscan.io/transaction/${txid}`
       else if (selectedNetworkId === 'TestNet') successUrl = `https://neoscan-testnet.io/transaction/${txid}`
       // TODO ELSE CUSTOM NET
-      
+
       content = (
         <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } onClickHandler={ () => history.push('/') } url={ successUrl }/>
       )
