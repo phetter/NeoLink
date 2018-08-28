@@ -205,13 +205,12 @@ export class Send extends Component {
         */
       )
     } else if (txid) {
-      console.log('tx id: ' + txid)
       let successUrl
 
       if (selectedNetworkId === 'MainNet') successUrl = `https://neoscan.io/transaction/${txid}`
       else if (selectedNetworkId === 'TestNet') successUrl = `https://neoscan-testnet.io/transaction/${txid}`
       // TODO ELSE CUSTOM NET
-      console.log('tx url ' + successUrl)
+      
       content = (
         <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } onClickHandler={ () => history.push('/') } url={ successUrl }/>
       )
