@@ -31,6 +31,7 @@ export class Send extends Component {
     amount: '',
     remark: '',
     showConfirmation: false,
+    confirmationMessage: ''
   }
 
   resetState = () => {
@@ -41,6 +42,7 @@ export class Send extends Component {
       address: '',
       amount: '',
       remark: '',
+      confirmationMessage: ''
     })
   }
 
@@ -87,11 +89,13 @@ export class Send extends Component {
     })
   }
 
+  handleCancelClick = () => {
+    console.log('cancle and grettle')
+  }
+
   handleSubmit = (values, dispatch, formProps) => {
     const { assetType, address, amount, remark } = values
     const { setFormFieldError } = this.props
-
-    // console.log('rem: ' + remark)
 
     this.setState({
       txid: '',
@@ -110,7 +114,8 @@ export class Send extends Component {
     const validationPassed = (assetType === 'NEO' || assetType === 'GAS') && !amountErrorMessage && !addressErrorMessage
 
     if (validationPassed) {
-      this.setState({ assetType, address, amount, remark, showConfirmation: true })
+      let confirmationMessage = 'Are you sure you want to send: ' + amount + ' ' + assetType + ' to ' + address + ' ?'
+      this.setState({ assetType, address, amount, remark, showConfirmation: true, confirmationMessage })
     }
   }
 
@@ -123,33 +128,35 @@ export class Send extends Component {
     let amounts = {}
     amounts[assetType] = toNumber(amount)
     // Neon.do.sendAsset(selectedNetworkId, address, account.wif, amounts)
-    sendAsset(selectedNetworkId, address, account, wif, amounts, remark, 0)
-      .then(result => {
-        this.setState({
-          loading: false,
-          showConfirmation: false,
-          txid: result,
-        })
-        reset()
+    sendAsset(selectedNetworkId, address, account, wif, amounts, remark, 0).then(result => {
+      this.setState({
+        loading: false,
+        showConfirmation: false,
+        txid: result,
       })
-      .catch(e => {
-        reset()
-        this.setState({
-          loading: false,
-          showConfirmation: false,
-        })
-        setFormFieldError('send', e.message)
+      console.log('result: '+ result)
+      reset()
+    })
+    .catch(e => {
+      console.log('send: '+ e.message)
+
+      this.resetState()
+      this.setState({
+        loading: false,
+        showConfirmation: false,
       })
+      setFormFieldError('send', e.message)
+    })
   }
 
   rejectSend = () => {
     const { reset } = this.props
-    reset()
+    resetState()
     this.setState({ showConfirmation: false })
   }
 
   render() {
-    const { txid, loading, showConfirmation } = this.state
+    const { txid, loading, showConfirmation, confirmationMessage } = this.state
     const {
       handleSubmit,
       account,
@@ -161,6 +168,8 @@ export class Send extends Component {
       renderTextField,
       renderSelectField,
     } = this.props
+
+
 
     let content
 
@@ -175,8 +184,11 @@ export class Send extends Component {
           logDeep('ac: ', accounts[index])
         })
       }
+
       content = (
         <PasswordModal
+          confirmationMessage={ confirmationMessage }
+          cancelSubmit={ this.handleCancelClick }
           accountLabel={ accountLabel }
           successHandler={ this.send }
           encryptedWif={ account.wif }
@@ -193,8 +205,15 @@ export class Send extends Component {
         */
       )
     } else if (txid) {
+      console.log('tx id: ' + txid)
+      let successUrl
+
+      if (selectedNetworkId === 'MainNet') successUrl = `https://neoscan.io/transaction/${txid}`
+      else if (selectedNetworkId === 'TestNet') successUrl = `https://neoscan-testnet.io/transaction/${txid}`
+      // TODO ELSE CUSTOM NET
+      console.log('tx url ' + successUrl)
       content = (
-        <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } onClickHandler={ () => history.push('/') } />
+        <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } onClickHandler={ () => history.push('/') } url={ successUrl }/>
       )
     } else {
       content = (

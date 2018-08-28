@@ -148,56 +148,58 @@ export const sendAsset = (netUrl, toAddress, account, wif, assetAmounts, remark,
   let fee
   if (txFee) fee = txFee
   else fee = 0
+  
+  return new Promise((resolve, reject) => {
+    return api.neoscan.getBalance(netUrl, account.address).then(balance => {
+      logDeep('balance: ', balance)
 
-  return api.neoscan.getBalance(netUrl, account.address).then(balance => {
-    logDeep('balance: ', balance)
+      const scriptHash = getScriptHashFromAddress(toAddress)
 
-    const scriptHash = getScriptHashFromAddress(toAddress)
+      logDeep('scriptHash: ', scriptHash)
 
-    logDeep('scriptHash: ', scriptHash)
+      if (remark) logDeep('remark: ', remark)
 
-    if (remark) logDeep('remark: ', remark)
-
-    const intents = Object.keys(assetAmounts).map(key => {
-      return {
-        assetId: Neon.CONST.ASSET_ID[key],
-        value: assetAmounts[key],
-        scriptHash: scriptHash,
-      }
-    })
-
-    const unsignedTx = tx.Transaction.createContractTx(balance, intents, {}, fee)
-
-    if (remark) {
-      let uTx = unsignedTx.addRemark(remark)
-
-      logDeep('unsignedTx: ', uTx)
-    }
-
-    const myAccount = Neon.create.account(wif)
-
-    let signedTx = unsignedTx.sign(myAccount.privateKey)
-
-    logDeep('signedTx: ', signedTx)
-    console.log('hash: ' + signedTx.hash)
-
-    api.neoscan.getRPCEndpoint(netUrl).then(rpcEndpt => {
-      console.log('rpcEndpt: ' + rpcEndpt)
-
-      const client = Neon.create.rpcClient(rpcEndpt)
-
-      logDeep('client: ', client)
-
-      client.sendRawTransaction(signedTx).then(res => {
-        logDeep('tx Result: ', res)
-
-        if (res === true) {
-          return signedTx.hash
-        } else {
-          // console.log(`Transaction failed: ${signedTx.serialize()}`)
-          console.log('transaction failed')
+      const intents = Object.keys(assetAmounts).map(key => {
+        return {
+          assetId: Neon.CONST.ASSET_ID[key],
+          value: assetAmounts[key],
+          scriptHash: scriptHash,
         }
-        return res
+      })
+
+      const unsignedTx = tx.Transaction.createContractTx(balance, intents, {}, fee)
+
+      if (remark) {
+        let uTx = unsignedTx.addRemark(remark)
+
+        logDeep('unsignedTx: ', uTx)
+      }
+
+      const myAccount = Neon.create.account(wif)
+
+      let signedTx = unsignedTx.sign(myAccount.privateKey)
+
+      logDeep('signedTx: ', signedTx)
+      console.log('hash: ' + signedTx.hash)
+
+      api.neoscan.getRPCEndpoint(netUrl).then(rpcEndpt => {
+        console.log('rpcEndpt: ' + rpcEndpt)
+
+        const client = Neon.create.rpcClient(rpcEndpt)
+
+        logDeep('client: ', client)
+
+        client.sendRawTransaction(signedTx).then(res => {
+          logDeep('tx Result: ', res)
+
+          if (res) {
+            resolve(signedTx.hash)
+          } else {
+            // console.log(`Transaction failed: ${signedTx.serialize()}`)
+            console.log('transaction failed')
+            reject('transaction failed')
+          }
+        })
       })
     })
   })

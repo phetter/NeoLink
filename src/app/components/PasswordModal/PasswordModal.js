@@ -4,6 +4,7 @@ import { wallet } from '@cityofzion/neon-js'
 import { Field, reduxForm } from 'redux-form'
 
 import PrimaryButton from '../common/buttons/PrimaryButton'
+import SecondaryButton from '../common/buttons/SecondaryButton'
 import Box from '../common/Box'
 import Loader from '../Loader'
 
@@ -13,6 +14,8 @@ import style from './PasswordModal.css'
 
 import { logDeep } from '../../utils/debug'
 
+import { history } from '../../store/configureStore'
+
 export class PasswordModal extends Component {
   state = {
     loading: false,
@@ -20,8 +23,12 @@ export class PasswordModal extends Component {
     passPhrase: '',
   }
 
+  cancel = () => {
+    history.push('/send')
+  }
+
   handleSubmit = (values, dispatch, formProps) => {
-    const { clearFormFieldError, encryptedWif, successHandler } = this.props
+    const { clearFormFieldError, encryptedWif, successHandler, confirmationMessage } = this.props
     const { reset } = formProps
     const passPhrase = values.passPhrase
 
@@ -91,7 +98,7 @@ export class PasswordModal extends Component {
 
   render() {
     const { loading } = this.state
-    const { handleSubmit, errors, renderTextField, accountLabel } = this.props
+    const { handleSubmit, errors, renderTextField, accountLabel, confirmationMessage } = this.props
 
     if (loading) {
       return <Loader />
@@ -107,6 +114,7 @@ export class PasswordModal extends Component {
       <section className={ style.Wrapper }>
         <Box>
           <h1 className={ style.Heading }>Confirm Transaction</h1>
+          <p>{ confirmationMessage }</p>
           <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.Form }>
             <div className={ style.label }>
               <span className={ style.label }>Account: </span>
@@ -124,6 +132,9 @@ export class PasswordModal extends Component {
               <PrimaryButton classNames={ style.Button } buttonText={ 'Authorize' } />
             </div>
           </form>
+          <form>
+          <SecondaryButton classNames={ style.Button } buttonText={ 'cancel' } onClickHandler={ this.cancelSubmit }/>
+          </form>
         </Box>
       </section>
     )
@@ -133,7 +144,9 @@ export class PasswordModal extends Component {
 PasswordModal.propTypes = {
   account: PropTypes.object.isRequired,
   accountLabel: PropTypes.string.isRequired,
+  confirmationMessage: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  cancelSubmit: PropTypes.func.isRequired,
   clearFormFieldError: PropTypes.func.isRequired,
   setFormFieldError: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
