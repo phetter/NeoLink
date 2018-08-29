@@ -200,7 +200,15 @@ export const sendAsset = (netUrl, toAddress, account, wif, assetAmounts, remark,
             reject('transaction failed')
           }
         })
+          .catch(e => {
+            console.log('sendRaw: ' + e)
+            reject(e)
+          })
       })
     })
+      .catch(e => {
+        console.log('getBalance: ' + e)
+        reject(e)
+      })
   })
 }

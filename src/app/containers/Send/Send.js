@@ -12,6 +12,7 @@ import sendSVG from '../../../img/paper-planeSolidWhite.svg'
 import Loader from '../../components/Loader'
 import ErrorCard from '../../components/errors/ErrorCard'
 import SendSuccessPage from '../../components/successPages/SendSuccessPage'
+import SendFailPage from '../../components/failPages/FailPage'
 
 import withForm from '../../components/HoC/withForm'
 import { toNumber, toBigNumber } from '../../utils/math'
@@ -32,6 +33,7 @@ export class Send extends Component {
     remark: '',
     showConfirmation: false,
     confirmationMessage: '',
+    errorMessage: '',
   }
 
   resetState = () => {
@@ -43,6 +45,7 @@ export class Send extends Component {
       amount: '',
       remark: '',
       confirmationMessage: '',
+      errorMessage: '',
     })
   }
 
@@ -143,6 +146,7 @@ export class Send extends Component {
       this.setState({
         loading: false,
         showConfirmation: false,
+        errorMessage: e.message,
       })
       setFormFieldError('send', e.message)
     })
@@ -155,7 +159,7 @@ export class Send extends Component {
   }
 
   render() {
-    const { txid, loading, showConfirmation, confirmationMessage } = this.state
+    const { txid, loading, showConfirmation, confirmationMessage, errorMessage } = this.state
     const {
       handleSubmit,
       account,
@@ -210,6 +214,11 @@ export class Send extends Component {
 
       content = (
         <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } onClickHandler={ () => history.push('/') } url={ successUrl } />
+      )
+    } else if (errorMessage) {
+      console.log('errorMessage; ' + errorMessage)
+      content = (
+        <SendFailPage txid={ txid } title={ 'Transaction failed!' } onClickHandler={ () => history.push('/') } children={ errorMessage } />
       )
     } else {
       content = (
