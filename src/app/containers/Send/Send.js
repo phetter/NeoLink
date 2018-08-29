@@ -146,7 +146,7 @@ export class Send extends Component {
       this.setState({
         loading: false,
         showConfirmation: false,
-        errorMessage: e.message
+        errorMessage: e.message,
       })
       setFormFieldError('send', e.message)
     })
@@ -218,7 +218,7 @@ export class Send extends Component {
     } else if (errorMessage) {
       console.log('errorMessage; ' + errorMessage)
       content = (
-        <SendFailPage txid={ txid } title={ 'Transaction failed!' } onClickHandler={ () => history.push('/') } children={ errorMessage} />
+        <SendFailPage txid={ txid } title={ 'Transaction failed!' } onClickHandler={ () => history.push('/') } children={ errorMessage } />
       )
     } else {
       content = (
