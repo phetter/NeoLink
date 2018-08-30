@@ -3,10 +3,6 @@ import PropTypes from 'prop-types'
 import style from './Transaction.css'
 import neoPNG from '../../../img/icon-34.png'
 
-import * as Neoscan from '../../utils/api/neoscan'
-
-import * as string from '../../utils/string'
-
 class Transaction extends Component {
   constructor(props) {
     super(props)
@@ -30,6 +26,7 @@ class Transaction extends Component {
   }
 
   render() {
+    // eslint-disable-next-line
     const { transaction, number } = this.props
 
     let remarks
