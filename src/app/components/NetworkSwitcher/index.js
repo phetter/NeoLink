@@ -15,7 +15,6 @@ import * as Neoscan from '../../utils/api/neoscan'
 
 import { truncateString } from '../../utils/api/neon'
 
-import { logDeep } from '../../utils/debug'
 import * as string from '../../utils/string'
 
 class NetworkSwitcher extends Component {
