@@ -187,6 +187,7 @@ export const getBalanceUrl = address => {
 //    page_number: 1,
 // TODO add more feature
 
+// eslint-disable-next-line
 export const get_address_abstracts = (address, page) => {
   return new Promise((resolve, reject) => {
     getRootUrl(address).then(url => {
@@ -244,6 +245,7 @@ export const getTxById = txid => {
 
 // Get a single transaction by transaction id
 
+// eslint-disable-next-line
 export const get_transaction = txid => {
   return new Promise((resolve, reject) => {
     getTxByIdUrl(txid).then(url => {
