@@ -43,9 +43,6 @@ export class PasswordModal extends Component {
       setFormFieldError,
     } = this.props
 
-    console.log('encryptedWif: ' + encryptedWif)
-    console.log('werd: ' + passPhrase)
-
     wallet
       .decryptAsync(encryptedWif, passPhrase)
       .then(wif => {

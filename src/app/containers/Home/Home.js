@@ -9,6 +9,8 @@ import AccountInfo from '../../components/AccountInfo'
 import RenameAccount from '../../components/RenameAccount'
 import TransactionList from '../../components/TransactionList'
 
+import * as string from '../../utils/string'
+
 import Asset from '../Asset'
 
 import style from './Home.css'
@@ -49,10 +51,42 @@ class Home extends Component {
   getHomeScreenTransactions = network => {
     const { account, accountActions } = this.props
 
+    let page = 1 // TODO add 'more' feature to list more txs
+
     this.setState({ transactionHistoryError: '' }, () => {
-      Neoscan.getTxsByAddress(account.address)
+      Neoscan.get_address_abstracts(account.address, page)
         .then(results => {
-          if (results) accountActions.setTransactions(results)
+          if (results && results.data) {
+            let total_pages = results.data.total_pages
+            let page_size = results.data.page_size
+            let page_number = results.data.page_number
+            let total_txs = results.data.total_entries
+            let txs = {}
+            txs.address = account.address
+            txs.data = []
+            txs.total = total_txs
+            txs.viewing = 'Viewing ' + page_size + ' of ' + total_txs + ' transactions on Page ' + page_number + ' of ' + total_pages
+
+            if(results.data && results.data.entries) {
+              accountActions.setTransactions({})
+              return results.data.entries.map(tx => {
+                return Neoscan.get_transaction(tx.txid).then(txDetail => {
+                  txDetail.stringRemarks = []
+
+                  txDetail.attributes.map((remark, i) => {
+                    if (remark.usage === 'Remark') {
+                      let s = string.hexstring2str(remark.data)
+                      txDetail.stringRemarks.push(s)
+                    }
+                  })
+
+                  txDetail.txTime = new Date(txDetail.time * 1000).toLocaleString()
+                  txs.data.push(txDetail)
+                  accountActions.setTransactions(txs)
+                })
+              })
+            }
+          }
         })
         .catch(() =>
           this.setState({
@@ -92,7 +126,7 @@ class Home extends Component {
       for (let key in account.results) {
         if (account.results.hasOwnProperty(key)) {
           if (key !== 'neo' && key !== 'gas') {
-            assets.push(<Asset assetName={ key } assetAmount={ account.results[key] } />)
+            assets.push(<Asset assetName={ key } assetAmount={ account.results[key].toLocaleString() } key={ key } />)
           }
         }
       }
@@ -133,7 +167,7 @@ class Home extends Component {
         <section className={ style.transactionInfo }>
           <h2 className={ style.transactionInfoHeader }>Transactions</h2>
           <TransactionList
-            transactions={ account.transactions || [] }
+            transactions={ account.transactions || {} }
             transactionHistoryError={ transactionHistoryError }
             getTransactions={ () => this.getHomeScreenTransactions(selectedNetworkId) }
           />
@@ -147,10 +181,8 @@ export default Home
 
 Home.propTypes = {
   walletActions: PropTypes.object.isRequired,
-  // networks: PropTypes.object,
   selectedNetworkId: PropTypes.string.isRequired,
   account: PropTypes.object.isRequired,
   accountActions: PropTypes.object,
   accounts: PropTypes.object.isRequired,
-  // txs: PropTypes.array
 }

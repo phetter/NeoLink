@@ -20,14 +20,7 @@ const AccountInfoHeader = ({ showOptions, label, address, accountDropDownMarkup 
         <h2 className={ style.accountInfoDetailsHeading }>{label}</h2>
         <p className={ style.accountInfoDetailsParagraph }>{address}</p>
       </div>
-      {showOptions && (
-        <DropDown
-          buttonContent={ <img src={ ellipsisSVG } alt='three vertical dots' className={ style.accountInfoDropdownButtonImage } /> }
-          buttonStyles={ style.accountDropDownButton }
-          dropDownContent={ accountDropDownMarkup }
-          dropDownContentClassNames={ style.accountInfoDropDown }
-        />
-      )}
+      { showOptions }
     </div>
   )
 }

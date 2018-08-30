@@ -17,38 +17,24 @@ class Transaction extends Component {
   }
 
   componentDidMount() {
-    const { transaction, neoSent, amounts, selectedNetworkId, networks } = this.props
+    const { transaction, neoSent, amounts, selectedNetworkId, networks, number } = this.props
     this.icon = neoSent === true ? <img src={ neoPNG } alt='neo' /> : <i className='fas fa-tint' />
     this.amount = neoSent === true ? amounts.neo : amounts.gas
     this.amountText = neoSent === true ? 'NEO' : 'GAS'
     this.transactionId = transaction.txid
     this.apiUrl = networks[selectedNetworkId].url
     this.txUrl = networks[selectedNetworkId].txUrl + this.transactionId
+    // this.txUrl = networks[selectedNetworkId].url + '/transaction/' + this.transactionId
+    this.txTime = transaction.txTime
     this.remarks = []
   }
 
   render() {
-    Neoscan.getTxById(this.transactionId)
-      .then(tx => {
-        this.remarks = []
-
-        tx.attributes.map((remark, i) => {
-          if (remark.usage === 'Remark') {
-            let s = string.hexstring2str(remark.data)
-            this.remarks.push(s)
-          }
-        })
-
-        // let d = new Date(0)
-        this.txTime = new Date(tx.time * 1000).toLocaleString()
-      })
-      .catch(error => {
-        console.log('error: ' + error)
-      })
+    const { transaction, number } = this.props
 
     let remarks
-    if (this.remarks && this.remarks.length) {
-      remarks = this.remarks.map((remark, i) => {
+    if (transaction.stringRemarks && transaction.stringRemarks.length) {
+      remarks = transaction.stringRemarks.map((remark, i) => {
         return <li key={ this.transactionId + i }>{remark}</li>
       })
     } else {
@@ -59,6 +45,7 @@ class Transaction extends Component {
       <div>
         <div />
         <div className={ style.transactionCard }>
+        { number }
           <a href={ this.txUrl } className={ style.transactionCardLink } target='_blank' rel='noopener'>
             <h4 className={ style.transactionCardHeading }>{this.transactionId}</h4>
           </a>
@@ -88,15 +75,12 @@ class Transaction extends Component {
 }
 
 Transaction.propTypes = {
-  // transactionId: PropTypes.string.isRequired,
-  // key: PropTypes.number,
   transaction: PropTypes.object.isRequired,
+  number: PropTypes.number.isRequired,
   networks: PropTypes.object,
   selectedNetworkId: PropTypes.string.isRequired,
   neoSent: PropTypes.bool.isRequired,
   amounts: PropTypes.object.isRequired,
-  // remarks: PropTypes.array,
-  // addTransactionRemark: PropTypes.func,
 }
 
 export default Transaction

@@ -9,29 +9,32 @@ import style from './TransactionList.css'
 
 import Neon from '@cityofzion/neon-js/'
 import { Fixed8 } from '../../utils/math'
+import { logDeep } from '../../utils/debug'
 
-// TODO add sort
+import * as Neoscan from '../../utils/api/neoscan'
+
+// TODO add sort - they can arrive out of order right now
 
 const TransactionList = ({ transactions, transactionHistoryError, getTransactions }) => {
   let transactionCards = []
 
   if (transactions && transactions.data && transactions.data.length) {
+    let i = 1
     transactionCards = transactions.data.map(tx => {
-      // TODO: implement change code in utils/rpc.js to hide business from pres
       const vin = tx.vin.filter(i => i.address_hash === transactions.address)
       const vout = tx.vouts.filter(o => o.address_hash === transactions.address)
 
       const change = {
-        NEO: vin.filter(i => i.asset === Neon.CONST.ASSET_ID.NEO).reduce((p, c) => p.add(c.value), new Fixed8(0)),
-        GAS: vout.filter(i => i.asset === Neon.CONST.ASSET_ID.GAS).reduce((p, c) => p.add(c.value), new Fixed8(0)),
+        NEO: vin.filter(i => i.asset === 'NEO').reduce((p, c) => p + c.value, 0),
+        GAS: vout.filter(i => i.asset === 'GAS').reduce((p, c) => p + + c.value, 0),
       }
 
       const amounts = {
         neo: change.NEO ? Number(change.NEO) : 0,
-        gas: change.GAS ? Math.abs(Number(change.GAS)) : 0,
+        gas: Number(change.GAS) ? Number(change.GAS) : 0,
       }
 
-      return <Transaction key={ tx.txid } transaction={ tx } neoSent={ amounts.neo > 0 } amounts={ amounts } />
+      return <Transaction number={ i++ } key={ tx.txid } transaction={ tx } neoSent={ amounts.neo > 0 } amounts={ amounts } />
     })
   }
 
@@ -52,7 +55,7 @@ const TransactionList = ({ transactions, transactionHistoryError, getTransaction
     if (transactionCards.length > 0) {
       content = (
         <div>
-          <div align='center'>{transactions.data.length}</div>
+          <div align='center'>{transactions.viewing}</div>
           <div>{transactionCards}</div>
         </div>
       )
@@ -65,7 +68,7 @@ const TransactionList = ({ transactions, transactionHistoryError, getTransaction
 }
 
 TransactionList.propTypes = {
-  transactions: PropTypes.array.isRequired,
+  transactions: PropTypes.object.isRequired,
   transactionHistoryError: PropTypes.string,
   getTransactions: PropTypes.func.isRequired,
 }

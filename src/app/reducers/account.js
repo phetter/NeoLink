@@ -34,7 +34,6 @@ const actionsMap = {
     }
   },
   [ActionTypes.SET_TRANSACTIONS](state, action) {
-    logDeep('set txs: ', action.transactions)
     return {
       ...state,
       transactions: action.transactions,
