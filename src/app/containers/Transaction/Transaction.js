@@ -26,8 +26,7 @@ class Transaction extends Component {
   }
 
   render() {
-    // eslint-disable-next-line
-    const { transaction, number } = this.props
+    let { transaction, number } = this.props
 
     number = number + 0
 
@@ -42,33 +41,33 @@ class Transaction extends Component {
 
     return (
       <div>
-        <div />
-        <div className={ style.transactionCard }>
-        { number }
-          <a href={ this.txUrl } className={ style.transactionCardLink } target='_blank' rel='noopener'>
-            <h4 className={ style.transactionCardHeading }>{this.transactionId}</h4>
-          </a>
+      <div />
+      <div className={ style.transactionCard }>
+      { number }
+        <a href={ this.txUrl } className={ style.transactionCardLink } target='_blank' rel='noopener'>
+          <h4 className={ style.transactionCardHeading }>{this.transactionId}</h4>
+        </a>
 
+        <p className={ style.transactionCardParagraph }>
+          {this.icon}{' '}
+          <span className={ style.transactionCardAmount }>
+            {this.amount} {this.amountText}
+          </span>
+        </p>
+        <div>
           <p className={ style.transactionCardParagraph }>
-            {this.icon}{' '}
-            <span className={ style.transactionCardAmount }>
-              {this.amount} {this.amountText}
+            <span className={ style.transactionCardRemarks }>{remarks}</span>
+          </p>
+        </div>
+        <div>
+          <p className={ style.transactionCardParagraph }>
+            <span className={ style.transactionCardTime }>
+              <b>{this.txTime}</b>
             </span>
           </p>
-          <div>
-            <p className={ style.transactionCardParagraph }>
-              <span className={ style.transactionCardRemarks }>{remarks}</span>
-            </p>
-          </div>
-          <div>
-            <p className={ style.transactionCardParagraph }>
-              <span className={ style.transactionCardTime }>
-                <b>{this.txTime}</b>
-              </span>
-            </p>
-          </div>
         </div>
       </div>
+    </div>
     )
   }
 }
