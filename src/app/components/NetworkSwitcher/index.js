@@ -15,6 +15,8 @@ import * as Neoscan from '../../utils/api/neoscan'
 
 import { truncateString } from '../../utils/api/neon'
 
+import * as string from '../../utils/string'
+
 class NetworkSwitcher extends Component {
   changeNetwork = selectedNetworkId => {
     const { setNetwork, setTransactions, account, setBalance } = this.props
@@ -28,8 +30,48 @@ class NetworkSwitcher extends Component {
 
       if (Neoscan.switchNetwork(selectedNetworkId)) {
         console.log('switching to : ' + selectedNetworkId)
-        Neoscan.getBalance(account.address).then(results => setBalance(results.neo, results.gas))
-        Neoscan.getTxsByAddress(account.address).then(results => setTransactions(results))
+        Neoscan.getBalance(account.address).then(results => {
+          console.log('results', results)
+          if (results) setBalance(results.neo, results.gas)
+        })
+        // Neoscan.getTxsByAddress(account.address).then(results => setTransactions(results))
+
+        let page = 1
+
+        Neoscan.get_address_abstracts(account.address, page)
+          .then(results => {
+            if (results && results.data) {
+              let totalPages = results.data.total_pages
+              let pageSize = results.data.page_size
+              let pageNumber = results.data.page_number
+              let totalTxs = results.data.total_entries
+              let txs = {}
+              txs.address = account.address
+              txs.data = []
+              txs.total = totalTxs
+              txs.viewing = 'Viewing ' + pageSize + ' of ' + totalTxs + ' transactions on Page ' + pageNumber + ' of ' + totalPages
+
+              if (results.data && results.data.entries) {
+                setTransactions({})
+                return results.data.entries.map(tx => {
+                  return Neoscan.get_transaction(tx.txid).then(txDetail => {
+                    txDetail.stringRemarks = []
+
+                    txDetail.attributes.map((remark, i) => {
+                      if (remark.usage === 'Remark') {
+                        let s = string.hexstring2str(remark.data)
+                        txDetail.stringRemarks.push(s)
+                      }
+                    })
+
+                    txDetail.txTime = new Date(txDetail.time * 1000).toLocaleString()
+                    txs.data.push(txDetail)
+                    setTransactions(txs)
+                  })
+                })
+              }
+            }
+          })
       } else { // most likely a custom network, other than MainNet or TestNet, was passed— currently unhandled by neoscanapi.js
         // TODO add error handling and recovery
       }

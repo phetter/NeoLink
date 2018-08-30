@@ -70,28 +70,17 @@ describe('Home', () => {
     // helpers.getBalance = jest.fn(() => new Promise((resolve, reject) => resolve()))
     // helpers.getTransactions = jest.fn(() => new Promise((resolve, reject) => resolve()))
     Neoscan.getBalance = jest.fn(() => new Promise((resolve, reject) => resolve()))
-    Neoscan.getTxsByAddress = jest.fn(() => new Promise((resolve, reject) => resolve()))
+    Neoscan.get_address_abstracts = jest.fn(() => new Promise((resolve, reject) => resolve()))
+    // Neoscan.getTxsByAddress = jest.fn(() => new Promise((resolve, reject) => resolve()))
 
     shallow(<Home { ...props } />)
 
     // expect(helpers.getBalance).toHaveBeenCalledTimes(1)
     expect(Neoscan.getBalance).toHaveBeenCalledTimes(1)
     // expect(helpers.getTransactions).toHaveBeenCalledTimes(1)
-    expect(Neoscan.getTxsByAddress).toHaveBeenCalledTimes(1)
+    expect(Neoscan.get_address_abstracts).toHaveBeenCalledTimes(1)
     // expect(helpers.getBalance).toHaveBeenCalledWith(
     expect(Neoscan.getBalance).toHaveBeenCalledWith(
-      // {
-      //   TestNet: { name: 'TestNet', apiType: 'neoscan', url: 'http://testnet.io' },
-      // },
-      // 'TestNet',
-      // {
-      //   address: 'ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be',
-      //   wif: 'KxyKz2LaFSCi2UQtpxnXs3jdzE5uAxguBRSgbiXMi6adkbivt2ub',
-      // }
-      'ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be'
-    )
-    // expect(helpers.getTransactions).toHaveBeenCalledWith(
-    expect(Neoscan.getTxsByAddress).toHaveBeenCalledWith(
       // {
       //   TestNet: { name: 'TestNet', apiType: 'neoscan', url: 'http://testnet.io' },
       // },

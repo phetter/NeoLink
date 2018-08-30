@@ -3,10 +3,6 @@ import PropTypes from 'prop-types'
 import style from './Transaction.css'
 import neoPNG from '../../../img/icon-34.png'
 
-import * as Neoscan from '../../utils/api/neoscan'
-
-import * as string from '../../utils/string'
-
 class Transaction extends Component {
   constructor(props) {
     super(props)
@@ -24,31 +20,17 @@ class Transaction extends Component {
     this.transactionId = transaction.txid
     this.apiUrl = networks[selectedNetworkId].url
     this.txUrl = networks[selectedNetworkId].txUrl + this.transactionId
+    // this.txUrl = networks[selectedNetworkId].url + '/transaction/' + this.transactionId
+    this.txTime = transaction.txTime
     this.remarks = []
   }
 
   render() {
-    Neoscan.getTxById(this.transactionId)
-      .then(tx => {
-        this.remarks = []
-
-        tx.attributes.map((remark, i) => {
-          if (remark.usage === 'Remark') {
-            let s = string.hexstring2str(remark.data)
-            this.remarks.push(s)
-          }
-        })
-
-        // let d = new Date(0)
-        this.txTime = new Date(tx.time * 1000).toLocaleString()
-      })
-      .catch(error => {
-        console.log('error: ' + error)
-      })
+    const { transaction, number } = this.props
 
     let remarks
-    if (this.remarks && this.remarks.length) {
-      remarks = this.remarks.map((remark, i) => {
+    if (transaction.stringRemarks && transaction.stringRemarks.length) {
+      remarks = transaction.stringRemarks.map((remark, i) => {
         return <li key={ this.transactionId + i }>{remark}</li>
       })
     } else {
@@ -59,6 +41,7 @@ class Transaction extends Component {
       <div>
         <div />
         <div className={ style.transactionCard }>
+          { number }
           <a href={ this.txUrl } className={ style.transactionCardLink } target='_blank' rel='noopener'>
             <h4 className={ style.transactionCardHeading }>{this.transactionId}</h4>
           </a>
@@ -88,15 +71,12 @@ class Transaction extends Component {
 }
 
 Transaction.propTypes = {
-  // transactionId: PropTypes.string.isRequired,
-  // key: PropTypes.number,
   transaction: PropTypes.object.isRequired,
+  number: PropTypes.number.isRequired,
   networks: PropTypes.object,
   selectedNetworkId: PropTypes.string.isRequired,
   neoSent: PropTypes.bool.isRequired,
   amounts: PropTypes.object.isRequired,
-  // remarks: PropTypes.array,
-  // addTransactionRemark: PropTypes.func,
 }
 
 export default Transaction
