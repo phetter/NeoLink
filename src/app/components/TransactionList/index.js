@@ -7,12 +7,6 @@ import FlashMessage from '../FlashMessage'
 
 import style from './TransactionList.css'
 
-import Neon from '@cityofzion/neon-js/'
-import { Fixed8 } from '../../utils/math'
-import { logDeep } from '../../utils/debug'
-
-import * as Neoscan from '../../utils/api/neoscan'
-
 // TODO add sort - they can arrive out of order right now
 
 const TransactionList = ({ transactions, transactionHistoryError, getTransactions }) => {
@@ -26,7 +20,7 @@ const TransactionList = ({ transactions, transactionHistoryError, getTransaction
 
       const change = {
         NEO: vin.filter(i => i.asset === 'NEO').reduce((p, c) => p + c.value, 0),
-        GAS: vout.filter(i => i.asset === 'GAS').reduce((p, c) => p + + c.value, 0),
+        GAS: vout.filter(i => i.asset === 'GAS').reduce((p, c) => p + c.value, 0),
       }
 
       const amounts = {
