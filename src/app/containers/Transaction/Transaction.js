@@ -13,7 +13,7 @@ class Transaction extends Component {
   }
 
   componentDidMount() {
-    const { transaction, neoSent, amounts, selectedNetworkId, networks, number } = this.props
+    const { transaction, neoSent, amounts, selectedNetworkId, networks } = this.props
     this.icon = neoSent === true ? <img src={ neoPNG } alt='neo' /> : <i className='fas fa-tint' />
     this.amount = neoSent === true ? amounts.neo : amounts.gas
     this.amountText = neoSent === true ? 'NEO' : 'GAS'
@@ -26,9 +26,7 @@ class Transaction extends Component {
   }
 
   render() {
-    let { transaction, number } = this.props
-
-    number = number + 0
+    const { transaction, number } = this.props
 
     let remarks
     if (transaction.stringRemarks && transaction.stringRemarks.length) {
