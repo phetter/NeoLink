@@ -57,17 +57,15 @@ class Home extends Component {
       Neoscan.get_address_abstracts(account.address, page)
         .then(results => {
           if (results && results.data) {
-            // eslint-disable-next-line
-            let total_pages = results.data.total_pages
-            // eslint-disable-next-line
-            let page_size = results.data.page_size
-            let page_number = results.data.page_number
-            let total_txs = results.data.total_entries
+            let totalPages = results.data.total_pages
+            let pageSize = results.data.page_size
+            let pageNumber = results.data.page_number
+            let totalTxs = results.data.total_entries
             let txs = {}
             txs.address = account.address
             txs.data = []
-            txs.total = total_txs
-            txs.viewing = 'Viewing ' + page_size + ' of ' + total_txs + ' transactions on Page ' + page_number + ' of ' + total_pages
+            txs.total = totalTxs
+            txs.viewing = 'Viewing ' + pageSize + ' of ' + totalTxs + ' transactions on Page ' + pageNumber + ' of ' + totalPages
 
             if (results.data && results.data.entries) {
               accountActions.setTransactions({})
