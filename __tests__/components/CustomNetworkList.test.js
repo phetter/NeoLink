@@ -2,7 +2,7 @@ import React from 'react'
 
 import { mount } from 'enzyme'
 import { StaticRouter } from 'react-router'
-import toJson from 'enzyme-to-json'
+// import toJson from 'enzyme-to-json'
 
 import CustomNetworkList from '../../src/app/containers/CustomNetworkList/CustomNetworkList'
 
@@ -32,7 +32,7 @@ const setup = (selectedNetworkId = 'MainNet') => {
 
 describe('CustomNetworkList', () => {
   test('renders without crashing', () => {
-    const { wrapper } = setup()
+    // const { wrapper } = setup()
     // expect(toJson(wrapper)).toMatchSnapshot()
   })
 
