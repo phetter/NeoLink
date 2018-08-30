@@ -51,6 +51,7 @@ export const syncState = state => {
 const validateUrl = url => {
   return new Promise((resolve, reject) => {
     try {
+      // eslint-disable-next-line
       const u = new URL(url)
       // console.log('validating URL: ' + url)
       resolve(url)

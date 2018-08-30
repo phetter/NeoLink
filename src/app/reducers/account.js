@@ -1,5 +1,5 @@
 import * as ActionTypes from '../constants/ActionTypes'
-import { logDeep } from '../utils/debug'
+// import { logDeep } from '../utils/debug'
 
 const initialState = {
   wif: '',
