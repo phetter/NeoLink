@@ -39,7 +39,7 @@ class Transaction extends Component {
 
     return (
       <div>
-      <div />
+        <div />
       <div className={ style.transactionCard }>
         { number }
           <a href={ this.txUrl } className={ style.transactionCardLink } target='_blank' rel='noopener'>
