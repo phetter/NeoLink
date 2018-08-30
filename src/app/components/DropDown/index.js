@@ -23,8 +23,10 @@ class DropDown extends Component {
   toggleDropDown = () => this.setState(prevState => ({ showDropDown: !prevState.showDropDown }))
 
   _closeDropDownMenu = event => {
-    if (this && this.node && !this.node.contains(event.target) || !event.target.className.includes('dropDown')) {
-      this.setState({ showDropDown: false })
+    if(this && this.node && ) {
+      if (!this.node.contains(event.target) || !event.target.className.includes('dropDown')) {
+        this.setState({ showDropDown: false })
+      }
     }
   }
 
