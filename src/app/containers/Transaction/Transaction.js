@@ -29,6 +29,8 @@ class Transaction extends Component {
     // eslint-disable-next-line
     const { transaction, number } = this.props
 
+    number = number + 0
+
     let remarks
     if (transaction.stringRemarks && transaction.stringRemarks.length) {
       remarks = transaction.stringRemarks.map((remark, i) => {
