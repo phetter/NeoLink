@@ -41,31 +41,31 @@ class Transaction extends Component {
       <div>
       <div />
       <div className={ style.transactionCard }>
-      { number }
-        <a href={ this.txUrl } className={ style.transactionCardLink } target='_blank' rel='noopener'>
-          <h4 className={ style.transactionCardHeading }>{this.transactionId}</h4>
-        </a>
+        { number }
+          <a href={ this.txUrl } className={ style.transactionCardLink } target='_blank' rel='noopener'>
+            <h4 className={ style.transactionCardHeading }>{this.transactionId}</h4>
+          </a>
 
-        <p className={ style.transactionCardParagraph }>
-          {this.icon}{' '}
-          <span className={ style.transactionCardAmount }>
-            {this.amount} {this.amountText}
-          </span>
-        </p>
-        <div>
           <p className={ style.transactionCardParagraph }>
-            <span className={ style.transactionCardRemarks }>{remarks}</span>
-          </p>
-        </div>
-        <div>
-          <p className={ style.transactionCardParagraph }>
-            <span className={ style.transactionCardTime }>
-              <b>{this.txTime}</b>
+            {this.icon}{' '}
+            <span className={ style.transactionCardAmount }>
+              {this.amount} {this.amountText}
             </span>
           </p>
+          <div>
+            <p className={ style.transactionCardParagraph }>
+              <span className={ style.transactionCardRemarks }>{remarks}</span>
+            </p>
+          </div>
+          <div>
+            <p className={ style.transactionCardParagraph }>
+              <span className={ style.transactionCardTime }>
+                <b>{this.txTime}</b>
+              </span>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
     )
   }
 }
