@@ -12,6 +12,7 @@ import sendSVG from '../../../img/paper-planeSolidWhite.svg'
 import Loader from '../../components/Loader'
 import ErrorCard from '../../components/errors/ErrorCard'
 import SendSuccessPage from '../../components/successPages/SendSuccessPage'
+import SendFailPage from '../../components/failPages/FailPage'
 
 import withForm from '../../components/HoC/withForm'
 import { toNumber, toBigNumber } from '../../utils/math'
@@ -31,6 +32,8 @@ export class Send extends Component {
     amount: '',
     remark: '',
     showConfirmation: false,
+    confirmationMessage: '',
+    errorMessage: '',
   }
 
   resetState = () => {
@@ -41,6 +44,8 @@ export class Send extends Component {
       address: '',
       amount: '',
       remark: '',
+      confirmationMessage: '',
+      errorMessage: '',
     })
   }
 
@@ -87,11 +92,13 @@ export class Send extends Component {
     })
   }
 
+  handleCancelClick = () => {
+    console.log('cancle and grettle')
+  }
+
   handleSubmit = (values, dispatch, formProps) => {
     const { assetType, address, amount, remark } = values
     const { setFormFieldError } = this.props
-
-    // console.log('rem: ' + remark)
 
     this.setState({
       txid: '',
@@ -110,7 +117,8 @@ export class Send extends Component {
     const validationPassed = (assetType === 'NEO' || assetType === 'GAS') && !amountErrorMessage && !addressErrorMessage
 
     if (validationPassed) {
-      this.setState({ assetType, address, amount, remark, showConfirmation: true })
+      let confirmationMessage = 'Are you sure you want to send: ' + amount + ' ' + assetType + ' to ' + address + ' ?'
+      this.setState({ assetType, address, amount, remark, showConfirmation: true, confirmationMessage })
     }
   }
 
@@ -123,23 +131,25 @@ export class Send extends Component {
     let amounts = {}
     amounts[assetType] = toNumber(amount)
     // Neon.do.sendAsset(selectedNetworkId, address, account.wif, amounts)
-    sendAsset(selectedNetworkId, address, account, wif, amounts, remark, 0)
-      .then(result => {
-        this.setState({
-          loading: false,
-          showConfirmation: false,
-          txid: result.txid,
-        })
-        reset()
+    sendAsset(selectedNetworkId, address, account, wif, amounts, remark, 0).then(result => {
+      this.setState({
+        loading: false,
+        showConfirmation: false,
+        txid: result,
       })
-      .catch(e => {
-        reset()
-        this.setState({
-          loading: false,
-          showConfirmation: false,
-        })
-        setFormFieldError('send', e.message)
+      console.log('result: ' + result)
+      reset()
+    }).catch(e => {
+      console.log('send: ' + e.message)
+
+      this.resetState()
+      this.setState({
+        loading: false,
+        showConfirmation: false,
+        errorMessage: e.message,
       })
+      setFormFieldError('send', e.message)
+    })
   }
 
   rejectSend = () => {
@@ -149,7 +159,7 @@ export class Send extends Component {
   }
 
   render() {
-    const { txid, loading, showConfirmation } = this.state
+    const { txid, loading, showConfirmation, confirmationMessage, errorMessage } = this.state
     const {
       handleSubmit,
       account,
@@ -175,8 +185,11 @@ export class Send extends Component {
           logDeep('ac: ', accounts[index])
         })
       }
+
       content = (
         <PasswordModal
+          confirmationMessage={ confirmationMessage }
+          cancelSubmit={ this.handleCancelClick }
           accountLabel={ accountLabel }
           successHandler={ this.send }
           encryptedWif={ account.wif }
@@ -193,8 +206,19 @@ export class Send extends Component {
         */
       )
     } else if (txid) {
+      let successUrl
+
+      if (selectedNetworkId === 'MainNet') successUrl = `https://neoscan.io/transaction/${txid}`
+      else if (selectedNetworkId === 'TestNet') successUrl = `https://neoscan-testnet.io/transaction/${txid}`
+      // TODO ELSE CUSTOM NET
+
       content = (
-        <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } onClickHandler={ () => history.push('/') } />
+        <SendSuccessPage txid={ txid } title={ 'Transaction successful!' } onClickHandler={ () => history.push('/') } url={ successUrl } />
+      )
+    } else if (errorMessage) {
+      console.log('errorMessage; ' + errorMessage)
+      content = (
+        <SendFailPage txid={ txid } title={ 'Transaction failed!' } onClickHandler={ () => history.push('/') } children={ errorMessage } />
       )
     } else {
       content = (

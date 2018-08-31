@@ -7,6 +7,7 @@ import Box from '../../components/common/Box'
 import PrimaryButton from '../../components/common/buttons/PrimaryButton'
 
 import style from './ExportWallet.css'
+import BackNavigation from '../../components/BackNavigation'
 
 export default class ExportWallet extends Component {
   state = {
@@ -50,32 +51,37 @@ export default class ExportWallet extends Component {
 
   render() {
     const { errorMsg } = this.state
-    const { accounts } = this.props
+    const { accounts, history } = this.props
 
     if (Object.keys(accounts).length === 0) {
       return <div>You have no stored accounts</div>
     }
 
     return (
-      <section className={ style.exportWallet }>
-        <Box>
-          <h1>Export Wallet</h1>
-          <p className={ style.exportWalletParagraph }>
-            Export your wallets encrypted keys, to a JSON format that you can import into other wallets. Never give this
-            file to anyone.
-          </p>
-          <form onSubmit={ this.exportWallet }>
-            <div>
-              <PrimaryButton buttonText='Export wallet' />
-            </div>
-          </form>
-          {errorMsg && <ErrorCard message={ errorMsg } onClickHandler={ () => this.setState({ errorMsg: '' }) } />}
-        </Box>
-      </section>
+      <React.Fragment>
+        <BackNavigation onClickHandler={ () => history.push('/settings') } />
+        <section className={ style.exportWallet }>
+          <Box>
+            <h1>Export Wallet</h1>
+            <p className={ style.exportWalletParagraph }>
+              Export your wallets encrypted keys, to a JSON format that you can import into other wallets. Never give this
+              file to anyone.
+            </p>
+            <form onSubmit={ this.exportWallet }>
+              <div>
+                <PrimaryButton buttonText='Export wallet' />
+              </div>
+            </form>
+            {errorMsg && <ErrorCard message={ errorMsg } onClickHandler={ () => this.setState({ errorMsg: '' }) } />}
+          </Box>
+        </section>
+      </React.Fragment>
+
     )
   }
 }
 
 ExportWallet.propTypes = {
   accounts: PropTypes.object.isRequired,
+  history: PropTypes.object,
 }

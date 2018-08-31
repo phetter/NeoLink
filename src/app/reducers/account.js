@@ -1,5 +1,5 @@
 import * as ActionTypes from '../constants/ActionTypes'
-import { logDeep } from '../utils/debug'
+// import { logDeep } from '../utils/debug'
 
 const initialState = {
   wif: '',
@@ -34,7 +34,6 @@ const actionsMap = {
     }
   },
   [ActionTypes.SET_TRANSACTIONS](state, action) {
-    logDeep('set txs: ', action.transactions)
     return {
       ...state,
       transactions: action.transactions,

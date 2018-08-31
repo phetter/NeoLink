@@ -51,8 +51,9 @@ export const syncState = state => {
 const validateUrl = url => {
   return new Promise((resolve, reject) => {
     try {
+      // eslint-disable-next-line
       const u = new URL(url)
-      console.log('host: ' + u)
+      // console.log('validating URL: ' + url)
       resolve(url)
     } catch (error) {
       console.log('neoscan: validateUrl: ' + error.message)
@@ -172,38 +173,64 @@ export const getTxsByAddressUrl = address => {
 // I.e., 'https://neoscan.io/api/main_net/v1/get_transaction/'
 
 export const getBalanceUrl = address => {
-  console.log(curState.config.neoscan.active.balanceUrl, address)
+  console.log('balurl : ' + curState.config.neoscan.active.balanceUrl + address)
   if (address) {
-    return validateUrl(curState.config.neoscan.active.balanceUrl + '/' + address + '/')
+    return validateUrl(curState.config.neoscan.active.balanceUrl + address + '/')
   } else return validateUrl(curState.config.neoscan.active.balanceUrl)
 }
 
-// Get all transactions for an address
+// get_address_abstracts for an address
+// This is a transaction list with a summary control header, f.e.:
+// { total_pages: 9,
+//    total_entries: 130,
+//    page_size: 15,
+//    page_number: 1,
+// TODO add more feature
 
-export const getTxsByAddress = address => {
+// eslint-disable-next-line
+export const get_address_abstracts = (address, page) => {
   return new Promise((resolve, reject) => {
-    getTxsByAddressUrl(address).then(url => {
-      console.log(url)
+    getRootUrl(address).then(url => {
+      console.log('url: ' + url + '/v1/get_address_abstracts/' + address + '/' + page)
       return axios
-        .get(url)
+        .get(url + '/v1/get_address_abstracts/' + address + '/' + page)
         .then(response => {
-          console.log(`Retrieved History for ${address} from neoscan ${url}`)
+          // console.log(`Retrieved History for ${address} from neoscan ${url}`)
+          // console.log('response: ' + response.data)
           response.data.address = address
           resolve({ data: response.data, address: address })
         })
         .catch(error => {
+          console.log('neoscan.get_address_abstracts(): ' + error)
           reject(error)
         })
     })
   })
 }
+//
+// export const get_transactions_from_list = (list, out) => {
+//   return new Promise((resolve, reject) => {
+//     if (list && list.data && list.data.entries) {
+//       list.data.entries.map(tx => {
+//         Neoscan.get_transaction(tx.txid)
+//           .then(txDetail => {
+//             out.data.push(txDetail)
+//           })
+//           .catch(e => {
+//             reject(e)
+//           })
+//       })
+//     }
+//   })
+//
+// }
 
-// Get a single transaction
+// Get a single transaction by transaction id
 
 export const getTxById = txid => {
   return new Promise((resolve, reject) => {
     getTxByIdUrl(txid).then(url => {
-      console.log(`Retrieving ${txid} History from neoscan ${url}`)
+      // console.log(`Retrieving ${txid} History from neoscan ${url}`)
       return axios
         .get(url)
         .then(response => {
@@ -216,10 +243,30 @@ export const getTxById = txid => {
   })
 }
 
+// Get a single transaction by transaction id
+
+// eslint-disable-next-line
+export const get_transaction = txid => {
+  return new Promise((resolve, reject) => {
+    getTxByIdUrl(txid).then(url => {
+      // console.log(`Retrieving ${txid} History from neoscan`)
+      return axios
+        .get(url)
+        .then(response => {
+          // console.log('response: ' + response.data)
+          resolve(response.data)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  })
+}
+
 export const getBalance = address => {
   return new Promise((resolve, reject) => {
     getBalanceUrl(address).then(url => {
-      console.log(`Retrieving balance for ${address} from neoscan ${url}`)
+      // console.log(`Retrieving balance for ${address} from neoscan ${url}`)
       return axios
         .get(url)
         .then(response => {

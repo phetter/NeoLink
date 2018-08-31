@@ -10,6 +10,7 @@ import ErrorCard from '../../components/errors/ErrorCard'
 import ImportWalletInfo from '../../components/ImportWalletInfo'
 
 import style from './ImportWallet.css'
+import BackNavigation from '../../components/BackNavigation'
 
 export default class ImportWallet extends Component {
   state = {
@@ -25,7 +26,7 @@ export default class ImportWallet extends Component {
 
     event.preventDefault()
 
-    importAccounts.forEach(function(accountObject) {
+    importAccounts.forEach(function (accountObject) {
       try {
         addAccount(new wallet.Account(accountObject))
       } catch (e) {
@@ -43,7 +44,7 @@ export default class ImportWallet extends Component {
       this.setState({
         importAccounts: [],
         errorMsg:
-          'The following accounts were not imported: "' + failedAccounts.map(act => `"${act}"`).join(', ') + '"',
+        'The following accounts were not imported: "' + failedAccounts.map(act => `"${act}"`).join(', ') + '"',
         success: false,
       })
     }
@@ -90,28 +91,33 @@ export default class ImportWallet extends Component {
     const { history } = this.props
 
     return (
-      <section className={ style.importWallet }>
-        {success && <ImportWalletSuccessPage history={ history } title={ 'Successfully imported wallet(s)' } />}
-        {!success && (
-          <Box>
-            <h1 className={ style.importWalletHeading }>Import Wallet</h1>
-            {importAccounts.length === 0 && (
-              <p className={ style.importWalletSubtitle }>Click to upload your JSON keystore file.</p>
-            )}
-            <form onSubmit={ this.importWallet }>
-              <Fragment>
-                {importAccounts.length === 0 && <FileUpload onChangeHandler={ this.handleFileUpload } />}
-                {importAccounts.length > 0 && <ImportWalletInfo numWallets={ importAccounts.length } />}
+      <React.Fragment>
+        <BackNavigation onClickHandler={ () => history.push('/settings') } />
+        <section className={ style.importWallet }>
+          {success && <ImportWalletSuccessPage history={ history } title={ 'Successfully imported wallet(s)' } />}
+          {!success && (
+            <Box>
+              <h1 className={ style.importWalletHeading }>Import Wallet</h1>
+              {importAccounts.length === 0 && (
+                <p className={ style.importWalletSubtitle }>Click to upload your JSON keystore file.</p>
+              )}
+              <form onSubmit={ this.importWallet }>
+                <Fragment>
+                  {importAccounts.length === 0 && <FileUpload onChangeHandler={ this.handleFileUpload } />}
+                  {importAccounts.length > 0 && <ImportWalletInfo numWallets={ importAccounts.length } />}
 
-                {importAccounts.length > 0 && (
-                  <PrimaryButton buttonText='Import Wallets' classNames={ style.importAccountsButton } />
-                )}
-              </Fragment>
-            </form>
-            {errorMsg && <ErrorCard message={ errorMsg } onClickHandler={ () => this.setState({ errorMsg: '' }) } />}
-          </Box>
-        )}
-      </section>
+                  {importAccounts.length > 0 && (
+                    <PrimaryButton buttonText='Import Wallets' classNames={ style.importAccountsButton } />
+                  )}
+                </Fragment>
+              </form>
+              {errorMsg && <ErrorCard message={ errorMsg } onClickHandler={ () => this.setState({ errorMsg: '' }) } />}
+            </Box>
+          )}
+        </section>
+
+      </React.Fragment>
+
     )
   }
 }
