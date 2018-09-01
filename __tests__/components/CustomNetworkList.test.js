@@ -37,7 +37,7 @@ describe('CustomNetworkList', () => {
   })
 
   test('renders without crashing', () => {
-    const { wrapper } = setup()
+    const { wrapper } = setup() 
     expect(toJson(wrapper)).toMatchSnapshot()
   })
 
