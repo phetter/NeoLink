@@ -143,7 +143,7 @@ PasswordModal.propTypes = {
   renderTextField: PropTypes.func.isRequired,
   successHandler: PropTypes.func,
   encryptedWif: PropTypes.string.isRequired,
-  cancelSubmit: PropTypes.func.isRequired
+  cancelSubmit: PropTypes.func.isRequired,
 }
 
 export default reduxForm({ form: 'login', destroyOnUnmount: false })(withForm(PasswordModal))

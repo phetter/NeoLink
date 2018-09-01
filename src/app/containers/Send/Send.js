@@ -93,7 +93,7 @@ export class Send extends Component {
   }
 
   handleCancelClick = () => {
-    this.setState({ showConfirmation: false });
+    this.setState({ showConfirmation: false })
   }
 
   handleSubmit = (values, dispatch, formProps) => {
