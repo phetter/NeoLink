@@ -1,34 +1,34 @@
 import React from 'react'
 
-import { mount } from 'enzyme'
-import { StaticRouter } from 'react-router'
-import toJson from 'enzyme-to-json'
+// import { mount } from 'enzyme'
+// import { StaticRouter } from 'react-router'
+// import toJson from 'enzyme-to-json'
 
-import CustomNetworkList from '../../src/app/containers/CustomNetworkList/CustomNetworkList'
+// import CustomNetworkList from '../../src/app/containers/CustomNetworkList/CustomNetworkList'
 
-const setup = (selectedNetworkId = 'MainNet') => {
-  const props = {
-    networks: {
-      MainNet: { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false },
-      Local: { name: 'local', url: 'http://127.0.0.1:5000', canDelete: true },
-    },
-    selectedNetworkId,
-    config: { selectedNetworkId: 'MainNet ' },
-    history: {},
-    onDeleteClickHandler: jest.fn(),
-    deleteCustomNetwork: jest.fn(),
-    setNetwork: jest.fn(),
-  }
-  const wrapper = mount(
-    <StaticRouter context={ {} }>
-      <CustomNetworkList { ...props } />
-    </StaticRouter>
-  )
-
-  return {
-    wrapper,
-  }
-}
+// const setup = (selectedNetworkId = 'MainNet') => {
+//   const props = {
+//     networks: {
+//       MainNet: { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false },
+//       Local: { name: 'local', url: 'http://127.0.0.1:5000', canDelete: true },
+//     },
+//     selectedNetworkId,
+//     config: { selectedNetworkId: 'MainNet ' },
+//     history: {},
+//     onDeleteClickHandler: jest.fn(),
+//     deleteCustomNetwork: jest.fn(),
+//     setNetwork: jest.fn(),
+//   }
+//   const wrapper = mount(
+//     <StaticRouter context={ {} }>
+//       <CustomNetworkList { ...props } />
+//     </StaticRouter>
+//   )
+//
+//   return {
+//     wrapper,
+//   }
+// }
 
 describe('CustomNetworkList', () => {
   test('temporary', () => {
