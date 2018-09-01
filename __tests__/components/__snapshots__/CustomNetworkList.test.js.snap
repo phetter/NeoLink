@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomNetworkList renders without crashing 1`] = `
+<StaticRouter
+  basename=""
+  context={Object {}}
+  location="/"
+>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <CustomNetworkList
+      config={
+        Object {
+          "selectedNetworkId": "MainNet ",
+        }
+      }
+      deleteCustomNetwork={[MockFunction]}
+      history={Object {}}
+      networks={
+        Object {
+          "Local": Object {
+            "canDelete": true,
+            "name": "local",
+            "url": "http://127.0.0.1:5000",
+          },
+          "MainNet": Object {
+            "canDelete": false,
+            "name": "MainNet",
+            "url": "http://api.wallet.cityofzion.io",
+          },
+        }
+      }
+      onDeleteClickHandler={[MockFunction]}
+      selectedNetworkId="MainNet"
+      setNetwork={[MockFunction]}
+    >
+      <div>
+        <BackNavigation
+          onClickHandler={[Function]}
+        >
+          <section
+            className="backNavigation"
+          >
+            <button
+              className="backNavigationButton"
+              onClick={[Function]}
+            >
+              <img
+                alt="arrow left"
+                className="backNavigationButtonImage"
+                src="test-file-stub"
+              />
+              Back
+            </button>
+          </section>
+        </BackNavigation>
+        <section
+          className="manageNetworksContainer"
+        >
+          <h1
+            className="manageNetworksHeading"
+          >
+            Manage Networks
+          </h1>
+          <CustomNetworkCard
+            dropDownContent={
+              <ul
+                className="customNetworkDropdown"
+              >
+                <li>
+                  <button
+                    className="customNetworkDropDownButton"
+                    onClick={[Function]}
+                  >
+                    <img
+                      alt="trashcan"
+                      className="customNetworkDropDownButtonImage"
+                      src="test-file-stub"
+                    />
+                     Delete
+                  </button>
+                  <Link
+                    className="customNetworkLink"
+                    replace={false}
+                    to="/editCustomNetwork/local"
+                  >
+                    <img
+                      alt="pen on paper"
+                      className="customNetworkDropDownButtonImage"
+                      src="test-file-stub"
+                    />
+                    Edit
+                  </Link>
+                </li>
+              </ul>
+            }
+            key="local"
+            name="local"
+            url="http://127.0.0.1:5000"
+          >
+            <section
+              className="customNetworkCard"
+            >
+              <div
+                className="customNetworkColorContainer"
+              >
+                <div
+                  className="customNetworkColor"
+                />
+              </div>
+              <div
+                className="customNetworkContainer"
+              >
+                <h3>
+                  local
+                </h3>
+                <h3
+                  className="customNetworkUrl"
+                >
+                  http://127.0.0.1:5000
+                </h3>
+              </div>
+              <DropDown
+                buttonContent={
+                  <img
+                    alt="three vertical dots"
+                    className="customNetworkCardDropdownImage"
+                    src="test-file-stub"
+                  />
+                }
+                buttonStyles="customNetworkDropdownButton"
+                classNames="customNetworkDropDown"
+                dropDownContent={
+                  <ul
+                    className="customNetworkDropdown"
+                  >
+                    <li>
+                      <button
+                        className="customNetworkDropDownButton"
+                        onClick={[Function]}
+                      >
+                        <img
+                          alt="trashcan"
+                          className="customNetworkDropDownButtonImage"
+                          src="test-file-stub"
+                        />
+                         Delete
+                      </button>
+                      <Link
+                        className="customNetworkLink"
+                        replace={false}
+                        to="/editCustomNetwork/local"
+                      >
+                        <img
+                          alt="pen on paper"
+                          className="customNetworkDropDownButtonImage"
+                          src="test-file-stub"
+                        />
+                        Edit
+                      </Link>
+                    </li>
+                  </ul>
+                }
+              >
+                <section
+                  className="dropDownContainer customNetworkDropDown"
+                >
+                  <button
+                    className="dropDownButton customNetworkDropdownButton"
+                    onClick={[Function]}
+                  >
+                    <img
+                      alt="three vertical dots"
+                      className="customNetworkCardDropdownImage"
+                      src="test-file-stub"
+                    />
+                  </button>
+                  <div
+                    className="dropDown undefined"
+                  >
+                    <ul
+                      className="customNetworkDropdown"
+                    >
+                      <li>
+                        <button
+                          className="customNetworkDropDownButton"
+                          onClick={[Function]}
+                        >
+                          <img
+                            alt="trashcan"
+                            className="customNetworkDropDownButtonImage"
+                            src="test-file-stub"
+                          />
+                           Delete
+                        </button>
+                        <Link
+                          className="customNetworkLink"
+                          replace={false}
+                          to="/editCustomNetwork/local"
+                        >
+                          <a
+                            className="customNetworkLink"
+                            href="/editCustomNetwork/local"
+                            onClick={[Function]}
+                          >
+                            <img
+                              alt="pen on paper"
+                              className="customNetworkDropDownButtonImage"
+                              src="test-file-stub"
+                            />
+                            Edit
+                          </a>
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </section>
+              </DropDown>
+            </section>
+          </CustomNetworkCard>
+        </section>
+      </div>
+    </CustomNetworkList>
+  </Router>
+</StaticRouter>
+`;

@@ -95,17 +95,11 @@ export class PasswordModal extends Component {
 
   render() {
     const { loading } = this.state
-    const { handleSubmit, errors, renderTextField, accountLabel, confirmationMessage } = this.props
+    const { handleSubmit, errors, renderTextField, accountLabel, confirmationMessage, cancelSubmit } = this.props
 
     if (loading) {
       return <Loader />
     }
-
-    // if (Object.keys(accounts).length === 0) {
-    //   console.log('going to start')
-    //   return <StartPage />
-    // }
-    // const accountDropDownMarkup = <AccountInfoDropdownContent address={ address } />
 
     return (
       <section className={ style.Wrapper }>
@@ -130,7 +124,7 @@ export class PasswordModal extends Component {
             </div>
           </form>
           <form>
-            <SecondaryButton classNames={ style.Button } buttonText={ 'cancel' } onClickHandler={ this.cancelSubmit } />
+            <SecondaryButton classNames={ style.Button } buttonText={ 'cancel' } onClickHandler={ cancelSubmit } />
           </form>
         </Box>
       </section>
@@ -149,6 +143,7 @@ PasswordModal.propTypes = {
   renderTextField: PropTypes.func.isRequired,
   successHandler: PropTypes.func,
   encryptedWif: PropTypes.string.isRequired,
+  cancelSubmit: PropTypes.func.isRequired
 }
 
 export default reduxForm({ form: 'login', destroyOnUnmount: false })(withForm(PasswordModal))
