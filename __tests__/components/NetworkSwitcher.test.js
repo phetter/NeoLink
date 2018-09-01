@@ -30,11 +30,11 @@ const setup = () => {
   }
 
   const wrapper = mount(
-      <NetworkSwitcher { ...props } />
+    <NetworkSwitcher { ...props } />
   )
 
   return {
-    wrapper
+    wrapper,
   }
 }
 

@@ -33,7 +33,7 @@ const setup = (selectedNetworkId = 'MainNet') => {
 describe('CustomNetworkList', () => {
   test('temporary', () => {
     // TODO fix tests
-    expect(true).toBe(true);
+    expect(true).toBe(true)
   })
 
   test('renders without crashing', () => {
