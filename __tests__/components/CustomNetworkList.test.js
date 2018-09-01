@@ -36,28 +36,28 @@ describe('CustomNetworkList', () => {
     expect(true).toBe(true);
   })
 
-  // test('renders without crashing', () => {
-    // const { wrapper } = setup()
-    // expect(toJson(wrapper)).toMatchSnapshot()
-  // })
+  test('renders without crashing', () => {
+    const { wrapper } = setup()
+    expect(toJson(wrapper)).toMatchSnapshot()
+  })
 
-  // test('lists networks properly', async () => {
-  //   const { wrapper } = setup()
-  //
-  //   expect(wrapper.html().includes('MainNet')).toBe(false)
-  //   expect(wrapper.html().includes('local')).toBe(true)
-  // })
+  test('lists networks properly', async () => {
+    const { wrapper } = setup()
 
-  // test('delete network works', async () => {
-  //   const { wrapper } = setup('Local')
-  //
-  //   wrapper.find('.dropDownButton').simulate('click')
-  //   wrapper.find('.customNetworkDropDownButton').simulate('click')
-  //   wrapper.find('.confirmDeleteAccept').simulate('click')
-  //
-  //   const networkList = wrapper.find(CustomNetworkList)
-  //
-  //   expect(networkList.instance().props.setNetwork).toHaveBeenCalledWith('MainNet')
-  //   expect(networkList.instance().props.deleteCustomNetwork).toHaveBeenCalledWith('Local')
-  // })
+    expect(wrapper.html().includes('MainNet')).toBe(false)
+    expect(wrapper.html().includes('local')).toBe(true)
+  })
+
+  test('delete network works', async () => {
+    const { wrapper } = setup('Local')
+
+    wrapper.find('.dropDownButton').simulate('click')
+    wrapper.find('.customNetworkDropDownButton').simulate('click')
+    wrapper.find('.confirmDeleteAccept').simulate('click')
+
+    const networkList = wrapper.find(CustomNetworkList)
+
+    expect(networkList.instance().props.setNetwork).toHaveBeenCalledWith('MainNet')
+    expect(networkList.instance().props.deleteCustomNetwork).toHaveBeenCalledWith('Local')
+  })
 })
