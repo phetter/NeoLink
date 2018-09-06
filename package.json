@@ -13,7 +13,7 @@
     "start": "node utils/webserver.js",
     "test": "jest",
     "test-ci": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "prepush": "echo 'running lint...' && npm run lint && echo 'running tests...' && npm test"
+    "prepush": "echo 'running lint...' && npm run lint && echo 'running tests...' && npm run test"
   },
   "devDependencies": {
     "axios": "^0.18.0",
