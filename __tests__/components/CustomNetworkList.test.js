@@ -20,7 +20,7 @@ const setup = (selectedNetworkId = 'MainNet') => {
     setNetwork: jest.fn(),
   }
   const wrapper = mount(
-      <CustomNetworkList { ...props } />
+    <CustomNetworkList { ...props } />
   )
 
   return {
