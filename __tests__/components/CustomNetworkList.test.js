@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { mount } from 'enzyme'
-// import { StaticRouter } from 'react-router'
+import { StaticRouter } from 'react-router'
 import toJson from 'enzyme-to-json'
 
 import CustomNetworkList from '../../src/app/containers/CustomNetworkList/CustomNetworkList'
@@ -20,7 +20,9 @@ const setup = (selectedNetworkId = 'MainNet') => {
     setNetwork: jest.fn(),
   }
   const wrapper = mount(
-    <CustomNetworkList { ...props } />
+    <StaticRouter context={ {} }>
+      <CustomNetworkList { ...props } />
+    </StaticRouter>
   )
 
   return {
