@@ -13,7 +13,7 @@
     "start": "node utils/webserver.js",
     "test": "jest",
     "test-ci": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-    "prepush": "echo 'running lint...' && npm run lint && echo 'running tests...' && npm run test"
+    "prepush": "echo 'running lint...' && npm run lint && echo 'running tests...' && npm test"
   },
   "devDependencies": {
     "axios": "^0.18.0",
@@ -55,7 +55,6 @@
     "jest": "^22.0.4",
     "jest-cli": "^22.4.4",
     "postcss-loader": "^2.0.9",
-    "react-router": "^4.3.1",
     "redux-devtools": "^3.4.1",
     "redux-devtools-dock-monitor": "^1.1.3",
     "redux-devtools-log-monitor": "^1.4.0",
