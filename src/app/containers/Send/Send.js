@@ -93,7 +93,7 @@ export class Send extends Component {
   }
 
   handleCancelClick = () => {
-    console.log('cancle and grettle')
+    this.setState({ showConfirmation: false })
   }
 
   handleSubmit = (values, dispatch, formProps) => {
@@ -179,7 +179,7 @@ export class Send extends Component {
     } else if (showConfirmation) {
       // console.log('showing form')
       let accountLabel
-      if (accounts.length) {
+      if (Object.keys(accounts).length > 0) {
         Object.keys(accounts).forEach(index => {
           if (account.address === accounts[index].address) accountLabel = accounts[index].label
           logDeep('ac: ', accounts[index])
@@ -270,7 +270,6 @@ export class Send extends Component {
                   component={ renderTextField }
                   type='text'
                   placeholder='Optional Remarks'
-                  error={ errors.address }
                   name='remark'
                   label='Remarks'
                 />
@@ -311,7 +310,6 @@ Send.propTypes = {
   renderTextField: PropTypes.func.isRequired,
   renderSelectField: PropTypes.func.isRequired,
   history: PropTypes.object,
-  // getWerd: PropTypes.bool,
 }
 
 export default reduxForm({ form: 'send', destroyOnUnmount: false, initialValues: { assetType: 'NEO' } })(withForm(Send))

@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux'
 
 import PasswordModal from './PasswordModal'
 
-const mapStateToProps = (state: Object) => ({
+const mapStateToProps = (state) => ({
   account: state.account,
   // accounts: state.wallet.accounts,
   // selectedNetworkId: state.config.selectedNetworkId,
