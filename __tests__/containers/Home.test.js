@@ -29,7 +29,7 @@ describe('Home', () => {
       },
     },
     networks: {
-      TestNet: { name: 'TestNet', apiType: 'neoscan', url: 'http://testnet.io' },
+      TestNet: { name: 'TestNet', apiType: 'neoscan', url: 'http://neoscan-testnet.io', addressUrl: 'http://neoscan-testnet.io' },
     },
   }
 
