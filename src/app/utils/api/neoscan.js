@@ -12,7 +12,6 @@ import { logDeep } from '../debug'
 
 import Promise from 'bluebird'
 
-
 // TODO Reintegrate this (neoscanIni bits) with state tree
 
 let neoscanIni = {}
@@ -73,8 +72,7 @@ export const setNet = networkId => {
 
 export const getNet = () => {
   let net
-  if (curState && curState.config && curState.config.neoscan && curState.config.neoscan.active)
-    net = curState.config.neoscan.active
+  if (curState && curState.config && curState.config.neoscan && curState.config.neoscan.active) net = curState.config.neoscan.active
   return net
 }
 
