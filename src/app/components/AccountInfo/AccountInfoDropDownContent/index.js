@@ -11,7 +11,13 @@ import editSVG from '../../../../img/edit.svg'
 import style from './AccountInfoDropDownContent.css'
 
 const AccountInfoDropDownContent = ({ onClickHandler, address }) => {
-  let addressLookupUrl = Neoscan.getNet().addressUrl + address
+  let addressLookupUrl
+  let net = Neoscan.getNet()
+  if (net && net.addressUrl) {
+    addressLookupUrl = net.addressUrl + address
+  } else {
+    addressLookupUrl = 'https://neoscan-testnet.io/address/' + address
+  }
   return (
     <Fragment>
       <Link to='/send' className={ style.dropDownLinks }>
