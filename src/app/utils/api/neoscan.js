@@ -6,10 +6,12 @@
 
 import axios from 'axios'
 
+// import { get } from 'lodash'
 // import { Fixed8 } from '../math'
 import { logDeep } from '../debug'
 
 import Promise from 'bluebird'
+
 
 // TODO Reintegrate this (neoscanIni bits) with state tree
 
@@ -18,12 +20,14 @@ let neoscanIni = {}
 neoscanIni.active = {}
 neoscanIni.mainNet = {}
 neoscanIni.mainNet.rootUrl = 'https://neoscan.io/api/main_net/'
+neoscanIni.mainNet.addressUrl = 'https://neoscan.io/address/'
 neoscanIni.mainNet.txByIdUrl = 'https://neoscan.io/api/main_net/v1/get_transaction/'
 neoscanIni.mainNet.txsByAddressUrl = 'https://neoscan.io/api/main_net/v1/get_last_transactions_by_address/'
 neoscanIni.mainNet.balanceUrl = 'https://neoscan.io/api/main_net/v1/get_balance/'
 
 neoscanIni.testNet = {}
 neoscanIni.testNet.rootUrl = 'https://neoscan-testnet.io/api/test_net/'
+neoscanIni.testNet.addressUrl = 'https://neoscan-testnet.io/address/'
 neoscanIni.testNet.txByIdUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/'
 neoscanIni.testNet.txsByAddressUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_last_transactions_by_address/'
 neoscanIni.testNet.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_balance/'
@@ -34,6 +38,7 @@ neoscanIni.testNet.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_
 // Store the whole thing for later management.
 neoscanIni.custom = {}
 neoscanIni.custom.rootUrl = 'https://neoscan-testnet.io/api/test_net/'
+neoscanIni.custom.addressUrl = 'https://neoscan-testnet.io/address/'
 neoscanIni.custom.txByIdUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/'
 neoscanIni.custom.txsByAddressUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_last_transactions_by_address/'
 neoscanIni.custom.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_balance/'
@@ -64,6 +69,13 @@ const validateUrl = url => {
 
 export const setNet = networkId => {
   return switchNetwork(networkId)
+}
+
+export const getNet = () => {
+  let net
+  if (curState && curState.config && curState.config.neoscan && curState.config.neoscan.active)
+    net = curState.config.neoscan.active
+  return net
 }
 
 // MAKE GAS PERDY
@@ -122,6 +134,7 @@ export const switchNetwork = networkId => {
         let custom = {}
         custom.name = curState.config.neoscan[networkId].name
         custom.rootUrl = u + '/api/test_net/'
+        custom.addressUrl = u + '/address/'
         custom.txByIdUrl = u + '/api/test_net/v1/get_transaction/'
         custom.txsByAddressUrl = u + '/api/test_net/v1/get_last_transactions_by_address/'
         custom.balanceUrl = u + '/api/test_net/v1/get_balance/'
@@ -185,7 +198,7 @@ export const getBalanceUrl = address => {
 //    total_entries: 130,
 //    page_size: 15,
 //    page_number: 1,
-// TODO add more feature
+// TODO add 'more' feature
 
 // eslint-disable-next-line
 export const get_address_abstracts = (address, page) => {
