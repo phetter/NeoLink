@@ -35,7 +35,6 @@ class Transaction extends Component {
     } else {
       remarks = ['']
     }
-    console.log('t: '+this.txSiteUrl)
     return (
       <div>
         <div />
