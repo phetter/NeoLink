@@ -33,7 +33,6 @@ class NetworkSwitcher extends Component {
           console.log('results', results)
           if (results) setBalance(results.neo, results.gas)
         })
-        // Neoscan.getTxsByAddress(account.address).then(results => setTransactions(results))
 
         let page = 1
 

@@ -19,8 +19,7 @@ class Transaction extends Component {
     this.amountText = neoSent === true ? 'NEO' : 'GAS'
     this.transactionId = transaction.txid
     this.apiUrl = networks[selectedNetworkId].url
-    this.txUrl = networks[selectedNetworkId].txUrl + this.transactionId
-    // this.txUrl = networks[selectedNetworkId].url + '/transaction/' + this.transactionId
+    this.txSiteUrl = networks[selectedNetworkId].txSiteUrl + this.transactionId
     this.txTime = transaction.txTime
     this.remarks = []
   }
@@ -36,13 +35,13 @@ class Transaction extends Component {
     } else {
       remarks = ['']
     }
-
+    console.log('t: '+this.txSiteUrl)
     return (
       <div>
         <div />
         <div className={ style.transactionCard }>
           { number }
-          <a href={ this.txUrl } className={ style.transactionCardLink } target='_blank' rel='noopener'>
+          <a href={ this.txSiteUrl } className={ style.transactionCardLink } target='_blank' rel='noopener'>
             <h4 className={ style.transactionCardHeading }>{this.transactionId}</h4>
           </a>
 

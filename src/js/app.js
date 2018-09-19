@@ -28,6 +28,7 @@ chrome.storage.local.get('stateVersion', stateVersion => {
 // Moved defaults from neondb to neoscan.
 // TODO MORE COMPOSABLE
 // TODO break down root url and compose against api version variable
+// TODO distinguish between neoscan api url and site url
 
 function upgradeToStateVersion1(initialState) {
   if (initialState && initialState.config && initialState.config.networks) {
@@ -42,12 +43,14 @@ function upgradeToStateVersion1(initialState) {
         initialState.config.neoscan.mainNet = {}
         initialState.config.neoscan.mainNet.rootUrl = initialState.config.networks[key].url = 'https://neoscan.io/api/main_net/'
         initialState.config.neoscan.mainNet.addressUrl = initialState.config.networks[key].addressUrl = 'https://neoscan.io/address/'
+        initialState.config.neoscan.mainNet.txSiteUrl = initialState.config.networks[key].txSiteUrl = 'https://neoscan.io/transaction/'
         initialState.config.neoscan.mainNet.txByIdUrl = initialState.config.networks[key].txUrl = 'https://neoscan.io/api/main_net/v1/get_transaction/'
         initialState.config.neoscan.mainNet.txsByAddressUrl = initialState.config.networks[key].txsUrl = 'https://neoscan.io/api/main_net/v1/get_last_transactions_by_address/'
         initialState.config.neoscan.mainNet.balanceUrl = initialState.config.networks[key].balanceUrl = 'https://neoscan.io/api/main_net/v1/get_balance/'
         initialState.config.neoscan.testNet = {}
         initialState.config.neoscan.testNet.rootUrl = initialState.config.networks[key].url = 'https://neoscan-testnet.io/api/test_net/'
         initialState.config.neoscan.testNet.addressUrl = initialState.config.networks[key].addressUrl = 'https://neoscan-testnet.io/address/'
+        initialState.config.neoscan.testNet.txSiteUrl = initialState.config.networks[key].txSiteUrl = 'https://neoscan-testnet.io/transaction/'
         initialState.config.neoscan.testNet.txByIdUrl = initialState.config.networks[key].txUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/'
         initialState.config.neoscan.testNet.txsByAddressUrl = initialState.config.networks[key].txsUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_last_transactions_by_address/'
         initialState.config.neoscan.testNet.balanceUrl = initialState.config.networks[key].balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_balance/'
