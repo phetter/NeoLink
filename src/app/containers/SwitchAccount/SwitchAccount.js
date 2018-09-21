@@ -12,6 +12,9 @@ import switchSVG from '../../../img/syncSolid.svg'
 
 import style from './SwitchAccount.css'
 
+import { logDeep } from '../../utils/debug'
+
+
 class SwitchAccount extends Component {
   state = {
     accounts: [],
@@ -34,21 +37,33 @@ class SwitchAccount extends Component {
   }
 
   setAccountState = () => {
-    const { accounts } = this.props
+    const { accounts, selectedNetworkId } = this.props
     const formattedAccounts = []
 
+    logDeep('cardsse: ', accounts)
     const accountsArray = Object.keys(accounts)
+    this.setState({ loading: true })
+
+    Neoscan.setNet(selectedNetworkId)
     accountsArray.map((account, index) => {
       Neoscan.getBalance(accounts[account].address).then(response => {
+        console.log('got balance: ' + accounts[account].address)
         formattedAccounts.push({
           address: accounts[account].address,
           encryptedKey: accounts[account].key,
           label: accounts[account].label,
-          neo: response.neo,
-          gas: response.gas,
+          neo: response.neo ? response.neo : 0,
+          gas: response.gas ? response.gas : 0,
         })
+        // console.log('index: '+index)
+        // console.log('array len '+ accountsArray.length)
+
         if (index === accountsArray.length - 1) {
+          // this.setState({ accounts: formattedAccounts })
           setTimeout(() => this.setState({ accounts: formattedAccounts }), 0)
+          this.setState({ accounts: formattedAccounts })
+          this.setState({ loading: false })
+
         }
       })
     })
@@ -58,6 +73,7 @@ class SwitchAccount extends Component {
     const { account } = this.props
     const { accounts } = this.state
     let selectedAccountIndex
+    logDeep('cards: ', accounts)
     const accountCards = accounts.map(({ label, neo, gas, address, encryptedKey }, index) => {
       const selected = account.address === address
       let selectedStyles = null
@@ -158,7 +174,7 @@ class SwitchAccount extends Component {
 SwitchAccount.propTypes = {
   accounts: PropTypes.object,
   account: PropTypes.object,
-  selectedNetworkId: PropTypes.object,
+  selectedNetworkId: PropTypes.string,
   setAccount: PropTypes.func,
   history: PropTypes.object,
 }

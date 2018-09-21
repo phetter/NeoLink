@@ -60,7 +60,7 @@ const validateUrl = url => {
     try {
       // eslint-disable-next-line
       const u = new URL(url)
-      // console.log('validating URL: ' + url)
+      console.log('validating URL: ' + url)
       resolve(url)
     } catch (error) {
       console.log('neoscan: validateUrl: ' + error.message)
@@ -280,7 +280,7 @@ export const get_transaction = txid => {
 export const getBalance = address => {
   return new Promise((resolve, reject) => {
     getBalanceUrl(address).then(url => {
-      // console.log(`Retrieving balance for ${address} from neoscan ${url}`)
+      console.log(`Retrieving balance for ${address} from neoscan ${url}`)
       return axios
         .get(url)
         .then(response => {
