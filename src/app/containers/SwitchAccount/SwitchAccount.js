@@ -39,7 +39,6 @@ class SwitchAccount extends Component {
     const { accounts, selectedNetworkId } = this.props
     const formattedAccounts = []
 
-    logDeep('cardsse: ', accounts)
     const accountsArray = Object.keys(accounts)
     this.setState({ loading: true })
 
@@ -71,7 +70,6 @@ class SwitchAccount extends Component {
     const { account } = this.props
     const { accounts } = this.state
     let selectedAccountIndex
-    logDeep('cards: ', accounts)
     const accountCards = accounts.map(({ label, neo, gas, address, encryptedKey }, index) => {
       const selected = account.address === address
       let selectedStyles = null
