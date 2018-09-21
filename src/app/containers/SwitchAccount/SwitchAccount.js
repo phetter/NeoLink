@@ -14,7 +14,6 @@ import style from './SwitchAccount.css'
 
 import { logDeep } from '../../utils/debug'
 
-
 class SwitchAccount extends Component {
   state = {
     accounts: [],
