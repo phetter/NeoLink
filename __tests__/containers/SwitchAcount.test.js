@@ -10,7 +10,7 @@ describe('Switch Account', () => {
   const props = {
     selectedNetworkId: 'TestNet',
     networks: {
-      MainNet: { name: 'TestNet', url: 'https://neoscan-testnet.io', canDelete: false, apiType: 'neoscan' },
+      TestNet: { name: 'TestNet', url: 'https://neoscan-testnet.io', canDelete: false, apiType: 'neoscan' },
     },
     account: {
       wif: testKeys.t1.wif,
