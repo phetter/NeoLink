@@ -12,7 +12,7 @@ import switchSVG from '../../../img/syncSolid.svg'
 
 import style from './SwitchAccount.css'
 
-import { logDeep } from '../../utils/debug'
+// import { logDeep } from '../../utils/debug'
 
 class SwitchAccount extends Component {
   state = {
@@ -115,7 +115,7 @@ class SwitchAccount extends Component {
   handlePasswordSubmit = () => {
     const { encryptedWif, password } = this.state
     const { setAccount, history } = this.props
-    this.setState({ loading: true })
+    // this.setState({ loading: true })
     console.log(encryptedWif, password)
     wallet
       .decryptAsync(encryptedWif, password)
