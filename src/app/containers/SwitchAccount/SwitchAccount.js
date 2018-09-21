@@ -63,7 +63,6 @@ class SwitchAccount extends Component {
           setTimeout(() => this.setState({ accounts: formattedAccounts }), 0)
           this.setState({ accounts: formattedAccounts })
           this.setState({ loading: false })
-
         }
       })
     })
