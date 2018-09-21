@@ -8,9 +8,9 @@ import { mount } from 'enzyme'
 
 describe('Switch Account', () => {
   const props = {
-    selectedNetworkId: 'MainNet',
+    selectedNetworkId: 'TestNet',
     networks: {
-      MainNet: { name: 'MainNet', url: 'http://api.wallet.cityofzion.io', canDelete: false, apiType: 'neoscan' },
+      MainNet: { name: 'TestNet', url: 'https://neoscan-testnet.io', canDelete: false, apiType: 'neoscan' },
     },
     account: {
       wif: testKeys.t1.wif,
