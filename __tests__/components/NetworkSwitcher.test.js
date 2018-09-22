@@ -28,7 +28,10 @@ const setup = () => {
     setNetwork: jest.fn(),
     getBalance: jest.fn(),
   }
-  const wrapper = mount(<NetworkSwitcher { ...props } />)
+
+  const wrapper = mount(
+    <NetworkSwitcher { ...props } />
+  )
 
   return {
     wrapper,
