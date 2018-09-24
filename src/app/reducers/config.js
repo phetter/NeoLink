@@ -3,12 +3,16 @@ import * as ActionTypes from '../constants/ActionTypes'
 
 // TODO rewrite URL parsing with a better system such host slug breakout:
 // TODO make composable
+// TODO distinguish between neoscan api url and site url
+
 const initialState = {
   networks: {
     MainNet: {
       name: 'MainNet',
       url: 'https://neoscan.io/api/main_net/',
       rootUrl: 'https://neoscan.io/api/main_net/',
+      addressUrl: 'https://neoscan.io/address/',
+      txSiteUrl: 'https://neoscan.io/trasnaction/',
       txUrl: 'https://neoscan.io/api/main_net/v1/get_transaction/',
       txByIdUrl: 'https://neoscan.io/api/main_net/v1/get_transaction/',
       txsUrl: 'https://neoscan.io/api/main_net/v1/get_last_transactions_by_address/',
@@ -20,6 +24,8 @@ const initialState = {
       name: 'TestNet',
       url: 'https://neoscan-testnet.io/api/test_net/',
       rootUrl: 'https://neoscan-testnet.io/api/test_net/',
+      addressUrl: 'https://neoscan-testnet.io/address/',
+      txSiteUrl: 'https://neoscan-testnet.io/trasnaction/',
       txUrl: 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/',
       txByIdUrl: 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/',
       txsUrl: 'https://neoscan-testnet.io/api/test_net/v1/get_last_transactions_by_address/',
@@ -63,7 +69,6 @@ const actionsMap = {
   [ActionTypes.EDIT_CUSTOM_NETWORK](state, action) {
     const networks = { ...state.networks }
     const objectName = Object.keys(networks).find(network => networks[network].name === action.id)
-    console.log(objectName, networks[objectName])
     networks[objectName].name = action.name
     networks[objectName].url = action.url
     networks[objectName].txUrl = action.txUrl

@@ -23,7 +23,6 @@ class NetworkSwitcher extends Component {
 
     if (selectedNetworkId) {
       setNetwork(selectedNetworkId)
-      console.log('switching to net: ' + selectedNetworkId)
       // neon-js / neondb version follows
       //  getBalance(networks, selectedNetworkId, account).then(results => setBalance(results.neo, results.gas))
       //  getTransactions(networks, selectedNetworkId, account).then(results => setTransactions(results))
@@ -34,7 +33,6 @@ class NetworkSwitcher extends Component {
           console.log('results', results)
           if (results) setBalance(results.neo, results.gas)
         })
-        // Neoscan.getTxsByAddress(account.address).then(results => setTransactions(results))
 
         let page = 1
 

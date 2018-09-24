@@ -6,6 +6,7 @@
 
 import axios from 'axios'
 
+// import { get } from 'lodash'
 // import { Fixed8 } from '../math'
 import { logDeep } from '../debug'
 
@@ -18,12 +19,16 @@ let neoscanIni = {}
 neoscanIni.active = {}
 neoscanIni.mainNet = {}
 neoscanIni.mainNet.rootUrl = 'https://neoscan.io/api/main_net/'
+neoscanIni.mainNet.addressUrl = 'https://neoscan.io/address/'
+neoscanIni.mainNet.txSiteUrl = 'https://neoscan.io/transaction/'
 neoscanIni.mainNet.txByIdUrl = 'https://neoscan.io/api/main_net/v1/get_transaction/'
 neoscanIni.mainNet.txsByAddressUrl = 'https://neoscan.io/api/main_net/v1/get_last_transactions_by_address/'
 neoscanIni.mainNet.balanceUrl = 'https://neoscan.io/api/main_net/v1/get_balance/'
 
 neoscanIni.testNet = {}
 neoscanIni.testNet.rootUrl = 'https://neoscan-testnet.io/api/test_net/'
+neoscanIni.testNet.addressUrl = 'https://neoscan-testnet.io/address/'
+neoscanIni.testNet.txSiteUrl = 'https://neoscan.io/transaction/'
 neoscanIni.testNet.txByIdUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/'
 neoscanIni.testNet.txsByAddressUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_last_transactions_by_address/'
 neoscanIni.testNet.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_balance/'
@@ -34,6 +39,8 @@ neoscanIni.testNet.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_
 // Store the whole thing for later management.
 neoscanIni.custom = {}
 neoscanIni.custom.rootUrl = 'https://neoscan-testnet.io/api/test_net/'
+neoscanIni.custom.addressUrl = 'https://neoscan-testnet.io/address/'
+neoscanIni.custom.txSiteUrl = 'https://neoscan.io/transaction/'
 neoscanIni.custom.txByIdUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_transaction/'
 neoscanIni.custom.txsByAddressUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_last_transactions_by_address/'
 neoscanIni.custom.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_balance/'
@@ -53,7 +60,6 @@ const validateUrl = url => {
     try {
       // eslint-disable-next-line
       const u = new URL(url)
-      // console.log('validating URL: ' + url)
       resolve(url)
     } catch (error) {
       console.log('neoscan: validateUrl: ' + error.message)
@@ -64,6 +70,12 @@ const validateUrl = url => {
 
 export const setNet = networkId => {
   return switchNetwork(networkId)
+}
+
+export const getNet = () => {
+  let net
+  if (curState && curState.config && curState.config.neoscan && curState.config.neoscan.active) net = curState.config.neoscan.active
+  return net
 }
 
 // MAKE GAS PERDY
@@ -116,12 +128,12 @@ export const switchNetwork = networkId => {
       if (curState && curState.config && curState.config.neoscan && curState.config.networks && curState.config.networks[networkId]) {
         net = curState.config.neoscan.active = curState.config.networks[networkId]
       } else {
-        // if (curState.config.neoscan[networkId].apiType !== 'neoscan') return undefined
         console.log('networkId' + networkId)
         let u = curState.config.neoscan[networkId].url
         let custom = {}
         custom.name = curState.config.neoscan[networkId].name
         custom.rootUrl = u + '/api/test_net/'
+        custom.addressUrl = u + '/address/'
         custom.txByIdUrl = u + '/api/test_net/v1/get_transaction/'
         custom.txsByAddressUrl = u + '/api/test_net/v1/get_last_transactions_by_address/'
         custom.balanceUrl = u + '/api/test_net/v1/get_balance/'
@@ -173,7 +185,6 @@ export const getTxsByAddressUrl = address => {
 // I.e., 'https://neoscan.io/api/main_net/v1/get_transaction/'
 
 export const getBalanceUrl = address => {
-  console.log('balurl : ' + curState.config.neoscan.active.balanceUrl + address)
   if (address) {
     return validateUrl(curState.config.neoscan.active.balanceUrl + address + '/')
   } else return validateUrl(curState.config.neoscan.active.balanceUrl)
@@ -185,7 +196,7 @@ export const getBalanceUrl = address => {
 //    total_entries: 130,
 //    page_size: 15,
 //    page_number: 1,
-// TODO add more feature
+// TODO add 'more' feature
 
 // eslint-disable-next-line
 export const get_address_abstracts = (address, page) => {
@@ -266,7 +277,7 @@ export const get_transaction = txid => {
 export const getBalance = address => {
   return new Promise((resolve, reject) => {
     getBalanceUrl(address).then(url => {
-      // console.log(`Retrieving balance for ${address} from neoscan ${url}`)
+      console.log(`neoscan.getBalance ${url}`)
       return axios
         .get(url)
         .then(response => {
@@ -278,25 +289,7 @@ export const getBalance = address => {
               gas: 0,
             }
           } else {
-            // TODO rewrite to dynamically populate assets
             data.balance.map(b => {
-              // switch (b.asset) {
-              //   case 'NEO':
-              //     neo = b.amount
-              //     break
-              //   case 'GAS':
-              //     gas = '' + b.amount
-              //     break
-              //   case 'Redeemable HashPuppy Token':
-              //     rht = '' + b.amount
-              //     console.log('rht: '+ rht)
-              //     break
-              //   case 'Master Contract Token':
-              //     mct = '' + b.amount
-              //     console.log('mct: '+ mct)
-              //     break
-              // }
-
               let ast = {}
               ast[b.asset] = b.amount
 
