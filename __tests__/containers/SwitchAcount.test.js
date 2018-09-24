@@ -32,17 +32,18 @@ describe('Switch Account', () => {
   }
 
   test('It renders the correct number of accounts', () => {
-    const wrapper = mount(<SwitchAccount { ...props } />)
+    const wrapper = mount(<SwitchAccount { ...props } />).then((data) => {
 
-    setTimeout(() => {
-      wrapper.setState({
-        accounts: [props.accounts[testKeys['t1']['address']], props.accounts.ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be],
-      })
+      setTimeout(() => {
+        wrapper.setState({
+          accounts: [props.accounts[testKeys['t1']['address']], props.accounts.ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be],
+        })
 
-      const cards = wrapper.find(SwitchAccountCard)
-      expect(cards.length).toBe(2)
-      expect(wrapper.instance().state.accounts.length).toBe(2)
-    }, 3000)
+        const cards = wrapper.find(SwitchAccountCard)
+        expect(cards.length).toBe(2)
+        expect(wrapper.instance().state.accounts.length).toBe(2)
+      }, 3000)
+    }
   })
 
   test('It correctly shows password form when switch account is clicked', () => {
