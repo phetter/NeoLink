@@ -26,15 +26,14 @@ class SwitchAccount extends Component {
 
   componentDidMount() {
     return Promise
-      .all([ this.setAccountState()])
+      .all([this.setAccountState()])
       .then(() => {
         this.setAccountState()
-
       })
       .catch((error) => {
         this.setState({
           loading: false,
-          switchAccountError: 'We could not switch your account. Please make sure your password is correct.',
+          switchAccountError: 'Component did not mount: ' + error,
         })
       })
   }
