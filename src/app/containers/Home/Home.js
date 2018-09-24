@@ -42,7 +42,6 @@ class Home extends Component {
     this.setState({ amountsError: '' }, () => {
       Neoscan.setNet(network)
       Neoscan.getBalance(account.address)
-        // .then(results => accountActions.setBalance(results.neo, results.gas))
         .then(results => accountActions.setBalance(results))
         .catch(() => this.setState({ amountsError: 'Could not retrieve amounts.' }))
     })

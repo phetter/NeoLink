@@ -60,7 +60,6 @@ const validateUrl = url => {
     try {
       // eslint-disable-next-line
       const u = new URL(url)
-      console.log('validating URL: ' + url)
       resolve(url)
     } catch (error) {
       console.log('neoscan: validateUrl: ' + error.message)
@@ -129,7 +128,6 @@ export const switchNetwork = networkId => {
       if (curState && curState.config && curState.config.neoscan && curState.config.networks && curState.config.networks[networkId]) {
         net = curState.config.neoscan.active = curState.config.networks[networkId]
       } else {
-        // if (curState.config.neoscan[networkId].apiType !== 'neoscan') return undefined
         console.log('networkId' + networkId)
         let u = curState.config.neoscan[networkId].url
         let custom = {}
@@ -187,7 +185,6 @@ export const getTxsByAddressUrl = address => {
 // I.e., 'https://neoscan.io/api/main_net/v1/get_transaction/'
 
 export const getBalanceUrl = address => {
-  console.log('balurl : ' + curState.config.neoscan.active.balanceUrl + address)
   if (address) {
     return validateUrl(curState.config.neoscan.active.balanceUrl + address + '/')
   } else return validateUrl(curState.config.neoscan.active.balanceUrl)
@@ -280,7 +277,7 @@ export const get_transaction = txid => {
 export const getBalance = address => {
   return new Promise((resolve, reject) => {
     getBalanceUrl(address).then(url => {
-      console.log(`Retrieving balance for ${address} from neoscan ${url}`)
+      console.log(`neoscan.getBalance ${url}`)
       return axios
         .get(url)
         .then(response => {
@@ -292,25 +289,7 @@ export const getBalance = address => {
               gas: 0,
             }
           } else {
-            // TODO rewrite to dynamically populate assets
             data.balance.map(b => {
-              // switch (b.asset) {
-              //   case 'NEO':
-              //     neo = b.amount
-              //     break
-              //   case 'GAS':
-              //     gas = '' + b.amount
-              //     break
-              //   case 'Redeemable HashPuppy Token':
-              //     rht = '' + b.amount
-              //     console.log('rht: '+ rht)
-              //     break
-              //   case 'Master Contract Token':
-              //     mct = '' + b.amount
-              //     console.log('mct: '+ mct)
-              //     break
-              // }
-
               let ast = {}
               ast[b.asset] = b.amount
 

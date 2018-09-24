@@ -45,7 +45,6 @@ class SwitchAccount extends Component {
     Neoscan.setNet(selectedNetworkId)
     accountsArray.map((account, index) => {
       Neoscan.getBalance(accounts[account].address).then(response => {
-        console.log('got balance: ' + accounts[account].address)
         formattedAccounts.push({
           address: accounts[account].address,
           encryptedKey: accounts[account].key,
@@ -53,8 +52,6 @@ class SwitchAccount extends Component {
           neo: response.neo ? response.neo : 0,
           gas: response.gas ? response.gas : 0,
         })
-        // console.log('index: '+index)
-        // console.log('array len '+ accountsArray.length)
 
         if (index === accountsArray.length - 1) {
           // this.setState({ accounts: formattedAccounts })
@@ -80,7 +77,7 @@ class SwitchAccount extends Component {
         selectedAccountIndex = index
       } else {
         switchAccountButton = (
-          <button className={ style.switchAccountButton } onClick={ this.handleSwitchAccountCardClick }>
+          <button className={ style.switchAccountButton } onClick={ () => this.handleSwitchAccountButtonClick(encryptedKey)}>
             <img src={ switchSVG } alt='arrows in circle' />Switch
           </button>
         )
@@ -107,6 +104,11 @@ class SwitchAccount extends Component {
 
   handleSwitchAccountCardClick = encryptedWif => {
     const { account } = this.props
+    // TODO: copy address? options flytout? configurable flyout?
+  }
+
+  handleSwitchAccountButtonClick = encryptedWif => {
+    const { account } = this.props
     if (encryptedWif !== account.wif) {
       this.setState({ showPasswordPrompt: true, encryptedWif })
     }
@@ -115,8 +117,7 @@ class SwitchAccount extends Component {
   handlePasswordSubmit = () => {
     const { encryptedWif, password } = this.state
     const { setAccount, history } = this.props
-    // this.setState({ loading: true })
-    console.log(encryptedWif, password)
+    this.setState({ loading: true })
     wallet
       .decryptAsync(encryptedWif, password)
       .then(wif => {

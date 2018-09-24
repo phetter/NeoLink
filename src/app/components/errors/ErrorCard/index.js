@@ -19,7 +19,6 @@ const ErrorCard = ({ onClickHandler, message, classNames }) => (
 ErrorCard.propTypes = {
   onClickHandler: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
-  classNames: PropTypes.classNames,
 }
 
 export default ErrorCard
