@@ -42,9 +42,8 @@ describe('Switch Account', () => {
     try {
       expect(cards.length).toBe(2)
       expect(wrapper.instance().state.accounts.length).toBe(2)
-      done()
-    } catch(e) {
-      done.faile(e)
+    } catch (e) {
+      console.log('error: ' + e)
     }
 
     // setTimeout(() => {
