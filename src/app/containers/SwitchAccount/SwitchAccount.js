@@ -77,7 +77,7 @@ class SwitchAccount extends Component {
         selectedAccountIndex = index
       } else {
         switchAccountButton = (
-          <button className={ style.switchAccountButton } onClick={ () => this.handleSwitchAccountButtonClick(encryptedKey)}>
+          <button className={ style.switchAccountButton } onClick={ () => this.handleSwitchAccountButtonClick(encryptedKey) }>
             <img src={ switchSVG } alt='arrows in circle' />Switch
           </button>
         )
@@ -103,7 +103,6 @@ class SwitchAccount extends Component {
   }
 
   handleSwitchAccountCardClick = encryptedWif => {
-    const { account } = this.props
     // TODO: copy address? options flytout? configurable flyout?
   }
 
