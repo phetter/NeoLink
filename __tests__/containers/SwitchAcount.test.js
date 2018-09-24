@@ -17,7 +17,7 @@ describe('Switch Account', () => {
       address: testKeys.t1.address,
     },
     accounts: {
-      [props.accounts[testKeys['t1']['address']]]: {
+      [testKeys['t1']['address']]: {
         address: testKeys.t1.address,
         label: 'My account',
         key: '',
