@@ -33,7 +33,6 @@ describe('Switch Account', () => {
 
   test('It renders the correct number of accounts', () => {
     const wrapper = mount(<SwitchAccount { ...props } />).then((data) => {
-
       setTimeout(() => {
         wrapper.setState({
           accounts: [props.accounts[testKeys['t1']['address']], props.accounts.ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be],

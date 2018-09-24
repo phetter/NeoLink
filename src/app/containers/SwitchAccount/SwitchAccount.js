@@ -26,9 +26,7 @@ class SwitchAccount extends Component {
 
   componentDidMount() {
     return Promise
-      .all([
-        this.setAccountState()
-      ])
+      .all([ this.setAccountState()])
       .then(() => {
         this.setAccountState()
 
