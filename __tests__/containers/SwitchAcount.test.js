@@ -38,35 +38,37 @@ describe('Switch Account', () => {
       accounts: [props.accounts[testKeys['t1']['address']], props.accounts.ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be],
     })
 
-    return Promise
-      .resolve(wrapper)
-      .then(() => wrapper.update())
-      .then(() => {
-        const cards = wrapper.find(SwitchAccountCard)
-        expect(cards.length).toBe(2)
-        expect(wrapper.instance().state.accounts.length).toBe(2)
-    })
-
-    // setTimeout(() => {
-    //   wrapper.setState({
-    //     accounts: [props.accounts[testKeys['t1']['address']], props.accounts.ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be],
+    // return Promise
+    //   .resolve(wrapper)
+    //   .then(() => wrapper.update())
+    //   .then(() => {
+    //     const cards = wrapper.find(SwitchAccountCard)
+    //     expect(cards.length).toBe(2)
+    //     expect(wrapper.instance().state.accounts.length).toBe(2)
     //   })
-    //
-    //   const cards = wrapper.find(SwitchAccountCard)
-    //   expect(cards.length).toBe(2)
-    //   expect(wrapper.instance().state.accounts.length).toBe(2)
-    // }, 3000)
+
+    setTimeout(() => {
+      wrapper.setState({
+        accounts: [props.accounts[testKeys['t1']['address']], props.accounts.ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be],
+      })
+
+      const cards = wrapper.find(SwitchAccountCard)
+      expect(cards.length).toBe(2)
+      expect(wrapper.instance().state.accounts.length).toBe(2)
+    }, 3000)
   })
 
   test('It correctly shows password form when switch account is clicked', () => {
     const wrapper = mount(<SwitchAccount { ...props } />)
 
-    wrapper.setState({
-      accounts: [props.accounts[testKeys['t1']['address']], props.accounts.ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be],
+    setTimeout(() => {
+      wrapper.setState({
+        accounts: [props.accounts[testKeys['t1']['address']], props.accounts.ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be],
+      })
+
+      wrapper.find('.switchAccountButton').simulate('click')
+
+      expect(wrapper.find(SwitchAccountConfirm).length).toBe(1)
     })
-
-    wrapper.find('.switchAccountButton').simulate('click')
-
-    expect(wrapper.find(SwitchAccountConfirm).length).toBe(1)
-  })
+  }, 3000)
 })
