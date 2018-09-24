@@ -40,7 +40,7 @@ describe('Switch Account', () => {
 
     return Promise
       .resolve(wrapper)
-      .then(() => mounted.update())
+      .then(() => wrapper.update())
       .then(() => {
         const cards = wrapper.find(SwitchAccountCard)
         expect(cards.length).toBe(2)
