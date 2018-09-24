@@ -43,7 +43,7 @@ describe('Switch Account', () => {
         expect(cards.length).toBe(2)
         expect(wrapper.instance().state.accounts.length).toBe(2)
       }, 3000)
-    }
+    })
   })
 
   test('It correctly shows password form when switch account is clicked', () => {
