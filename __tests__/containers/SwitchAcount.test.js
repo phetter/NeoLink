@@ -38,13 +38,14 @@ describe('Switch Account', () => {
       accounts: [props.accounts[testKeys['t1']['address']], props.accounts.ARjkxk6VcKPFKqRHhuLNog9TbdYxhKu9be],
     })
 
-    const cards = wrapper.find(SwitchAccountCard)
-    try {
-      expect(cards.length).toBe(2)
-      expect(wrapper.instance().state.accounts.length).toBe(2)
-    } catch (e) {
-      console.log('error: ' + e)
-    }
+    return Promise
+      .resolve(wrapper)
+      .then(() => mounted.update())
+      .then(() => {
+        const cards = wrapper.find(SwitchAccountCard)
+        expect(cards.length).toBe(2)
+        expect(wrapper.instance().state.accounts.length).toBe(2)
+    })
 
     // setTimeout(() => {
     //   wrapper.setState({
