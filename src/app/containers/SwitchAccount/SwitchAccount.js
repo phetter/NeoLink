@@ -12,6 +12,8 @@ import switchSVG from '../../../img/syncSolid.svg'
 
 import style from './SwitchAccount.css'
 
+// import { logDeep } from '../../utils/debug'
+
 class SwitchAccount extends Component {
   state = {
     accounts: [],
@@ -23,7 +25,17 @@ class SwitchAccount extends Component {
   }
 
   componentDidMount() {
-    this.setAccountState()
+    return Promise
+      .all([this.setAccountState()])
+      .then(() => {
+        this.setAccountState()
+      })
+      .catch((error) => {
+        this.setState({
+          loading: false,
+          switchAccountError: 'Component did not mount: ' + error,
+        })
+      })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,21 +46,28 @@ class SwitchAccount extends Component {
   }
 
   setAccountState = () => {
-    const { accounts } = this.props
+    const { accounts, selectedNetworkId } = this.props
     const formattedAccounts = []
 
     const accountsArray = Object.keys(accounts)
+    this.setState({ loading: true })
+
+    Neoscan.setNet(selectedNetworkId)
     accountsArray.map((account, index) => {
       Neoscan.getBalance(accounts[account].address).then(response => {
         formattedAccounts.push({
           address: accounts[account].address,
           encryptedKey: accounts[account].key,
           label: accounts[account].label,
-          neo: response.neo,
-          gas: response.gas,
+          neo: response.neo ? response.neo : 0,
+          gas: response.gas ? response.gas : 0,
         })
+
         if (index === accountsArray.length - 1) {
+          // this.setState({ accounts: formattedAccounts })
           setTimeout(() => this.setState({ accounts: formattedAccounts }), 0)
+          this.setState({ accounts: formattedAccounts })
+          this.setState({ loading: false })
         }
       })
     })
@@ -68,7 +87,7 @@ class SwitchAccount extends Component {
         selectedAccountIndex = index
       } else {
         switchAccountButton = (
-          <button className={ style.switchAccountButton } onClick={ this.handleSwitchAccountCardClick }>
+          <button className={ style.switchAccountButton } onClick={ () => this.handleSwitchAccountButtonClick(encryptedKey) }>
             <img src={ switchSVG } alt='arrows in circle' />Switch
           </button>
         )
@@ -94,6 +113,10 @@ class SwitchAccount extends Component {
   }
 
   handleSwitchAccountCardClick = encryptedWif => {
+    // TODO: copy address? options flytout? configurable flyout?
+  }
+
+  handleSwitchAccountButtonClick = encryptedWif => {
     const { account } = this.props
     if (encryptedWif !== account.wif) {
       this.setState({ showPasswordPrompt: true, encryptedWif })
@@ -104,7 +127,6 @@ class SwitchAccount extends Component {
     const { encryptedWif, password } = this.state
     const { setAccount, history } = this.props
     this.setState({ loading: true })
-    console.log(encryptedWif, password)
     wallet
       .decryptAsync(encryptedWif, password)
       .then(wif => {
@@ -158,7 +180,7 @@ class SwitchAccount extends Component {
 SwitchAccount.propTypes = {
   accounts: PropTypes.object,
   account: PropTypes.object,
-  selectedNetworkId: PropTypes.object,
+  selectedNetworkId: PropTypes.string,
   setAccount: PropTypes.func,
   history: PropTypes.object,
 }

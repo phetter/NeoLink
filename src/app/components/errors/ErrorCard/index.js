@@ -6,8 +6,8 @@ import crossSVG from '../../../../img/times.svg'
 
 import style from './ErrorCard.css'
 
-const ErrorCard = ({ onClickHandler, message, classNames }) => (
-  <div className={ style.errorCard + ' ' + classNames }>
+const ErrorCard = ({ onClickHandler, message }) => (
+  <div className={ style.errorCard + ' ' }>
     <img src={ exclamationTriangleSVG } alt='Exclamation triangle' className={ style.errorCardIcon } />
     <p className={ style.errorCardText }>{message}</p>
     <button className={ style.errorCardCloseButton } onClick={ onClickHandler }>
@@ -19,7 +19,6 @@ const ErrorCard = ({ onClickHandler, message, classNames }) => (
 ErrorCard.propTypes = {
   onClickHandler: PropTypes.func.isRequired,
   message: PropTypes.string.isRequired,
-  classNames: PropTypes.classNames,
 }
 
 export default ErrorCard
