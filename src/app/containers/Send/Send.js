@@ -169,7 +169,6 @@ export class Send extends Component {
       errors,
       clearFormFieldError,
       renderTextField,
-      renderSelectField,
     } = this.props
 
     let content
@@ -239,21 +238,14 @@ export class Send extends Component {
               <section className={ style.sendSelectAsset }>
                 <p className={ style.sendSelectAssetText }>Send</p>
                 <Field
-                  component={ renderSelectField }
-                  classNames={ style.sendAssetSelectBox }
-                  cssOnly
+                  component="select"
+                  className={ style.sendAssetSelectBox }
+                  type="select"
                   name='assetType'
-                  options={ [
-                    {
-                      label: 'NEO',
-                      value: 'NEO',
-                    },
-                    {
-                      label: 'GAS',
-                      value: 'GAS',
-                    },
-                  ] }
-                />
+                >
+                  <option value="NEO">NEO</option>
+                  <option value="GAS">GAS</option>
+                </Field>
               </section>
               <section className={ style.sendAddress }>
                 <Field
@@ -308,8 +300,7 @@ Send.propTypes = {
   setFormFieldError: PropTypes.func.isRequired,
   clearFormFieldError: PropTypes.func.isRequired,
   renderTextField: PropTypes.func.isRequired,
-  renderSelectField: PropTypes.func.isRequired,
   history: PropTypes.object,
 }
 
-export default reduxForm({ form: 'send', destroyOnUnmount: false, initialValues: { assetType: 'NEO' } })(withForm(Send))
+export default reduxForm({ form: 'send', destroyOnUnmount: false })(withForm(Send))
