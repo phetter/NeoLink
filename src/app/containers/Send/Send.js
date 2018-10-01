@@ -238,13 +238,13 @@ export class Send extends Component {
               <section className={ style.sendSelectAsset }>
                 <p className={ style.sendSelectAssetText }>Send</p>
                 <Field
-                  component="select"
+                  component='select'
                   className={ style.sendAssetSelectBox }
-                  type="select"
+                  type='select'
                   name='assetType'
                 >
-                  <option value="NEO">NEO</option>
-                  <option value="GAS">GAS</option>
+                  <option value='NEO'>NEO</option>
+                  <option value='GAS'>GAS</option>
                 </Field>
               </section>
               <section className={ style.sendAddress }>

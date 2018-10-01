@@ -49,7 +49,7 @@ AddTransactionRemark.propTypes = {
   addTransactionRemark: PropTypes.func,
   handleSubmit: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
-  renderTextField: PropTypes.func.isRequired
+  renderTextField: PropTypes.func.isRequired,
 }
 
 export default reduxForm({
