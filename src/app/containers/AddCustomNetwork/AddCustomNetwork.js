@@ -77,7 +77,7 @@ export class AddCustomNetwork extends Component {
 
   render() {
     const { showSuccess } = this.state
-    const { handleSubmit, history, errors, renderTextField, renderSelectField } = this.props
+    const { handleSubmit, history, errors, renderTextField } = this.props
 
     return (
       <Fragment>
@@ -90,7 +90,6 @@ export class AddCustomNetwork extends Component {
               <CustomNetworkForm
                 onSubmit={ handleSubmit(this.handleSubmit) }
                 renderTextField={ renderTextField }
-                renderSelectField={ renderSelectField }
                 errors={ errors }
               />
             </CustomNetworkContainer>
@@ -110,7 +109,6 @@ AddCustomNetwork.propTypes = {
   errors: PropTypes.object.isRequired,
   validateLength: PropTypes.func.isRequired,
   renderTextField: PropTypes.func.isRequired,
-  renderSelectField: PropTypes.func.isRequired,
 }
 
 export default reduxForm({
