@@ -53,23 +53,6 @@ const options = {
         exclude: [/node_modules/, /build/],
       },
       {
-        test: /\.(css)$/,
-        include: [path.resolve(__dirname, 'node_modules/@material')],
-        use: [
-          { loader: 'style-loader' },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              localIdentName: '[local]',
-              modules: true,
-              sourceMap: true,
-            },
-          },
-          { loader: 'postcss-loader' },
-        ],
-      },
-      {
         test: /\.css$/,
         use: [
           { loader: 'style-loader' },
