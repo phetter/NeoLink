@@ -6,7 +6,7 @@ import PrimaryButton from '../../buttons/PrimaryButton'
 
 import style from './CustomNetworkForm.css'
 
-const CustomNetworkForm = ({ renderTextField, renderSelectField, errors, onSubmit }) => {
+const CustomNetworkForm = ({ renderTextField, errors, onSubmit }) => {
   return (
     <form onSubmit={ onSubmit } className={ style.customNetworkForm }>
       <Field component={ renderTextField } type='text' name='name' label='Network Name' error={ errors.name } />
@@ -18,7 +18,6 @@ const CustomNetworkForm = ({ renderTextField, renderSelectField, errors, onSubmi
 
 CustomNetworkForm.propTypes = {
   renderTextField: PropTypes.func.isRequired,
-  renderSelectField: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
 }

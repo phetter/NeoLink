@@ -23,7 +23,19 @@
 }
 
 .sendAssetSelectBox {
-  width: 100px;
+  -webkit-appearance: none;
+  height: 35px;
+  width: 100%;
+  border: none;
+  background-color: #f1f1f1;
+  color: #585858;
+  background-image: url('../../../img/chevron-down-grey.svg');
+  background-repeat: no-repeat;
+  background-position: 95% 50%;
+  border-radius: 3px;
+  background-size: 15px;
+  padding: 0 10px;
+  font-size: 0.9rem;
   margin-bottom: 0;
 }
 

@@ -50,8 +50,6 @@ AddTransactionRemark.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   errors: PropTypes.object.isRequired,
   renderTextField: PropTypes.func.isRequired,
-  // renderSelectField: PropTypes.func.isRequired,
-  // transactionRemarks: PropTypes.object.isRequired,
 }
 
 export default reduxForm({
