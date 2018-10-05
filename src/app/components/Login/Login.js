@@ -62,7 +62,7 @@ export class Login extends Component {
         // getTransactions(networks, selectedNetworkId, account).then(transactions => setTransactions(transactions))
         Neoscan.setNet(selectedNetworkId)
         Neoscan.getBalance(account.address).then(results => setBalance(results.neo, results.gas))
-        Neoscan.getTxsByAddress(account.address).then(results => setTransactions(results))
+        Neoscan.getTxsByAddressUrl(account.address).then(results => setTransactions(results))
       })
       .catch(e => {
         this.setState({ loading: false }, () => setFormFieldError('passPhrase', 'Wrong password'))
