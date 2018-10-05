@@ -5,20 +5,20 @@ import util from 'util'
 const BN = BigNumber
 
 // https://stackoverflow.com/questions/4912788/truncate-not-round-off-decimal-numbers-in-javascript
-export const truncateNumber = (num: number, places: number): number =>
+export const truncateNumber = (num, places) =>
   Math.trunc(num * 10 ** places) / 10 ** places
 
 // https://github.com/MikeMcl/bignumber.js/issues/11
-export const toBigNumber = (value: number | string) =>
+export const toBigNumber = (value) =>
   new BigNumber(String(value))
 
-export const toNumber = (value: string | number) =>
+export const toNumber = (value) =>
   toBigNumber(value).toNumber()
 
-export const isZero = (amount: string | number) =>
+export const isZero = (amount) =>
   toBigNumber(amount).equals(0)
 
-export const isNumber = (value: string | number): boolean => {
+export const isNumber = (value) => {
   try {
     toBigNumber(value)
     return true

@@ -5,7 +5,7 @@ import { setAccount, setBalance, setTransactions } from '../../actions/account'
 
 import Login from './Login'
 
-const mapStateToProps = (state: Object) => ({
+const mapStateToProps = (state) => ({
   account: state.account,
   accounts: state.wallet.accounts,
   selectedNetworkId: state.config.selectedNetworkId,
