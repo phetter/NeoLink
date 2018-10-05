@@ -58,7 +58,7 @@ let humanDates = false // mutate the date format to human-readable (hardcoded to
 // debug = true | turns on verbose activity console printing
 
 export const debug = (debug) => {
-  if (debug !== undefined) defly = debug
+  if (!debug) defly = debug
   else defly = !defly
   if (defly) console.log('neoscan api debugging enabled')
   else console.log('This is your last debugging message! neoscan api debugging disabled')
@@ -248,16 +248,17 @@ export const get_address_abstracts = (address, page) => {
 // I.e., 'https://neoscan.io/api/main_net/v1/get_last_transactions_by_address/'
 // TODO add page argument format = address + '/' + page
 
-exports.get_last_transactions_by_address_url = (address, page) => {
+// eslint-disable-next-line
+export const get_last_transactions_by_address_url = (address, page) => {
   if (address) return validateUrl(curState.config.neoscan.active.txsByAddressUrl + '/' + address + '/' + page)
   else return validateUrl(curState.config.neoscan.active.txsByAddressUrl)
 }
 
 // Get all transactions for an address
+// eslint-disable-next-line
+export const get_last_transactions_by_address = (address, page) => {
+  let pageArg = page || '1'
 
-exports.get_last_transactions_by_address = (address, page) => {
-  let pageArg = '1'
-  if (page) pageArg = page
   return new Promise((resolve, reject) => {
     this.get_last_transactions_by_address_url(address, pageArg).then(url => {
       if (defly) console.log(url)
