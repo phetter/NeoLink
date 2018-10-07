@@ -53,7 +53,7 @@ class Home extends Component {
     let page = 1 // TODO add 'more' feature to list more txs
 
     this.setState({ transactionHistoryError: '' }, () => {
-      Neoscan.get_address_abstracts(account.address, page)
+      Neoscan.getAddressAbstracts(account.address, page)
         .then(results => {
           if (results && results.data) {
             let totalPages = results.data.total_pages
@@ -69,7 +69,7 @@ class Home extends Component {
             if (results.data && results.data.entries) {
               accountActions.setTransactions({})
               return results.data.entries.map(tx => {
-                return Neoscan.get_transaction(tx.txid).then(txDetail => {
+                return Neoscan.getTransaction(tx.txid).then(txDetail => {
                   txDetail.stringRemarks = []
 
                   txDetail.attributes.map((remark, i) => {
