@@ -36,7 +36,7 @@ class NetworkSwitcher extends Component {
 
         let page = 1
 
-        Neoscan.get_address_abstracts(account.address, page)
+        Neoscan.getAddressAbstracts(account.address, page)
           .then(results => {
             if (results && results.data) {
               let totalPages = results.data.total_pages
@@ -52,7 +52,7 @@ class NetworkSwitcher extends Component {
               if (results.data && results.data.entries) {
                 setTransactions({})
                 return results.data.entries.map(tx => {
-                  return Neoscan.get_transaction(tx.txid).then(txDetail => {
+                  return Neoscan.getTransaction(tx.txid).then(txDetail => {
                     txDetail.stringRemarks = []
 
                     txDetail.attributes.map((remark, i) => {

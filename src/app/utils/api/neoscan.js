@@ -84,9 +84,10 @@ const validateUrl = url => {
     try {
       // eslint-disable-next-line
       const u = new URL(url)
+      if (defly) console.log('neoscan.validateUrl(' + url + ')')
       resolve(url)
     } catch (error) {
-      console.log('neoscan: validateUrl: ' + error.message)
+      console.log('neoscan.validateUrl(' + url + '): ' + error.message)
       reject(error)
     }
   })
@@ -225,11 +226,10 @@ export const getBalanceUrl = address => {
 //    page_number: 1,
 // TODO add 'more' feature
 
-// eslint-disable-next-line
-export const get_address_abstracts = (address, page) => {
+export const getAddressAbstracts = (address, page) => {
   return new Promise((resolve, reject) => {
     getRootUrl(address).then(url => {
-      if (defly) console.log('url: ' + url + '/v1/get_address_abstracts/' + address + '/' + page)
+      if (defly) console.log('neoscan.getAddressAbstracts(' + address + ', ' + page + ')')
       return axios
         .get(url + '/v1/get_address_abstracts/' + address + '/' + page)
         .then(response => {
@@ -248,24 +248,22 @@ export const get_address_abstracts = (address, page) => {
 // I.e., 'https://neoscan.io/api/main_net/v1/get_last_transactions_by_address/'
 // TODO add page argument format = address + '/' + page
 
-// eslint-disable-next-line
-export const get_last_transactions_by_address_url = (address, page) => {
+export const getLastTransactionsByAddressUrl = (address, page) => {
   if (address) return validateUrl(curState.config.neoscan.active.txsByAddressUrl + '/' + address + '/' + page)
   else return validateUrl(curState.config.neoscan.active.txsByAddressUrl)
 }
 
 // Get all transactions for an address
-// eslint-disable-next-line
-export const get_last_transactions_by_address = (address, page) => {
+export const getLastTransactionsByAddress = (address, page) => {
   let pageArg = page || '1'
 
   return new Promise((resolve, reject) => {
-    this.get_last_transactions_by_address_url(address, pageArg).then(url => {
+    this.getLastTransactionsByAddressaddressUrl(address, pageArg).then(url => {
       if (defly) console.log(url)
       return axios
         .get(url)
         .then(response => {
-          if (defly) console.log(`Retrieved History for ${address} from neoscan ${url}`)
+          if (defly) console.log('neoscan.getLastTransactionsByAddress(' + address + ', ' + pageArg + ')')
           response.data.address = address
           resolve({ data: transactionLimit ? response.data[transactionLimit] : response.data, address: address })
           // resolve({ data: response.data[1], address: address })
@@ -277,48 +275,12 @@ export const get_last_transactions_by_address = (address, page) => {
   })
 }
 
-// export const get_transactions_from_list = (list, out) => {
-//   return new Promise((resolve, reject) => {
-//     if (list && list.data && list.data.entries) {
-//       list.data.entries.map(tx => {
-//         Neoscan.get_transaction(tx.txid)
-//           .then(txDetail => {
-//             out.data.push(txDetail)
-//           })
-//           .catch(e => {
-//             reject(e)
-//           })
-//       })
-//     }
-//   })
-//
-// }
-
 // Get a single transaction by transaction id
 
-export const getTxById = txid => {
+export const getTransaction = txid => {
   return new Promise((resolve, reject) => {
     getTxByIdUrl(txid).then(url => {
-      // console.log(`Retrieving ${txid} History from neoscan ${url}`)
-      return axios
-        .get(url)
-        .then(response => {
-          resolve(response.data)
-        })
-        .catch(error => {
-          reject(error)
-        })
-    })
-  })
-}
-
-// Get a single transaction by transaction id
-
-// eslint-disable-next-line
-export const get_transaction = txid => {
-  return new Promise((resolve, reject) => {
-    getTxByIdUrl(txid).then(url => {
-      // console.log(`Retrieving ${txid} History from neoscan`)
+      if (defly) console.log('neoscan.getTransaction(' + txid + ')')
       return axios
         .get(url)
         .then(response => {
@@ -332,10 +294,19 @@ export const get_transaction = txid => {
   })
 }
 
+// getBalance for an address
+// /api/test_net/v1/get_balance/{address}
+// Returns the balance for an address including NEP5 Tokens.
+//
+// URI ParametersHide
+// address
+// string (required)
+// base 58 address
+
 export const getBalance = address => {
   return new Promise((resolve, reject) => {
     getBalanceUrl(address).then(url => {
-      if (defly) console.log(`neoscan.getBalance ${url}`)
+      if (defly) console.log('neoscan.getBalance(' + url + ')')
       return axios
         .get(url)
         .then(response => {
@@ -388,7 +359,7 @@ export const getUnclaimedUrl = address => {
 export const getUnclaimed = address => {
   return new Promise((resolve, reject) => {
     this.getUnclaimedUrl(address).then(url => {
-      if (defly) console.log('querying unclaimed gas')
+      if (defly) console.log('neoscan.getUnclaimed(' + address + ')')
       return axios
         .get(url)
         .then(response => {
@@ -410,7 +381,7 @@ export const getClaimableUrl = address => {
 export const getClaimable = address => {
   return new Promise((resolve, reject) => {
     this.getClaimableUrl(address).then(url => {
-      if (defly) console.log('querying claimable transactions')
+      if (defly) console.log('neoscan.getClaimable(' + address + ')')
       return axios
         .get(url)
         .then(response => {
@@ -432,7 +403,7 @@ export const getClaimedUrl = address => {
 export const getClaimed = address => {
   return new Promise((resolve, reject) => {
     this.getClaimedUrl(address).then(url => {
-      if (defly) console.log('querying claimed transactions')
+      if (defly) console.log('neoscan.getClaimed(' + address + ')')
       return axios
         .get(url)
         .then(response => {
@@ -454,7 +425,7 @@ export const getHeightUrl = () => {
 export const getHeight = () => {
   return new Promise((resolve, reject) => {
     this.getHeightUrl().then(url => {
-      if (defly) console.log('Retrieving block height')
+      if (defly) console.log('neoscan.getHeight()')
       return axios
         .get(url)
         .then(response => {
@@ -476,7 +447,7 @@ export const getBlockUrl = hash => {
 exports.getBlock = (hash) => {
   return new Promise((resolve, reject) => {
     this.getBlockUrl(hash).then(url => {
-      if (defly) console.log('Retrieving block by hash or index')
+      if (defly) console.log('neoscan.getBlock(' + hash + ')')
       return axios
         .get(url)
         .then(response => {
@@ -484,7 +455,7 @@ exports.getBlock = (hash) => {
         })
         .catch(error => {
           // eslint-disable-next-line
-          reject('neoscan.js/get_block(): ' + error + 'If this is a 404 it is likely because the block does not exist.')
+          reject('neoscan.getBlock(' + hash + '): ' + error + 'If this is a 404 it is likely because the block does not exist.')
         })
     })
   })
@@ -499,7 +470,7 @@ export const getAllNodesUrl = () => {
 export const getAllNodes = () => {
   return new Promise((resolve, reject) => {
     this.getAllNodesUrl().then(url => {
-      if (defly) console.log('Retrieving node list')
+      if (defly) console.log('neoscan.getAllNodes')
       return axios
         .get(url)
         .then(response => {

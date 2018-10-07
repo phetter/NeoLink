@@ -69,7 +69,7 @@ class Home extends Component {
             if (results.data && results.data.entries) {
               accountActions.setTransactions({})
               return results.data.entries.map(tx => {
-                return Neoscan.get_transaction(tx.txid).then(txDetail => {
+                return Neoscan.getTransaction(tx.txid).then(txDetail => {
                   txDetail.stringRemarks = []
 
                   txDetail.attributes.map((remark, i) => {
