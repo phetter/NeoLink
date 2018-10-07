@@ -70,7 +70,7 @@ describe('Home', () => {
     // helpers.getBalance = jest.fn(() => new Promise((resolve, reject) => resolve()))
     // helpers.getTransactions = jest.fn(() => new Promise((resolve, reject) => resolve()))
     Neoscan.getBalance = jest.fn(() => new Promise((resolve, reject) => resolve()))
-    Neoscan.get_address_abstracts = jest.fn(() => new Promise((resolve, reject) => resolve()))
+    Neoscan.getAddressAbstracts = jest.fn(() => new Promise((resolve, reject) => resolve()))
     // Neoscan.getTxsByAddress = jest.fn(() => new Promise((resolve, reject) => resolve()))
 
     shallow(<Home { ...props } />)
