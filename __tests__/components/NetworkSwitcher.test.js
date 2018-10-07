@@ -39,10 +39,9 @@ const setup = () => {
 }
 
 describe('NetworkSwitch', () => {
-  test('renders without crashing', done => {
+  test('Renders without crashing', () => {
     const { wrapper } = setup()
     expect(wrapper).toMatchSnapshot()
-    done()
   })
 
   test('correctly renders MainNet initially', () => {
