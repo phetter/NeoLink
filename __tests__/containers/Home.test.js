@@ -78,7 +78,7 @@ describe('Home', () => {
     // expect(helpers.getBalance).toHaveBeenCalledTimes(1)
     expect(Neoscan.getBalance).toHaveBeenCalledTimes(1)
     // expect(helpers.getTransactions).toHaveBeenCalledTimes(1)
-    expect(Neoscan.get_address_abstracts).toHaveBeenCalledTimes(1)
+    expect(Neoscan.getAddressAbstracts).toHaveBeenCalledTimes(1)
     // expect(helpers.getBalance).toHaveBeenCalledWith(
     expect(Neoscan.getBalance).toHaveBeenCalledWith(
       // {
