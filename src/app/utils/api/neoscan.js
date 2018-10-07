@@ -444,7 +444,7 @@ export const getBlockUrl = hash => {
 
 // Returns the block model from its hash or index
 
-exports.getBlock = (hash) => {
+export const getBlock = (hash) => {
   return new Promise((resolve, reject) => {
     this.getBlockUrl(hash).then(url => {
       if (defly) console.log('neoscan.getBlock(' + hash + ')')
