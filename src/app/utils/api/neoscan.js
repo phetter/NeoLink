@@ -47,6 +47,30 @@ neoscanIni.custom.balanceUrl = 'https://neoscan-testnet.io/api/test_net/v1/get_b
 
 let curState = {}
 
+// Behavioral Configuration
+
+let defly = false // debugging flag - toggle with debug() or debug(bool)
+
+let transactionLimit = 0 // limits the number of returned transactions
+// eslint-disable-next-line
+let humanDates = false // mutate the date format to human-readable (hardcoded to generic date string for now)
+
+// debug = true | turns on verbose activity console printing
+
+export const debug = (debug) => {
+  if (!debug) defly = debug
+  else defly = !defly
+  if (defly) console.log('neoscan api debugging enabled')
+  else console.log('This is your last debugging message! neoscan api debugging disabled')
+}
+
+// Run this to configure API
+// See "Behavioral Configuration" above
+
+export const configure = (cfgObj) => {
+  ({ transactionLimit, humanDates } = cfgObj)
+}
+
 // ../storage.js adds this as a subscriber to listen for state changes.
 // I'm not sure this is the right approach as we still can't sync state yet.
 // TODO figure out how to sync state and do this whole bit properly
@@ -69,6 +93,8 @@ const validateUrl = url => {
 }
 
 export const setNet = networkId => {
+  if (defly) console.log('set_net(' + networkId + ')')
+
   return switchNetwork(networkId)
 }
 
@@ -95,7 +121,7 @@ export const switchNetwork = networkId => {
   let net
   switch (networkId) {
     case 'MainNet':
-      if (curState && curState.config && curState.config.neoscan) {
+      if (curState && curState.config && curState.config.neoscan && curState.config.neoscan.mainNet && curState.config.neoscan.active) {
         net = curState.config.neoscan.active = curState.config.neoscan.mainNet
       } else {
         curState = {
@@ -109,7 +135,7 @@ export const switchNetwork = networkId => {
       }
       break
     case 'TestNet':
-      if (curState && curState.config && curState.config.neoscan) {
+      if (curState && curState.config && curState.config.neoscan && curState.config.neoscan.testNet && curState.config.neoscan.active) {
         net = curState.config.neoscan.active = curState.config.neoscan.testNet
       } else {
         curState = {
@@ -147,10 +173,11 @@ export const switchNetwork = networkId => {
           },
         }
         net = curState.config.neoscan.active
-        logDeep('net', net)
       }
       break
   }
+  if (defly) logDeep('net', net)
+
   return net
 }
 
@@ -202,12 +229,10 @@ export const getBalanceUrl = address => {
 export const get_address_abstracts = (address, page) => {
   return new Promise((resolve, reject) => {
     getRootUrl(address).then(url => {
-      console.log('url: ' + url + '/v1/get_address_abstracts/' + address + '/' + page)
+      if (defly) console.log('url: ' + url + '/v1/get_address_abstracts/' + address + '/' + page)
       return axios
         .get(url + '/v1/get_address_abstracts/' + address + '/' + page)
         .then(response => {
-          // console.log(`Retrieved History for ${address} from neoscan ${url}`)
-          // console.log('response: ' + response.data)
           response.data.address = address
           resolve({ data: response.data, address: address })
         })
@@ -218,7 +243,40 @@ export const get_address_abstracts = (address, page) => {
     })
   })
 }
-//
+
+// Returns the full URL all the way up to the args.
+// I.e., 'https://neoscan.io/api/main_net/v1/get_last_transactions_by_address/'
+// TODO add page argument format = address + '/' + page
+
+// eslint-disable-next-line
+export const get_last_transactions_by_address_url = (address, page) => {
+  if (address) return validateUrl(curState.config.neoscan.active.txsByAddressUrl + '/' + address + '/' + page)
+  else return validateUrl(curState.config.neoscan.active.txsByAddressUrl)
+}
+
+// Get all transactions for an address
+// eslint-disable-next-line
+export const get_last_transactions_by_address = (address, page) => {
+  let pageArg = page || '1'
+
+  return new Promise((resolve, reject) => {
+    this.get_last_transactions_by_address_url(address, pageArg).then(url => {
+      if (defly) console.log(url)
+      return axios
+        .get(url)
+        .then(response => {
+          if (defly) console.log(`Retrieved History for ${address} from neoscan ${url}`)
+          response.data.address = address
+          resolve({ data: transactionLimit ? response.data[transactionLimit] : response.data, address: address })
+          // resolve({ data: response.data[1], address: address })
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  })
+}
+
 // export const get_transactions_from_list = (list, out) => {
 //   return new Promise((resolve, reject) => {
 //     if (list && list.data && list.data.entries) {
@@ -277,7 +335,7 @@ export const get_transaction = txid => {
 export const getBalance = address => {
   return new Promise((resolve, reject) => {
     getBalanceUrl(address).then(url => {
-      console.log(`neoscan.getBalance ${url}`)
+      if (defly) console.log(`neoscan.getBalance ${url}`)
       return axios
         .get(url)
         .then(response => {
@@ -321,18 +379,135 @@ export const parseUnspent = unspentArr => {
   })
 }
 
-// TODO: implement change code from TransactionList/index.js here to hide business from pres
-// function parseTxHistory (rawTxs, address) {
-//   return rawTxs.map(tx => {
-//     const vin = tx.vin.filter(i => i.address_hash === address)
-//     const vout = tx.vouts.filter(o => o.address_hash === address)
-//     const change = {
-//       NEO: vin.filter(i => i.asset === Neon.CONST.ASSET_ID.NEO).reduce((p, c) => p.add(c.value), new Fixed8(0)),
-//       GAS: vout.filter(i => i.asset === Neon.CONST.ASSET_ID.GAS).reduce((p, c) => p.add(c.value), new Fixed8(0))
-//     }
-//       txid: tx.txid,
-//       blockHeight: new Fixed8(tx.block_height),
-//       change
-//     }
-//   })
-// }
+export const getUnclaimedUrl = address => {
+  return validateUrl(curState.config.neoscan.active.rootUrl + '/v1/get_unclaimed/' + address)
+}
+
+// Returns the unclaimed gas for an address from its hash.
+
+export const getUnclaimed = address => {
+  return new Promise((resolve, reject) => {
+    this.getUnclaimedUrl(address).then(url => {
+      if (defly) console.log('querying unclaimed gas')
+      return axios
+        .get(url)
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  })
+}
+
+export const getClaimableUrl = address => {
+  return validateUrl(curState.config.neoscan.active.rootUrl + '/v1/get_claimable/' + address)
+}
+
+// Returns the AVAILABLE claimable transactions for an address, from its hash.
+
+export const getClaimable = address => {
+  return new Promise((resolve, reject) => {
+    this.getClaimableUrl(address).then(url => {
+      if (defly) console.log('querying claimable transactions')
+      return axios
+        .get(url)
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  })
+}
+
+export const getClaimedUrl = address => {
+  return validateUrl(curState.config.neoscan.active.rootUrl + '/v1/get_claimed/' + address)
+}
+
+// Returns the claimed transactions for an address, from its hash
+
+export const getClaimed = address => {
+  return new Promise((resolve, reject) => {
+    this.getClaimedUrl(address).then(url => {
+      if (defly) console.log('querying claimed transactions')
+      return axios
+        .get(url)
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  })
+}
+
+export const getHeightUrl = () => {
+  return validateUrl(curState.config.neoscan.active.rootUrl + '/v1/get_height')
+}
+
+// Returns latest block index of the neoscan db.
+
+export const getHeight = () => {
+  return new Promise((resolve, reject) => {
+    this.getHeightUrl().then(url => {
+      if (defly) console.log('Retrieving block height')
+      return axios
+        .get(url)
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  })
+}
+
+export const getBlockUrl = hash => {
+  return validateUrl(curState.config.neoscan.active.rootUrl + '/v1/get_block/' + hash)
+}
+
+// Returns the block model from its hash or index
+
+exports.getBlock = (hash) => {
+  return new Promise((resolve, reject) => {
+    this.getBlockUrl(hash).then(url => {
+      if (defly) console.log('Retrieving block by hash or index')
+      return axios
+        .get(url)
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(error => {
+          // eslint-disable-next-line
+          reject('neoscan.js/get_block(): ' + error + 'If this is a 404 it is likely because the block does not exist.')
+        })
+    })
+  })
+}
+
+export const getAllNodesUrl = () => {
+  return validateUrl(curState.config.neoscan.active.rootUrl + '/v1/get_all_nodes')
+}
+
+// Returns all working nodes and their respective heights. Information is updated each minute.
+
+export const getAllNodes = () => {
+  return new Promise((resolve, reject) => {
+    this.getAllNodesUrl().then(url => {
+      if (defly) console.log('Retrieving node list')
+      return axios
+        .get(url)
+        .then(response => {
+          resolve(response.data)
+        })
+        .catch(error => {
+          reject(error)
+        })
+    })
+  })
+}
