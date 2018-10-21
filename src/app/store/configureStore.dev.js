@@ -5,7 +5,7 @@ import rootReducer from '../reducers'
 import storage from '../utils/storage'
 import DevTools from '../containers/DevTools'
 import createHistory from 'history/createBrowserHistory'
-import { routerMiddleware } from 'react-router-redux'
+import { connectRouter, routerMiddleware } from 'connected-react-router'
 
 export const history = createHistory()
 
@@ -35,7 +35,7 @@ export default function(initialState) {
   if (initialState.router && initialState.router.location) {
     history.location = initialState.router.location
   }
-  const store = createStore(rootReducer, initialState, enhancer)
+  const store = createStore(connectRouter(history)(rootReducer), initialState, enhancer)
 
   if (module.hot) {
     module.hot.accept('../reducers', () => {
