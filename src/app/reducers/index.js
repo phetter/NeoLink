@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
 import { reducer as formReducer } from 'redux-form'
 
 import account from './account'
@@ -11,5 +10,4 @@ export default combineReducers({
   config,
   wallet,
   form: formReducer,
-  router: routerReducer,
 })
