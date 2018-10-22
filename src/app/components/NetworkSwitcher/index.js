@@ -15,6 +15,8 @@ import * as Neoscan from '../../utils/api/neoscan'
 
 import { truncateString } from '../../utils/api/neon'
 
+import * as _ from 'lodash'
+
 import * as string from '../../utils/string'
 
 class NetworkSwitcher extends Component {
@@ -36,40 +38,44 @@ class NetworkSwitcher extends Component {
 
         let page = 1
 
-        Neoscan.getAddressAbstracts(account.address, page)
-          .then(results => {
-            if (results && results.data) {
-              let totalPages = results.data.total_pages
-              let pageSize = results.data.page_size
-              let pageNumber = results.data.page_number
-              let totalTxs = results.data.total_entries
-              let txs = {}
-              txs.address = account.address
-              txs.data = []
-              txs.total = totalTxs
-              txs.viewing = 'Viewing ' + pageSize + ' of ' + totalTxs + ' transactions on Page ' + pageNumber + ' of ' + totalPages
+        Neoscan.getAddressAbstracts(account.address, page).then(results => {
+          if (results && results.data) {
+            let totalPages = results.data.total_pages
+            let pageSize = results.data.page_size
+            let pageNumber = results.data.page_number
+            let totalTxs = results.data.total_entries
+            let txs = {}
+            txs.address = account.address
+            txs.data = []
+            txs.total = totalTxs
+            txs.viewing = 'Viewing ' + pageSize + ' of ' + totalTxs + ' transactions on Page ' + pageNumber + ' of ' + totalPages
 
-              if (results.data && results.data.entries) {
-                setTransactions({})
-                return results.data.entries.map(tx => {
-                  return Neoscan.getTransaction(tx.txid).then(txDetail => {
-                    txDetail.stringRemarks = []
+            setTransactions({})
 
-                    txDetail.attributes.map((remark, i) => {
+            Neoscan.getLastTransactionsByAddress(account.address, page).then(result => {
+              if (_.isArray(result.data)) {
+                result.data.map(tx => {
+                  if (tx) {
+                    tx.stringRemarks = []
+
+                    tx.attributes.map((remark, i) => {
                       if (remark.usage === 'Remark') {
                         let s = string.hexstring2str(remark.data)
-                        txDetail.stringRemarks.push(s)
+                        tx.stringRemarks.push(s)
                       }
                     })
 
-                    txDetail.txTime = new Date(txDetail.time * 1000).toLocaleString()
-                    txs.data.push(txDetail)
+                    tx.txTime = new Date(tx.time * 1000).toLocaleString()
+                    txs.data.push(tx)
                     setTransactions(txs)
-                  })
+                  }
                 })
+              } else { // not an array, most likely because we set a limit or picked a specific tx index
+
               }
-            }
-          })
+            })
+          }
+        })
       } else { // most likely a custom network, other than MainNet or TestNet, was passed— currently unhandled by neoscanapi.js
         // TODO add error handling and recovery
       }

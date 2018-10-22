@@ -258,7 +258,7 @@ export const getLastTransactionsByAddress = (address, page) => {
   let pageArg = page || '1'
 
   return new Promise((resolve, reject) => {
-    this.getLastTransactionsByAddressaddressUrl(address, pageArg).then(url => {
+    getLastTransactionsByAddressUrl(address, pageArg).then(url => {
       if (defly) console.log(url)
       return axios
         .get(url)
