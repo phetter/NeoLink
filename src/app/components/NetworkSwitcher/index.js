@@ -15,7 +15,7 @@ import * as Neoscan from '../../utils/api/neoscan'
 
 import { truncateString } from '../../utils/api/neon'
 
-import * as _ from 'lodash'
+import { isArray } from 'lodash'
 
 import * as string from '../../utils/string'
 
@@ -53,7 +53,7 @@ class NetworkSwitcher extends Component {
             setTransactions({})
 
             Neoscan.getLastTransactionsByAddress(account.address, page).then(result => {
-              if (_.isArray(result.data)) {
+              if (isArray(result.data)) {
                 result.data.map(tx => {
                   if (tx) {
                     tx.stringRemarks = []
@@ -71,7 +71,7 @@ class NetworkSwitcher extends Component {
                   }
                 })
               } else { // not an array, most likely because we set a limit or picked a specific tx index
-
+                // TODO: Leaving this empty as it shouldn't happen right now since neoscan limit config is code-controllled
               }
             })
           }

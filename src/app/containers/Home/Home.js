@@ -13,9 +13,7 @@ import * as string from '../../utils/string'
 
 import Asset from '../Asset'
 
-// import { logDeep } from '../../utils/debug'
-
-import * as _ from 'lodash'
+import { isArray } from 'lodash'
 
 import style from './Home.css'
 
@@ -73,7 +71,7 @@ class Home extends Component {
 
           Neoscan.getLastTransactionsByAddress(account.address, page).then(result => {
             // logDeep('txs: ', result.data)
-            if (_.isArray(result.data)) {
+            if (isArray(result.data)) {
               result.data.map(tx => {
                 if (tx) {
                   tx.stringRemarks = []
@@ -91,7 +89,7 @@ class Home extends Component {
                 }
               })
             } else { // not an array, most likely because we set a limit or picked a specific tx index
-
+              // TODO: Leaving this empty as it shouldn't happen right now since neoscan limit config is code-controllled
             }
           })
         }
