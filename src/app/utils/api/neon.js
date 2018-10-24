@@ -1,5 +1,7 @@
 // neon.js - neon-js api module
 
+// TODO Review rpc network selection for actions versus neoscan selection for queries
+
 import Neon, { u, wallet, api, tx } from '@cityofzion/neon-js'
 import { toNumber } from '../math'
 import { logDeep } from '../debug'

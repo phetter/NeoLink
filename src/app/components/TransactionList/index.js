@@ -7,7 +7,9 @@ import FlashMessage from '../FlashMessage'
 
 import style from './TransactionList.css'
 
-// TODO add sort - they can arrive out of order right now
+// TODO WHY DID THIS CHANGE?
+const NEO = 'c56f33fc6ecfcd0c225c4ab356fee59390af8560be0e930faebe74a6daff7c9b'
+const GAS = '602c79718b16e442de58778e148d0b1084e3b2dffd5de6b7b16cee7969282de7'
 
 const TransactionList = ({ transactions, transactionHistoryError, getTransactions }) => {
   let transactionCards = []
@@ -19,8 +21,11 @@ const TransactionList = ({ transactions, transactionHistoryError, getTransaction
       const vout = tx.vouts.filter(o => o.address_hash === transactions.address)
 
       const change = {
-        NEO: vin.filter(i => i.asset === 'NEO').reduce((p, c) => p + c.value, 0),
-        GAS: vout.filter(i => i.asset === 'GAS').reduce((p, c) => p + c.value, 0),
+        NEO: vin.filter(i => i.asset === NEO).reduce((p, c) => p + c.value, 0),
+        GAS: vout.filter(i => i.asset === GAS).reduce((p, c) => p + c.value, 0),
+        // TODO Figure out WHY THIS CHANGED.
+        // NEO: vin.filter(i => i.asset === 'NEO').reduce((p, c) => p + c.value, 0),
+        // GAS: vout.filter(i => i.asset === 'GAS').reduce((p, c) => p + c.value, 0),
       }
 
       const amounts = {
