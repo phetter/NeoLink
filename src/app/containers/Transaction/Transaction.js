@@ -43,9 +43,7 @@ class Transaction extends Component {
           <a href={ this.txSiteUrl } className={ style.transactionCardLink } target='_blank' rel='noopener'>
             <h4 className={ style.transactionCardHeading }>{this.transactionId}</h4>
           </a>
-
           <p className={ style.transactionCardParagraph }>
-            {this.icon}{' '}
             <span className={ style.transactionCardAmount }>
               {this.amount} {this.amountText}
             </span>
