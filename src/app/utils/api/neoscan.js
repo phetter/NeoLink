@@ -310,8 +310,21 @@ export const getBalance = address => {
       return axios
         .get(url)
         .then(response => {
-          let assets = {}
           let data = response.data
+          let assets = {}
+
+          // Next line is new, keeping the above for backwards compatibility with current codebase (for now).
+          // The plan is to follow neoscan get_balance json result format. I.e.,
+          // details = {
+          //    asset_symbol: 'CTX',
+          //    asset_hash: '9aff1e08aea2048a26a3d2ddbb3df495b932b1e7',
+          //    asset: 'Contract Token X',
+          //    amount: 10000
+          // }
+          assets._details = {}
+
+          // logDeep('data: ', data)
+
           if (data.address === 'not found') {
             assets = {
               neo: 0,
@@ -328,6 +341,11 @@ export const getBalance = address => {
                 assets['gas'] = b.amount
               } else if (b.amount) {
                 assets[b.asset] = b.amount
+                assets._details[b.asset] = {
+                  'symbol': b.asset_symbol,
+                  'hash': b.asset_hash,
+                  'amount': b.amount,
+                }
               }
             })
           }
