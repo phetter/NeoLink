@@ -172,7 +172,7 @@ export class Send extends Component {
 
     let content
 
-    if (account.results._tokens.length) {
+    if (account && account.results && account.results._tokens.length) {
       let tokens = account.results._tokens
       tokens.forEach(token => {
         logDeep('token: ', token)
