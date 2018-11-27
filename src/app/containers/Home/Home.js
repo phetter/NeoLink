@@ -129,7 +129,7 @@ class Home extends Component {
     if (account.results) {
       for (let key in account.results) {
         if (account.results.hasOwnProperty(key)) {
-          if (key !== 'neo' && key !== 'gas' && key !== '_details') {
+          if (key !== 'neo' && key !== 'gas' && key !== '_tokens') {
             assets.push(<Asset assetName={ key } assetAmount={ account.results[key].toLocaleString() } key={ key } />)
           }
         }

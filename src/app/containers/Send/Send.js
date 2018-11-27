@@ -172,6 +172,20 @@ export class Send extends Component {
 
     let content
 
+    // if (Object.keys(account.results._details).length) {
+    //   console.log('length!')
+    //   Object.keys(account.results._details).forEach(index => {
+    //     logDeep('index: ', account.results._details[index])
+    //   })
+    // }
+
+    if (account.results._tokens.length) {
+      let tokens = account.results._tokens
+      tokens.forEach(token => {
+        logDeep('token: ', token)
+      })
+    }
+
     if (loading) {
       content = <Loader />
     } else if (showConfirmation) {
