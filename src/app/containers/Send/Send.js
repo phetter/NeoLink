@@ -19,6 +19,8 @@ import { toNumber, toBigNumber } from '../../utils/math'
 
 import PasswordModal from '../../components/PasswordModal'
 
+import Asset from '../Asset'
+
 import { logDeep } from '../../utils/debug'
 
 import style from './Send.css'
@@ -171,19 +173,21 @@ export class Send extends Component {
     } = this.props
 
     let content
+    let assets = []
 
     if (account && account.results && account.results._tokens.length) {
       let tokens = account.results._tokens
+
       tokens.forEach(token => {
-        logDeep('token: ', token)
+        assets.push(<Asset assetName={ token.name } assetAmount={ token.amount.toLocaleString() } key={ token.name } />)
       })
     }
 
     if (loading) {
       content = <Loader />
     } else if (showConfirmation) {
-      // console.log('showing form')
       let accountLabel
+
       if (Object.keys(accounts).length > 0) {
         Object.keys(accounts).forEach(index => {
           if (account.address === accounts[index].address) accountLabel = accounts[index].label
@@ -240,6 +244,12 @@ export class Send extends Component {
               showOptions={ false }
               label={ getAccountName(account, accounts) }
             />
+            <section >
+              <h2 >Tokens</h2>
+              <div>
+                {assets}
+              </div>
+            </section>
             <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.sendForm }>
               <section className={ style.sendSelectAsset }>
                 <p className={ style.sendSelectAssetText }>Send</p>
