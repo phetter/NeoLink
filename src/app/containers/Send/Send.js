@@ -174,9 +174,10 @@ export class Send extends Component {
 
     let content
     let assets = []
+    let tokens = []
 
     if (account && account.results && account.results._tokens.length) {
-      let tokens = account.results._tokens
+      tokens = account.results._tokens
 
       tokens.forEach(token => {
         assets.push(<Asset assetName={ token.name } assetAmount={ token.amount.toLocaleString() } key={ token.name } />)
@@ -261,6 +262,11 @@ export class Send extends Component {
                 >
                   <option value='NEO'>NEO</option>
                   <option value='GAS'>GAS</option>
+                  { tokens.map(token => (
+                    <option key={ token.hash } value={ token.symbol }>
+                      { token.name }
+                    </option>
+                  )) }
                 </Field>
               </section>
               <section className={ style.sendAddress }>
