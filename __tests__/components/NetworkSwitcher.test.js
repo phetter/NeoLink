@@ -39,31 +39,31 @@ const setup = () => {
 }
 
 describe('NetworkSwitch', () => {
-  test('Renders without crashing', () => {
+  // test('Renders without crashing', () => {
+  //   const { wrapper } = setup()
+  //   expect(wrapper).toMatchSnapshot()
+  // })
+  test('correctly renders MainNet initially', () => {
     const { wrapper } = setup()
-    expect(wrapper).toMatchSnapshot()
+    wrapper.find('.dropDownButton').simulate('click')
+    const networkSelectorElement = wrapper.find('.networkOptionButton').at(0)
+
+    expect(networkSelectorElement.contains(<div className='networkNavigationOptionSelected' />)).toBe(true)
   })
-  // test('correctly renders MainNet initially', () => {
-  //   const { wrapper } = setup()
-  //   wrapper.find('.dropDownButton').simulate('click')
-  //   const networkSelectorElement = wrapper.find('.networkOptionButton').at(0)
-  //
-  //   expect(networkSelectorElement.contains(<div className='networkNavigationOptionSelected' />)).toBe(true)
-  // })
-  //
-  // test('switches to the correct network when chosen from the dropdown', async () => {
-  //   const { wrapper } = setup()
-  //
-  //   const instance = wrapper.instance()
-  //   wrapper.find('.dropDownButton').simulate('click')
-  //   let networkSelectorElement = wrapper.find('.networkOptionButton').at(1)
-  //   networkSelectorElement.simulate('click')
-  //
-  //   expect(instance.props.setNetwork).toHaveBeenCalledWith('TestNet')
-  //
-  //   networkSelectorElement = wrapper.find('.networkOptionButton').at(0)
-  //   networkSelectorElement.simulate('click')
-  //
-  //   expect(instance.props.setNetwork).toHaveBeenCalledWith('MainNet')
-  // })
+
+  test('switches to the correct network when chosen from the dropdown', async () => {
+    const { wrapper } = setup()
+
+    const instance = wrapper.instance()
+    wrapper.find('.dropDownButton').simulate('click')
+    let networkSelectorElement = wrapper.find('.networkOptionButton').at(1)
+    networkSelectorElement.simulate('click')
+
+    expect(instance.props.setNetwork).toHaveBeenCalledWith('TestNet')
+
+    networkSelectorElement = wrapper.find('.networkOptionButton').at(0)
+    networkSelectorElement.simulate('click')
+
+    expect(instance.props.setNetwork).toHaveBeenCalledWith('MainNet')
+  })
 })
