@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import style from './Asset.css'
 
@@ -18,11 +18,9 @@ class Asset extends Component {
   render() {
     const { assetName, assetAmount } = this.props
     return (
-      <div>
-        <div className={ style.assetCard }>
-          <h4 className={ style.assetCardName }>{assetName}: {assetAmount}</h4>
-        </div>
-      </div>
+      <Fragment>
+        <h4 className={ style.assetCardName }>{assetName}: {assetAmount}</h4>
+      </Fragment>
     )
   }
 }

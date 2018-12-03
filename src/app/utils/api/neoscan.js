@@ -338,7 +338,7 @@ export const getBalance = address => {
               } else if (b.amount) {
                 assets[b.asset] = b.amount
 
-                let token = {
+                const token = {
                   'name': b.asset,
                   'symbol': b.asset_symbol,
                   'hash': b.asset_hash,
