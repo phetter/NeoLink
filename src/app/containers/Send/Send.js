@@ -94,6 +94,45 @@ export class Send extends Component {
     })
   }
 
+  getSelectedFieldValue = (option) => {
+    this.setState({ selectedField: option.target.value })
+  }
+
+  getPortfolio = () => {
+    const { account } = this.props
+    let portfolio = {
+      assets: [],
+      tokens: [],
+    }
+
+    if (account && account.results && account.results._tokens.length) {
+      portfolio.tokens = account.results._tokens
+
+      portfolio.tokens.forEach(token => {
+        portfolio.assets.push(<Asset assetName={ token.name } assetAmount={ token.amount.toLocaleString() } key={ token.name } />)
+      })
+    }
+    return portfolio
+  }
+
+  getAmount = (symbol) => {
+    const { account } = this.props
+    const portfolio = this.getPortfolio()
+    console.log(symbol)
+    let amount = 0
+
+    portfolio.tokens.forEach(token => {
+      if (token.symbol === symbol) amount = token.amount
+    })
+
+    if (!amount) {
+      if (symbol === 'GAS') amount = account.gas
+      else if (symbol === 'NEO') amount = account.neo
+    }
+
+    return amount
+  }
+
   handleCancelClick = () => {
     this.setState({ showConfirmation: false })
   }
@@ -160,7 +199,7 @@ export class Send extends Component {
   }
 
   render() {
-    const { txid, loading, showConfirmation, confirmationMessage, errorMessage } = this.state
+    const { txid, loading, showConfirmation, confirmationMessage, errorMessage, selectedField } = this.state
     const {
       handleSubmit,
       account,
@@ -173,16 +212,8 @@ export class Send extends Component {
     } = this.props
 
     let content
-    let assets = []
-    let tokens = []
 
-    if (account && account.results && account.results._tokens.length) {
-      tokens = account.results._tokens
-
-      tokens.forEach(token => {
-        assets.push(<Asset assetName={ token.name } assetAmount={ token.amount.toLocaleString() } key={ token.name } />)
-      })
-    }
+    const portfolio = this.getPortfolio()
 
     if (loading) {
       content = <Loader />
@@ -245,12 +276,6 @@ export class Send extends Component {
               showOptions={ false }
               label={ getAccountName(account, accounts) }
             />
-            <section >
-              <h2 >Tokens</h2>
-              <div>
-                {assets}
-              </div>
-            </section>
             <form onSubmit={ handleSubmit(this.handleSubmit) } className={ style.sendForm }>
               <section className={ style.sendSelectAsset }>
                 <p className={ style.sendSelectAssetText }>Send</p>
@@ -259,12 +284,13 @@ export class Send extends Component {
                   className={ style.sendAssetSelectBox }
                   type='select'
                   name='assetType'
+                  onChange={ e => this.getSelectedFieldValue(e) }
                 >
                   <option value='NEO'>NEO</option>
                   <option value='GAS'>GAS</option>
-                  { tokens.map(token => (
+                  { portfolio.tokens.map(token => (
                     <option key={ token.hash } value={ token.symbol }>
-                      { token.name }
+                      { token.name } { token.amount }
                     </option>
                   )) }
                 </Field>
@@ -298,6 +324,9 @@ export class Send extends Component {
                   label='Amount'
                   classNames={ style.sendAmountsInputField }
                 />
+                <section className={ style.sendAmount }>
+                  Available: { this.getAmount(selectedField) }
+                </section>
                 <PrimaryButton buttonText='Send' icon={ sendSVG } classNames={ style.sendButton } />
               </section>
             </form>
